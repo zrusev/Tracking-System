@@ -3,6 +3,8 @@
     using Metrics_Track.Models;
     using Metrics_Track.Services.Services;
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
+
     public class CountriesController : Controller
     {   
         private readonly ICountry countries;
@@ -35,5 +37,10 @@
             return View(cvm);
         }
 
+        public JsonResult GetMining(int id)
+        {
+            var modelMining = this.mining.ById(id);
+            return Json(modelMining);
+        }
     }
 }
