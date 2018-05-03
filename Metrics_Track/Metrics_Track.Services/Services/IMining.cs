@@ -4,6 +4,6 @@
     using System.Collections.Generic;
     public interface IMining
     {
-        IEnumerable<tbl_Mining> ById(int id);
+        IEnumerable<MiningDataModel> ById(int id);
     }
 }

@@ -13,18 +13,18 @@
             this.db = db;
         }
 
-        public IEnumerable<tbl_Mining> ById(int id)
+        public IEnumerable<MiningDataModel> ById(int id)
         {
-            var qry = from min in this.db.TblMining
-                      from trl in this.db.TrelUserMining
-                        .Where(t => min.IdMining == t.IdMining && t.IdLogin == (id))
-                        .DefaultIfEmpty()
-                      select new tbl_Mining() {
-                          IdMining = min.IdMining,
-                          State = min.State
-                      };
+            var minings = this.db.TblMining
+                        .Where(t => t.TrelUserMining.Any(i => i.IdLogin == id))
+                        .Select(m => new MiningDataModel
+                        {
+                            IdMining = m.IdMining,
+                            State = m.State
+                        })
+                        .ToList();
 
-            return qry;
+            return minings;
         }
     }
 }

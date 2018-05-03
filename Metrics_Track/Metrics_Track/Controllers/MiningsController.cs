@@ -12,15 +12,15 @@
             this.minings = minings;
         }
 
-        [Route("Minings/ById/{id}")]
-        public IActionResult ById(int id)
-        {
-            var minings = this.minings.ById(id);
+        //[Route("Minings/ById/{id}")]
+        //public IActionResult ById(int id)
+        //{
+        //    var minings = this.minings.ById(id);
 
-            return View(new MiningById
-            {
-                Minings = minings
-            });
-        }
+        //    return View(new MiningById
+        //    {
+        //        Minings = minings
+        //    });
+        //}
     }
 }

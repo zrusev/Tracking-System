@@ -15,28 +15,10 @@
 
 <div class="container-fluid">
     <div class="row">
-
-        <div class="col-md-3">
-            <div class="sidebar-nav-fixed affix">
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="background-color:#D1D0DE">
-                        <ul class="list-group">
-                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">1to1</li>
-                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Active</li>
-                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Admin</li>
-                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Awaiting Work</li>
-                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Break</li>
-                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Quality Feedback</li>
-                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">System Issues</li>
-                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Team meeting</li>
-                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Training</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 text-left">
+        <p>&nbsp;</p>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 text-left">
             <div class="panel-group" id="country">
             @foreach (var country in Model.CountryList)
             {
@@ -46,7 +28,6 @@
                             <a class="list-group-item" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold">@country.Country</a>
                         </h4>
                     </div>
-
                     <div id="country-@country.ID_Country" class="panel-collapse collapse">
                         <div class="panel-body" style="background-color:#D1D0DE">
                             <div class="panel-group" id="process-@country.ID_Country">
@@ -71,7 +52,6 @@
                                                     }
                                                     </div>
                                                 </div>
-
                                                 <div class="col-sm-4">
                                                     <h6>Activity</h6>
                                                     <div class="btn-group-vertical center-block" data-toggle="buttons">
@@ -83,16 +63,15 @@
                                                     }
                                                     </div>
                                                 </div>
-
                                                 <div class="col-sm-4">
                                                     <h6>Status</h6>
                                                     <div class="btn-group-vertical center-block" data-toggle="buttons">
-                                                    @foreach (var status in process.StatusList)
-                                                    {
+                                                     @foreach (var status in process.StatusList)
+                                                     {
                                                         <label class="btn btn-default form-check-label">
                                                             <input class="form-check-label" type="radio" autocomplete="off" data-id="@status.ID_Status">@status.Status
                                                         </label>
-                                                    }
+                                                     }
                                                     </div>
                                                 </div>
                                             </div>
@@ -107,46 +86,82 @@
             }
             </div>
         </div>
-
-        <div class="col-md-3">
-            <div class="sidebar-nav-fixed pull-right affix">
-                <form>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="ReceivedDate">Received Date</label>
-                            <input type="datetime" class="form-control" id="receiveddate1">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="PolicyNumer">Policy Number</label>
-                            <input type="text" class="form-control" id="PolicyNumber1" placeholder="Policy number">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="Amount">Amount</label>
-                            <input type="text" class="form-control" id="amount1" placeholder="Amount">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="Comment">Comment</label>
-                            <input type="text" class="form-control" id="comment1" placeholder="Comments">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                            <label class="form-check-label" for="gridCheck">
-                                Check me out
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
-
+        
+       <div class="col-lg-8">
+           <div class="sidebar-nav-fixed pull-right affix">
+               <div class="row">
+                   <div class="col-lg-8">
+                       <h5>My current status: Active</h5>
+                   </div>
+                   <hr />
+               </div>              
+               <div class="row">
+                   <div class="col-lg-8">                       
+                       <div class="btn-group-sm center-block" data-toggle="buttons">
+                           @foreach (var status in Model.MiningList)
+                           {
+                              <label class="btn btn-default form-check-label" style="background-color:#00A4E4; color:white;">
+                                  <input class="form-check-label" type="radio" autocomplete="off" data-id="@status.IdMining">@status.State
+                              </label>
+                           }
+                       </div>
+                       <hr />
+                   </div>              
+               </div>
+               <div class="row">
+                   <div class="col-lg-6">
+                       <form>
+                           <div class="form-row">
+                               <div class="form-group">
+                                   <label for="ReceivedDate">Received Date</label>
+                                   <input type="datetime" class="form-control" id="receiveddate1">
+                               </div>
+                           </div>
+                           <div class="form-row">
+                               <div class="col-lg-6">
+                                   <div class="form-group">
+                                       <label for="PolicyNumer">Policy Number</label>
+                                       <input type="text" class="form-control" id="PolicyNumber1" placeholder="Policy number">
+                                   </div>
+                               </div>
+                               <div class="col-lg-6">
+                                   <div class="form-group">
+                                       <label for="Amount">Amount</label>
+                                       <input type="text" class="form-control" id="amount1" placeholder="Amount">
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="form-row">
+                               <div class="form-group">
+                                   <label for="Comment">Comment</label>
+                                   <input type="text" class="form-control" id="comment1" placeholder="Comments">
+                               </div>
+                           </div>
+                           <div class="form-row">
+                               <div class="form-group">
+                                   <label for="InceptionDate">Inception Date</label>
+                                   <input type="datetime" class="form-control" id="inceptiondate1">
+                               </div>
+                           </div>
+                           <div class="form-row">
+                               <div class="form-group">
+                                   <label for="BoundDate">Bound Date</label>
+                                   <input type="datetime" class="form-control" id="bounddate1">
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="checkbox" id="gridCheck">
+                                   <label class="form-check-label" for="gridCheck">
+                                       High Priority
+                                   </label>
+                               </div>
+                           </div>
+                           <button type="submit" class="btn btn-primary">Submit</button>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
     </div>
 </div>

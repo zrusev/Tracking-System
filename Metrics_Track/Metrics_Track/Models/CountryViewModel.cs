@@ -8,6 +8,8 @@
         public int ID_Country { get; set; }
         public List<CountryDataModel> CountryList { get; set; }
 
+        public List<MiningDataModel> MiningList { get; set; }
+
         public IEnumerable<SelectListItem> CountryEnum
         {
             get
@@ -19,6 +21,7 @@
         public CountryViewModel()
         {
             this.CountryList = new List<CountryDataModel>();
+            this.MiningList = new List<MiningDataModel>();
         }
     }
 }
