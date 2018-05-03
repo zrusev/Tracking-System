@@ -1,0 +1,152 @@
+﻿@model CountryViewModel
+
+@{
+    ViewBag.Title = $"{Model.CountryList.FirstOrDefault().Country}";
+    Layout = "_Layout";
+}
+
+<script language="javascript" type="text/javascript">
+    function GetTokens() {
+        var countryId = parseInt($('#country .in').attr("id").split("-")[1]);
+        var processId = parseInt($('#process' + '-' + countryId + ' .in').attr("id").split("-")[1]);
+        alert(countryId + ' ~ ' + processId);
+    }
+</script>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="sidebar-nav-fixed affix">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color:#D1D0DE">
+                        <ul class="list-group">
+                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">1to1</li>
+                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Active</li>
+                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Admin</li>
+                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Awaiting Work</li>
+                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Break</li>
+                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Quality Feedback</li>
+                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">System Issues</li>
+                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Team meeting</li>
+                            <li class="list-group-item" style="color:white; background-color:#00A4E4;">Training</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 text-left">
+            <div class="panel-group" id="country">
+            @foreach (var country in Model.CountryList)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color:#D1D0DE">
+                        <h4 class="panel-title">
+                            <a class="list-group-item" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold">@country.Country</a>
+                        </h4>
+                    </div>
+
+                    <div id="country-@country.ID_Country" class="panel-collapse collapse">
+                        <div class="panel-body" style="background-color:#D1D0DE">
+                            <div class="panel-group" id="process-@country.ID_Country">
+                                <div class="panel panel-default">
+                                @foreach (var process in country.ProcessList)
+                                {
+                                    <div class="panel">
+                                        <a class="list-group-item" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4;">@process.Process</a>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="process-@process.ID_Process">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <h6>Line of business</h6>
+                                                    <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                    @foreach (var lob in process.LobList)
+                                                    {
+                                                        <label class="btn btn-default form-check-label">
+                                                            <input class="form-check-label" type="radio" autocomplete="off" data-id="@lob.ID_Lob">@lob.Lob
+                                                        </label>
+                                                    }
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <h6>Activity</h6>
+                                                    <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                    @foreach (var activity in process.ActivityList)
+                                                    {
+                                                        <label class="btn btn-default form-check-label">
+                                                            <input class="form-check-label" type="radio" autocomplete="off" data-id="@activity.ID_Activity">@activity.Activity
+                                                        </label>
+                                                    }
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <h6>Status</h6>
+                                                    <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                    @foreach (var status in process.StatusList)
+                                                    {
+                                                        <label class="btn btn-default form-check-label">
+                                                            <input class="form-check-label" type="radio" autocomplete="off" data-id="@status.ID_Status">@status.Status
+                                                        </label>
+                                                    }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="sidebar-nav-fixed pull-right affix">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ReceivedDate">Received Date</label>
+                            <input type="datetime" class="form-control" id="receiveddate1">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="PolicyNumer">Policy Number</label>
+                            <input type="text" class="form-control" id="PolicyNumber1" placeholder="Policy number">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="Amount">Amount</label>
+                            <input type="text" class="form-control" id="amount1" placeholder="Amount">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="Comment">Comment</label>
+                            <input type="text" class="form-control" id="comment1" placeholder="Comments">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck">
+                            <label class="form-check-label" for="gridCheck">
+                                Check me out
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
