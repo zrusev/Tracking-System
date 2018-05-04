@@ -39,7 +39,7 @@
         }
 
         function onSuccess2(response) {
-            $("#currentstatus").append("<span>" + "My status: " + response.status + "</span>");
+            $("#currentstatus").append("<span>" + response.status + "</span>");
         }
 
         function LoadData() {
@@ -87,94 +87,94 @@
     <div class="row">
         <div class="col-lg-4 text-left">
             <div class="panel-group" id="country">
-                @foreach (var country in Model.CountryList)
-                {
-                    <div class="panel panel-default">
-                        <div class="panel-heading" style="background-color:#D1D0DE">
-                            <h4 class="panel-title">
-                                <a class="list-group-item" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold">@country.Country</a>
-                            </h4>
-                        </div>
-                        <div id="country-@country.ID_Country" class="panel-collapse collapse">
-                            <div class="panel-body" style="background-color:#D1D0DE">
-                                <div class="panel-group" id="process-@country.ID_Country">
-                                    <div class="panel panel-default">
-                                        @foreach (var process in country.ProcessList)
-                                        {
-                                            <div class="panel">
-                                                <a class="list-group-item" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4;">@process.Process</a>
-                                            </div>
+            @foreach (var country in Model.CountryList)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color:#D1D0DE">
+                        <h4 class="panel-title">
+                            <a class="list-group-item" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold">@country.Country</a>
+                        </h4>
+                    </div>
+                    <div id="country-@country.ID_Country" class="panel-collapse collapse">
+                        <div class="panel-body" style="background-color:#D1D0DE">
+                            <div class="panel-group" id="process-@country.ID_Country">
+                                <div class="panel panel-default">
+                                @foreach (var process in country.ProcessList)
+                                {
+                                    <div class="panel">
+                                        <a class="list-group-item" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4;">@process.Process</a>
+                                    </div>
 
-                                            <div class="panel-collapse collapse" id="process-@process.ID_Process">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-sm-4">
-                                                            <h6>Line of business</h6>
-                                                            <div class="btn-group-vertical center-block" data-toggle="buttons">
-                                                                @foreach (var lob in process.LobList)
-                                                                {
-                                                                    <label class="btn btn-default form-check-label">
-                                                                        <input class="form-check-label" type="radio" autocomplete="off" data-id="@lob.ID_Lob">@lob.Lob
-                                                                    </label>
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <h6>Activity</h6>
-                                                            <div class="btn-group-vertical center-block" data-toggle="buttons">
-                                                                @foreach (var activity in process.ActivityList)
-                                                                {
-                                                                    <label class="btn btn-default form-check-label">
-                                                                        <input class="form-check-label" type="radio" autocomplete="off" data-id="@activity.ID_Activity">@activity.Activity
-                                                                    </label>
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <h6>Status</h6>
-                                                            <div class="btn-group-vertical center-block" data-toggle="buttons">
-                                                                @foreach (var status in process.StatusList)
-                                                                {
-                                                                    <label class="btn btn-default form-check-label">
-                                                                        <input class="form-check-label" type="radio" autocomplete="off" data-id="@status.ID_Status">@status.Status
-                                                                    </label>
-                                                                }
-                                                            </div>
-                                                        </div>
+                                    <div class="panel-collapse collapse" id="process-@process.ID_Process">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <h6>Line of business</h6>
+                                                    <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                    @foreach (var lob in process.LobList)
+                                                    {
+                                                        <label class="btn btn-default form-check-label">
+                                                            <input class="form-check-label" type="radio" autocomplete="off" data-id="@lob.ID_Lob">@lob.Lob
+                                                        </label>
+                                                    }
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <h6>Activity</h6>
+                                                    <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                    @foreach (var activity in process.ActivityList)
+                                                    {
+                                                        <label class="btn btn-default form-check-label">
+                                                            <input class="form-check-label" type="radio" autocomplete="off" data-id="@activity.ID_Activity">@activity.Activity
+                                                        </label>
+                                                    }
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <h6>Status</h6>
+                                                    <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                    @foreach (var status in process.StatusList)
+                                                    {
+                                                        <label class="btn btn-default form-check-label">
+                                                            <input class="form-check-label" type="radio" autocomplete="off" data-id="@status.ID_Status">@status.Status
+                                                        </label>
+                                                    }
                                                     </div>
                                                 </div>
                                             </div>
-                                        }
+                                        </div>
                                     </div>
+                                }
                                 </div>
                             </div>
                         </div>
                     </div>
-                }
+                </div>
+            }
             </div>
         </div>
 
         <div class="col-lg-4">
             <div class="sidebar-nav-fixed pull-right affix">
                 <div class="row">
-                        <div class="col-lg-4 text-left">
-                            <div class="panel-heading" style="background-color:#D1D0DE">
-                                <div class="panel-title" style="background-color:#00A4E4; color:white; text-align:left; font-weight:bold">
-                                    <span id="currentstatus">
-                                        Current status: Active
-                                    </span>
-                                </div>
+                    <div class="col-lg-4 text-left">
+                        <div class="panel-heading" style="background-color:#D1D0DE">
+                            <div class="panel-title" style="background-color:#00A4E4; color:white; text-align:center; font-weight:bold">
+                                <span id="currentstatus">
+                                    Active
+                                </span>
                             </div>
                         </div>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 text-left">
+                    <div class="col-lg-4 text-left" style="padding-top:20px">
                         <label>Update status</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <select id="useractivity" style="width:100%">
+                        <select id="useractivity" style="width:100%; height:30px">
                         @foreach (var status in Model.MiningList)
                         {
                             <option id=@status.IdMining value=@status.State>@status.State</option>
@@ -182,11 +182,6 @@
                         </select>
                         @*<input class="btn btn-primary" name="submitButton" id="btnSave" value="Save" type="button">*@
                         <hr />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <p>&nbsp;</p>
                     </div>
                 </div>
                 <div class="row">
@@ -234,9 +229,21 @@
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                                    <input class="form-check-input" type="checkbox" id="sectionCheck">
                                     <label class="form-check-label" for="gridCheck">
-                                        High Priority
+                                        Lock sections
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="receivedCheck">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Lock received date
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="priorityCheck">
+                                    <label class="form-check-label" for="gridCheck">
+                                        High priority
                                     </label>
                                 </div>
                             </div>
@@ -247,6 +254,69 @@
             </div>
         </div>
 
-        <div class="col-lg-4 text-left">
+        <div class="col-lg-4">
+            <div class="sidebar-nav-fixed pull-right affix">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h4>My previous transaction</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr style="background-color:#D1D0DE">
+                                    <th>Transaction ID</th>
+                                    <th>Policy Number</th>
+                                    <th>Received Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="active">
+                                    <td>123456</td>
+                                    <td>EA1234PH</td>
+                                    <td>@DateTime.Now</td>
+                                    <td>Completed</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h4>My pending transactions</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr style="background-color:#D1D0DE">
+                                    <th>Transaction ID</th>
+                                    <th>Policy Number</th>
+                                    <th>Received Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="active">
+                                    <td>123456</td>
+                                    <td>EA1457PH</td>
+                                    <td>@DateTime.Now</td>
+                                    <td>Pending</td>
+                                </tr>
+                                <tr>
+                                    <td>234567</td>
+                                    <td>EA7894PH</td>
+                                    <td>@DateTime.Now</td>
+                                    <td>Pending</td>
+                                </tr>
+                                <tr class="active">
+                                    <td>567894</td>
+                                    <td>EA5555PH</td>
+                                    <td>@DateTime.Now</td>
+                                    <td>Pending</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
+
+    </div>
 </div>
