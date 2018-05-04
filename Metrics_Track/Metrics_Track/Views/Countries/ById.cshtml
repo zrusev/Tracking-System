@@ -154,22 +154,26 @@
             </div>
         </div>
 
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <div class="sidebar-nav-fixed pull-right affix">
                 <div class="row">
-                    <div class="col-lg-3" style="background-color:#00A4E4; color:white; text-align:left">
-                        <h5 id="currentstatus">
-                            <span>
-                                My status: Active
-                            </span>
-                        </h5>
+                        <div class="col-lg-4 text-left">
+                            <div class="panel-heading" style="background-color:#D1D0DE">
+                                <div class="panel-title" style="background-color:#00A4E4; color:white; text-align:left; font-weight:bold">
+                                    <span id="currentstatus">
+                                        Current status: Active
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 text-left">
+                        <label>Update status</label>
                     </div>
                 </div>
                 <div class="row">
-                    <h5>Choose status</h5>
-                </div>
-                <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <select id="useractivity" style="width:100%">
                         @foreach (var status in Model.MiningList)
                         {
@@ -177,50 +181,55 @@
                         }
                         </select>
                         @*<input class="btn btn-primary" name="submitButton" id="btnSave" value="Save" type="button">*@
+                        <hr />
                     </div>
                 </div>
                 <div class="row">
-                    <p>&nbsp;</p>
+                    <div class="col-lg-4">
+                        <p>&nbsp;</p>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <form>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="ReceivedDate">Received Date</label>
-                                    <input type="datetime" class="form-control" id="receiveddate1">
+                                    <div class="form-group">
+                                        <label for="PolicyNumer">Policy Number</label>
+                                        <input type="text" class="form-control" id="PolicyNumber1" placeholder="Enter policy number">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="PolicyNumer">Policy Number</label>
-                                        <input type="text" class="form-control" id="PolicyNumber1" placeholder="Policy number">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
+                                <div class="form-group">
                                     <div class="form-group">
                                         <label for="Amount">Amount</label>
-                                        <input type="text" class="form-control" id="amount1" placeholder="Amount">
+                                        <input type="text" class="form-control" id="amount1" placeholder="Enter amount">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="ReceivedDate">Received Date</label>
+                                    <input type="datetime" class="form-control" id="receiveddate1" placeholder="Enter received date">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="Comment">Comment</label>
-                                    <input type="text" class="form-control" id="comment1" placeholder="Comments">
+                                    <input type="text" class="form-control" id="comment1" placeholder="Enter comment" style="height:84px">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="InceptionDate">Inception Date</label>
-                                    <input type="datetime" class="form-control" id="inceptiondate1">
+                                    <input type="datetime" class="form-control" id="inceptiondate1" placeholder="Enter inception date">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="BoundDate">Bound Date</label>
-                                    <input type="datetime" class="form-control" id="bounddate1">
+                                    <input type="datetime" class="form-control" id="bounddate1" placeholder="Enter bound date">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -237,5 +246,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="col-lg-4 text-left">
+        </div>
 </div>
