@@ -9,11 +9,38 @@
 {
     <script language="javascript" type="text/javascript">
         $(function () {
-            LoadData;
             $('#btnSave').click(function () {
-                LoadData()
+                UpdateStatus()
+            });
+
+            $("#useractivity").change(function () {
+                var type = $(this).val();
+                var comment = $("#comment1").val();
+                UpdateStatus(type, comment);
             });
         });
+
+        function UpdateStatus(activityType, activityComment) {
+            $("#currentstatus").empty();
+            $.ajax({
+                type: "Post",
+                url: '@Url.Action("UpdateStatus")',
+                dataType: "json",
+                data: { type: activityType, comment: activityComment },
+                success: onSuccess2,
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+
+        function onSuccess2(response) {
+            $("#currentstatus").append("<span>" + "My status: " + response.status + "</span>");
+        }
 
         function LoadData() {
             $("#tblMining tbody tr").remove();
@@ -35,7 +62,6 @@
          }
 
         function onSuccess(ajaxResponse) { 
-            console.log(ajaxResponse);
             var rows = '';
             $.each(ajaxResponse, function (index, ajaxResponse) {
                 rows = "<tr>"
@@ -131,36 +157,30 @@
         <div class="col-lg-8">
             <div class="sidebar-nav-fixed pull-right affix">
                 <div class="row">
-                    <div class="col-lg-8">
-                        <h5>My current status: Active</h5>
+                    <div class="col-lg-3" style="background-color:#00A4E4; color:white; text-align:left">
+                        <h5 id="currentstatus">
+                            <span>
+                                My status: Active
+                            </span>
+                        </h5>
                     </div>
-                    <hr />
                 </div>
                 <div class="row">
-                    <div class="col-lg-8">
-                        @*<div class="btn-group-sm center-block" data-toggle="buttons">
+                    <h5>Choose status</h5>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <select id="useractivity" style="width:100%">
                         @foreach (var status in Model.MiningList)
                         {
-                            <label class="btn btn-default form-check-label" style="background-color:#00A4E4; color:white;">
-                                <input class="form-check-label" type="radio" autocomplete="off" data-id="@status.IdMining">@status.State
-                            </label>
+                            <option id=@status.IdMining value=@status.State>@status.State</option>
                         }
-                    </div>*@
-                        <table id="tblMining">
-                            <thead>
-                                @foreach (var status in Model.MiningList)
-                                {
-                                    <tr>
-                                        <td>@status.IdMining</td>
-                                        <td>@status.State</td>
-                                    </tr>
-                                }
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <input class="btn btn-primary" name="submitButton" id="btnSave" value="Save" type="button">
-                        <hr />
+                        </select>
+                        @*<input class="btn btn-primary" name="submitButton" id="btnSave" value="Save" type="button">*@
                     </div>
+                </div>
+                <div class="row">
+                    <p>&nbsp;</p>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">

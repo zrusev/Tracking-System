@@ -3,7 +3,7 @@
     using Metrics_Track.Models;
     using Metrics_Track.Services.Services;
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
+    using System;
 
     public class CountriesController : Controller
     {   
@@ -35,6 +35,20 @@
             }
 
             return View(cvm);
+        }
+
+        public IActionResult UpdateStatus(string type, string comment)
+        {
+            int id = 145;
+            string activityType = type;
+            DateTime stamp = DateTime.Now;
+            string activityCommment = comment;
+            short sandbox = 1;
+            string version = null;
+
+            this.mining.AddUserActivity(id, activityType, stamp, activityCommment, sandbox, version);
+
+            return Json(new { Status = activityType });
         }
 
         public JsonResult GetMining(int id)
