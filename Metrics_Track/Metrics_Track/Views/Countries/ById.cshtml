@@ -6,7 +6,13 @@
 }
 
 @section Scripts
-{
+    {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+
     <script language="javascript" type="text/javascript">
         $(function () {
             $('#btnSave').click(function () {
@@ -17,6 +23,12 @@
                 var type = $(this).val();
                 var comment = $("#comment1").val();
                 UpdateStatus(type, comment);
+            });
+
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+                $('#datetimepicker2').datetimepicker();
+                $('#datetimepicker3').datetimepicker();
             });
         });
 
@@ -61,7 +73,7 @@
             return false;
          }
 
-        function onSuccess(ajaxResponse) { 
+        function onSuccess(ajaxResponse) {
             var rows = '';
             $.each(ajaxResponse, function (index, ajaxResponse) {
                 rows = "<tr>"
@@ -87,70 +99,70 @@
     <div class="row">
         <div class="col-lg-4 text-left">
             <div class="panel-group" id="country">
-            @foreach (var country in Model.CountryList)
-            {
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="background-color:#D1D0DE">
-                        <h4 class="panel-title">
-                            <a class="list-group-item" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold">@country.Country</a>
-                        </h4>
-                    </div>
-                    <div id="country-@country.ID_Country" class="panel-collapse collapse">
-                        <div class="panel-body" style="background-color:#D1D0DE">
-                            <div class="panel-group" id="process-@country.ID_Country">
-                                <div class="panel panel-default">
-                                @foreach (var process in country.ProcessList)
-                                {
-                                    <div class="panel">
-                                        <a class="list-group-item" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4;">@process.Process</a>
-                                    </div>
+                @foreach (var country in Model.CountryList)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="background-color:#D1D0DE">
+                            <h4 class="panel-title">
+                                <a class="list-group-item" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold">@country.Country</a>
+                            </h4>
+                        </div>
+                        <div id="country-@country.ID_Country" class="panel-collapse collapse">
+                            <div class="panel-body" style="background-color:#D1D0DE">
+                                <div class="panel-group" id="process-@country.ID_Country">
+                                    <div class="panel panel-default">
+                                        @foreach (var process in country.ProcessList)
+                                        {
+                                            <div class="panel">
+                                                <a class="list-group-item" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4;">@process.Process</a>
+                                            </div>
 
-                                    <div class="panel-collapse collapse" id="process-@process.ID_Process">
-                                        <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <h6>Line of business</h6>
-                                                    <div class="btn-group-vertical center-block" data-toggle="buttons">
-                                                    @foreach (var lob in process.LobList)
-                                                    {
-                                                        <label class="btn btn-default form-check-label">
-                                                            <input class="form-check-label" type="radio" autocomplete="off" data-id="@lob.ID_Lob">@lob.Lob
-                                                        </label>
-                                                    }
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <h6>Activity</h6>
-                                                    <div class="btn-group-vertical center-block" data-toggle="buttons">
-                                                    @foreach (var activity in process.ActivityList)
-                                                    {
-                                                        <label class="btn btn-default form-check-label">
-                                                            <input class="form-check-label" type="radio" autocomplete="off" data-id="@activity.ID_Activity">@activity.Activity
-                                                        </label>
-                                                    }
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <h6>Status</h6>
-                                                    <div class="btn-group-vertical center-block" data-toggle="buttons">
-                                                    @foreach (var status in process.StatusList)
-                                                    {
-                                                        <label class="btn btn-default form-check-label">
-                                                            <input class="form-check-label" type="radio" autocomplete="off" data-id="@status.ID_Status">@status.Status
-                                                        </label>
-                                                    }
+                                            <div class="panel-collapse collapse" id="process-@process.ID_Process">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <h6>Line of business</h6>
+                                                            <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                                @foreach (var lob in process.LobList)
+                                                                {
+                                                                    <label class="btn btn-default form-check-label">
+                                                                        <input class="form-check-label" type="radio" autocomplete="off" data-id="@lob.ID_Lob">@lob.Lob
+                                                                    </label>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <h6>Activity</h6>
+                                                            <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                                @foreach (var activity in process.ActivityList)
+                                                                {
+                                                                    <label class="btn btn-default form-check-label">
+                                                                        <input class="form-check-label" type="radio" autocomplete="off" data-id="@activity.ID_Activity">@activity.Activity
+                                                                    </label>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <h6>Status</h6>
+                                                            <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                                @foreach (var status in process.StatusList)
+                                                                {
+                                                                    <label class="btn btn-default form-check-label">
+                                                                        <input class="form-check-label" type="radio" autocomplete="off" data-id="@status.ID_Status">@status.Status
+                                                                    </label>
+                                                                }
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        }
                                     </div>
-                                }
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
             </div>
         </div>
 
@@ -175,10 +187,10 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <select id="useractivity" style="width:100%; height:30px">
-                        @foreach (var status in Model.MiningList)
-                        {
-                            <option id=@status.IdMining value=@status.State>@status.State</option>
-                        }
+                            @foreach (var status in Model.MiningList)
+                            {
+                                <option id=@status.IdMining value=@status.State>@status.State</option>
+                            }
                         </select>
                         @*<input class="btn btn-primary" name="submitButton" id="btnSave" value="Save" type="button">*@
                         <hr />
@@ -206,7 +218,12 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="ReceivedDate">Received Date</label>
-                                    <input type="datetime" class="form-control" id="receiveddate1" placeholder="Enter received date">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -218,13 +235,23 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="InceptionDate">Inception Date</label>
-                                    <input type="datetime" class="form-control" id="inceptiondate1" placeholder="Enter inception date">
+                                    <div class='input-group date' id='datetimepicker2'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="BoundDate">Bound Date</label>
-                                    <input type="datetime" class="form-control" id="bounddate1" placeholder="Enter bound date">
+                                    <div class='input-group date' id='datetimepicker3'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
