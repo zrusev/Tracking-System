@@ -34,14 +34,18 @@
 
             $(".list-group-item").on("click", function () {
                 if ($(this).attr("aria-expanded") === 'true') {
-                    $(".btn btn-default form-check-label active").each(function (index, item) {
-                        item.className.replace(" active", "");
-                    });
                     console.log("hiding all");
                 } else { 
+                    var btns = $(this).parent().next().find(".btn-group-vertical label");
+                    btns.each(function (index, item) {
+                        item.classList.remove('active');
+                    });
+                    $('input[name=LobSelection]').val("");
+                    $('input[name=ActivitySelection]').val("");
+                    $('input[name=StatusSelection]').val("");
                     console.log("no action");
                 }
-                console.log($(this).text());
+                //console.log($(this).text());
             });
 
             $("#useractivity").change(function () {
