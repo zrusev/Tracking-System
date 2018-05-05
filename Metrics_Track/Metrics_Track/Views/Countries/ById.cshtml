@@ -19,6 +19,31 @@
                 UpdateStatus()
             });
 
+            $('.btn-default').on('click', function () {
+                var division = $(this).parent().attr("id");
+                var selection = $(this).find('input').attr('id');
+
+                if (division == "Lob") {
+                    $('input[name=LobSelection]').val(selection);
+                } else if (division == "Activity") {
+                    $('input[name=ActivitySelection]').val(selection);
+                } else if (division == "Status") {
+                    $('input[name=StatusSelection]').val(selection);
+                }
+            });
+
+            $(".list-group-item").on("click", function () {
+                if ($(this).attr("aria-expanded") === 'true') {
+                    $(".btn btn-default form-check-label active").each(function (index, item) {
+                        item.className.replace(" active", "");
+                    });
+                    console.log("hiding all");
+                } else { 
+                    console.log("no action");
+                }
+                console.log($(this).text());
+            });
+
             $("#useractivity").change(function () {
                 var type = $(this).val();
                 var comment = $("#comment1").val();
@@ -122,33 +147,33 @@
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <h6>Line of business</h6>
-                                                            <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                            <div class="btn-group-vertical center-block" data-toggle="buttons" id="Lob">
                                                                 @foreach (var lob in process.LobList)
                                                                 {
                                                                     <label class="btn btn-default form-check-label">
-                                                                        <input class="form-check-label" type="radio" autocomplete="off" data-id="@lob.ID_Lob">@lob.Lob
+                                                                        <input class="form-check-label" type="radio" autocomplete="off" id="@lob.ID_Lob">@lob.Lob
                                                                     </label>
                                                                 }
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <h6>Activity</h6>
-                                                            <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                            <div class="btn-group-vertical center-block" data-toggle="buttons" id="Activity">
                                                                 @foreach (var activity in process.ActivityList)
                                                                 {
                                                                     <label class="btn btn-default form-check-label">
-                                                                        <input class="form-check-label" type="radio" autocomplete="off" data-id="@activity.ID_Activity">@activity.Activity
+                                                                        <input class="form-check-label" type="radio" autocomplete="off" id="@activity.ID_Activity">@activity.Activity
                                                                     </label>
                                                                 }
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <h6>Status</h6>
-                                                            <div class="btn-group-vertical center-block" data-toggle="buttons">
+                                                            <div class="btn-group-vertical center-block" data-toggle="buttons" id="Status">
                                                                 @foreach (var status in process.StatusList)
                                                                 {
                                                                     <label class="btn btn-default form-check-label">
-                                                                        <input class="form-check-label" type="radio" autocomplete="off" data-id="@status.ID_Status">@status.Status
+                                                                        <input class="form-check-label" type="radio" autocomplete="off" id="@status.ID_Status">@status.Status
                                                                     </label>
                                                                 }
                                                             </div>
@@ -201,18 +226,21 @@
                         <form>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="PolicyNumer">Policy Number</label>
-                                        <input type="text" class="form-control" id="PolicyNumber1" placeholder="Enter policy number">
-                                    </div>
+                                    <input type="hidden" name="LobSelection" value="" />
+                                    <input type="hidden" name="ActivitySelection" value="" />
+                                    <input type="hidden" name="StatusSelection" value="" />
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="Amount">Amount</label>
-                                        <input type="text" class="form-control" id="amount1" placeholder="Enter amount">
-                                    </div>
+                                    <label for="PolicyNumer">Policy Number</label>
+                                    <input type="text" class="form-control" id="PolicyNumber1" placeholder="Enter policy number">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="Amount">Amount</label>
+                                    <input type="text" class="form-control" id="amount1" placeholder="Enter amount">
                                 </div>
                             </div>
                             <div class="form-row">
