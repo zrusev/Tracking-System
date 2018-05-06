@@ -126,7 +126,7 @@
         <p>&nbsp;</p>
     </div>
     <div class="row">
-        <div class="col-lg-4 text-left">
+        <div class="col-lg-4">
             <div class="panel-group" id="country">
                 @foreach (var country in Model.CountryList)
                 {
@@ -138,12 +138,13 @@
                         </div>
                         <div id="country-@country.ID_Country" class="panel-collapse collapse">
                             <div class="panel-body" style="background-color:#D1D0DE">
-                                <div class="panel-group" id="process-@country.ID_Country">
+                                <div class="
+                                     " id="process-@country.ID_Country">
                                     <div class="panel panel-default">
                                         @foreach (var process in country.ProcessList)
                                         {
                                             <div class="panel">
-                                                <a class="list-group-item" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4;">@process.Process</a>
+                                                <a class="list-group-item small" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4;">@process.Process</a>
                                             </div>
 
                                             <div class="panel-collapse collapse" id="process-@process.ID_Process">
@@ -154,7 +155,7 @@
                                                             <div class="btn-group-vertical center-block" data-toggle="buttons" id="Lob">
                                                                 @foreach (var lob in process.LobList)
                                                                 {
-                                                                    <label class="btn btn-default form-check-label">
+                                                                    <label class="btn btn-default form-check-label" style="font-size:10px">
                                                                         <input class="form-check-label" type="radio" autocomplete="off" id="@lob.ID_Lob">@lob.Lob
                                                                     </label>
                                                                 }
@@ -165,7 +166,7 @@
                                                             <div class="btn-group-vertical center-block" data-toggle="buttons" id="Activity">
                                                                 @foreach (var activity in process.ActivityList)
                                                                 {
-                                                                    <label class="btn btn-default form-check-label">
+                                                                    <label class="btn btn-default form-check-label" style="font-size:10px">
                                                                         <input class="form-check-label" type="radio" autocomplete="off" id="@activity.ID_Activity">@activity.Activity
                                                                     </label>
                                                                 }
@@ -176,7 +177,7 @@
                                                             <div class="btn-group-vertical center-block" data-toggle="buttons" id="Status">
                                                                 @foreach (var status in process.StatusList)
                                                                 {
-                                                                    <label class="btn btn-default form-check-label">
+                                                                    <label class="btn btn-default form-check-label" style="font-size:10px">
                                                                         <input class="form-check-label" type="radio" autocomplete="off" id="@status.ID_Status">@status.Status
                                                                     </label>
                                                                 }
@@ -198,7 +199,7 @@
         <div class="col-lg-4">
             <div class="sidebar-nav-fixed pull-right affix">
                 <div class="row">
-                    <div class="col-lg-4 text-left">
+                    <div class="col-lg-4">
                         <div class="panel-heading" style="background-color:#D1D0DE">
                             <div class="panel-title" style="background-color:#00A4E4; color:white; text-align:center; font-weight:bold">
                                 <span id="currentstatus">
@@ -209,7 +210,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 text-left" style="padding-top:20px">
+                    <div class="col-lg-4" style="padding-top:20px">
                         <label>Update status</label>
                     </div>
                 </div>
@@ -318,7 +319,7 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <h4>My previous transaction</h4>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-condensed">
                             <thead>
                                 <tr style="background-color:#D1D0DE">
                                     <th>Transaction ID</th>
@@ -342,7 +343,7 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <h4>My pending transactions</h4>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-condensed">
                             <thead>
                                 <tr style="background-color:#D1D0DE">
                                     <th>Transaction ID</th>
