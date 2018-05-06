@@ -14,7 +14,6 @@
         }
         public IEnumerable<CountryDataModel> ById(int id)
         {
-
             var query = from trlUserCountry in this.db.TrelUserCountry
                         join tblCountry in this.db.TblCountry on trlUserCountry.IdCountry equals tblCountry.IdCountry into UserCountry_Table
                             from leftUserCountry in UserCountry_Table.DefaultIfEmpty()
@@ -49,7 +48,7 @@
                         join tblTowerCategory in this.db.TblTowerCategory on leftProcessTowerCategory.IdTowerCategory equals tblTowerCategory.IdTowerCategory into TowerCategory_Table
                             from leftTowerCategory in TowerCategory_Table.DefaultIfEmpty()
                         where leftLogin.IdLogin == id
-                        select new ProcessMap
+                        select new ProcessMapDataModel
                         {
                             IdCountry = leftUserCountry.IdCountry,
                             Country = leftUserCountry.Country,
@@ -174,7 +173,7 @@
                         }
                     });
                 }
-         }
+            }
 
             return countries;
         }

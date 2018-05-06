@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-
     public class TrackerDbContext : IdentityDbContext<User>            
     {
         public TrackerDbContext(DbContextOptions<TrackerDbContext> options)

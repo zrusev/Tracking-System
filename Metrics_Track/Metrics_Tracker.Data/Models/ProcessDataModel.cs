@@ -4,10 +4,13 @@
     public class ProcessDataModel
     {
         public int ID_Process{ get; set; }
+
         public string Process { get; set; }
 
         public List<StatusDataModel> StatusList { get; set; }
+
         public List<ActivityDataModel> ActivityList { get; set; }
+
         public List<LobDataModel> LobList { get; set; }
 
         public ProcessDataModel()

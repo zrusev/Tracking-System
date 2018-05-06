@@ -1,7 +1,7 @@
 ﻿namespace Metrics_Track.Controllers
 {
+    using Infrastructure.Extensions;
     using Metrics_Track.Data.Models;
-    using Metrics_Track.Infrastructure.Extensions;
     using Metrics_Track.Services.Services;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;

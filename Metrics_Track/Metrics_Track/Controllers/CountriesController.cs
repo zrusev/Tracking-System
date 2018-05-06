@@ -1,10 +1,9 @@
 ﻿namespace Metrics_Track.Controllers
 {
-    using Metrics_Track.Models;
     using Metrics_Track.Services.Services;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
     using System;
-
     public class CountriesController : Controller
     {   
         private readonly ICountry countries;
