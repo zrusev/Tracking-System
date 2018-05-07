@@ -133,7 +133,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" style="background-color:#D1D0DE">
                             <h4 class="panel-title">
-                                <a class="list-group-item" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold">@country.Country</a>
+                                <a class="list-group-item" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold; cursor:default">@country.Country</a>
                             </h4>
                         </div>
                         <div id="country-@country.ID_Country" class="panel-collapse collapse">
@@ -144,7 +144,7 @@
                                         @foreach (var process in country.ProcessList)
                                         {
                                             <div class="panel">
-                                                <a class="list-group-item small" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4;">@process.Process</a>
+                                                <a class="list-group-item small" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4; padding-bottom: 5px; padding-top: 5px; cursor:default">@process.Process</a>
                                             </div>
 
                                             <div class="panel-collapse collapse" id="process-@process.ID_Process">
@@ -155,7 +155,7 @@
                                                             <div class="btn-group-vertical center-block" data-toggle="buttons" id="Lob">
                                                                 @foreach (var lob in process.LobList)
                                                                 {
-                                                                    <label class="btn btn-default form-check-label" style="font-size:10px">
+                                                                    <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
                                                                         <input class="form-check-label" type="radio" autocomplete="off" id="@lob.ID_Lob">@lob.Lob
                                                                     </label>
                                                                 }
@@ -166,7 +166,7 @@
                                                             <div class="btn-group-vertical center-block" data-toggle="buttons" id="Activity">
                                                                 @foreach (var activity in process.ActivityList)
                                                                 {
-                                                                    <label class="btn btn-default form-check-label" style="font-size:10px">
+                                                                    <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
                                                                         <input class="form-check-label" type="radio" autocomplete="off" id="@activity.ID_Activity">@activity.Activity
                                                                     </label>
                                                                 }
@@ -177,7 +177,7 @@
                                                             <div class="btn-group-vertical center-block" data-toggle="buttons" id="Status">
                                                                 @foreach (var status in process.StatusList)
                                                                 {
-                                                                    <label class="btn btn-default form-check-label" style="font-size:10px">
+                                                                    <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
                                                                         <input class="form-check-label" type="radio" autocomplete="off" id="@status.ID_Status">@status.Status
                                                                     </label>
                                                                 }
