@@ -33,25 +33,64 @@
             });
 
             $(".list-group-item").on("click", function () {
+                var division = $(this).data("parent");
+
                 if ($(this).attr("aria-expanded") === 'true') {
-                    console.log("hiding all");
+                    if (division == "#country") { 
+                        $('input[name=CountrySelection]').val("");
+                    }
+
+                    $('input[name=ProcessSelection]').val("");
+                    console.log("hide");
                 } else { 
                     var btns = $(this).parent().next().find(".btn-group-vertical label");
                     btns.each(function (index, item) {
                         item.classList.remove('active');
                     });
-                    $('input[name=LobSelection]').val("");
+                    
+                    var selection = $(this).data("id");
+                    console.log(selection);
+
+                    if (division == "#country") {
+                        $('input[name=CountrySelection]').val(selection);
+                    } else {
+                        $('input[name=ProcessSelection]').val(selection);
+                    }
+
                     $('input[name=ActivitySelection]').val("");
+                    $('input[name=LobSelection]').val("");
                     $('input[name=StatusSelection]').val("");
-                    console.log("no action");
+
+                    console.log("show");
                 }
-                //console.log($(this).text());
             });
 
             $("#useractivity").change(function () {
                 var type = $(this).val();
                 var comment = $("#comment1").val();
                 UpdateStatus(type, comment);
+            });
+
+            $("#submittranform").submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "Post",
+                    url: '@Url.Action("SubmitTransaction")',
+                    dataType: "json",
+                    data: {
+                        policyNumber: $("#policynumber1").val(),
+                        amount: $("#amount1").val()
+                    },
+                    success: function (success) { 
+                        alert(success.Status + " New transaction id: " + success.newId)
+                    },
+                    error: function (ex) {
+                        var r = jQuery.parseJSON(response.responseText);
+                        alert("Message: " + r.Message);
+                        alert("StackTrace: " + r.StackTrace);
+                        alert("ExceptionType: " + r.ExceptionType);
+                    }
+                });
             });
 
             $(function () {
@@ -228,18 +267,20 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <form>
+                        <form id="submittranform" method="post">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <input type="hidden" name="LobSelection" value="" />
+                                    <input type="hidden" name="CountrySelection" value="" />
+                                    <input type="hidden" name="ProcessSelection" value="" />
                                     <input type="hidden" name="ActivitySelection" value="" />
+                                    <input type="hidden" name="LobSelection" value="" />
                                     <input type="hidden" name="StatusSelection" value="" />
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="PolicyNumer">Policy Number</label>
-                                    <input type="text" class="form-control" id="PolicyNumber1" placeholder="Enter policy number">
+                                    <input type="text" class="form-control" id="policynumber1" placeholder="Enter policy number">
                                 </div>
                             </div>
                             <div class="form-row">

@@ -30,6 +30,7 @@
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICountry, Country>();
             services.AddTransient<IMining, Mining>();
+            services.AddTransient<ITransaction, Transaction>();
 
             services.AddMvc();
         }
