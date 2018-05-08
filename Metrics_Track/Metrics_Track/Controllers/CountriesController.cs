@@ -52,10 +52,16 @@
             return Json(new { Status = activityType });
         }
 
-        public IActionResult SubmitTransaction(string policyNumber, string amount)
+        public IActionResult SubmitTransaction(int processId, int activityId, int lobId,
+                                   DateTime receivedDate, DateTime startDate, DateTime completeDate, int statusId, string comment,
+                                   string numberId, string partnerId, string contactId, double premium, string currCode,
+                                   string insuredName, string tranRequestor, int originalId, short statusCode, short priority, string attachments,
+                                   DateTime inceptionDate, DateTime dateReceived)
         {
-            //var identityId = this.transaction.AddTransaction(145, 15, ,,,processId, processId, processId);
-            var identityId = 123;
+            var identityId = this.transaction.AddTransaction(145, 15, processId, activityId, lobId, processId, processId, processId, receivedDate, startDate,
+                                                            DateTime.Now, 1, comment, numberId, string.Empty, string.Empty, premium, "EUR",
+                                                            string.Empty, string.Empty, 0, 1, 0, string.Empty, inceptionDate, dateReceived);
+
             return Json(new { Status = "Transaction has been uploaded successfully!", newId = identityId });
         }
 
