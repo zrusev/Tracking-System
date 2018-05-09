@@ -6,8 +6,8 @@
     {
         public int ID_Country { get; set; }
         public List<CountryDataModel> CountryList { get; set; }
-
         public List<MiningDataModel> MiningList { get; set; }
+        public TransactionDataModel Transaction { get; set; }
 
         public CountryViewModel()
         {

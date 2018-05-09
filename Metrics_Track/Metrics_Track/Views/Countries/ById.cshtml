@@ -36,18 +36,18 @@
                 var division = $(this).data("parent");
 
                 if ($(this).attr("aria-expanded") === 'true') {
-                    if (division == "#country") { 
+                    if (division == "#country") {
                         $('input[name=CountrySelection]').val("");
                     }
 
                     $('input[name=ProcessSelection]').val("");
                     //console.log("hide");
-                } else { 
+                } else {
                     var btns = $(this).parent().next().find(".btn-group-vertical label");
                     btns.each(function (index, item) {
                         item.classList.remove('active');
                     });
-                    
+
                     var selection = $(this).data("id");
 
                     if (division == "#country") {
@@ -78,7 +78,7 @@
                     data: {
                         processId: $('input[name=ProcessSelection]').val(),
                         activityId: $('input[name=ActivitySelection]').val(),
-                        lobId: $('input[name=LobSelection]').val(),                        
+                        lobId: $('input[name=LobSelection]').val(),
                         receivedDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
                         startDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
                         comment: $("#comment1").val(),
@@ -87,8 +87,8 @@
                         inceptionDate: ($("#datetimepicker2").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
                         dateReceived: ($("#datetimepicker3").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss")
                     },
-                    success: function (success) { 
-                        alert(success.Status + " New transaction id: " + success.newId)
+                    success: function (success) {
+                        alert(" New transaction id: " + success.newId)
                     },
                     error: function (ex) {
                         var r = jQuery.parseJSON(response.responseText);
@@ -164,6 +164,8 @@
             alert(countryId + ' ~ ' + processId);
         }
     </script>
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
 
 <div class="container-fluid">
@@ -276,30 +278,38 @@
                         <form id="submittranform" method="post">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <input type="hidden" name="CountrySelection" value="" />
-                                    <input type="hidden" name="ProcessSelection" value="" />
-                                    <input type="hidden" name="ActivitySelection" value="" />
-                                    <input type="hidden" name="LobSelection" value="" />
-                                    <input type="hidden" name="StatusSelection" value="" />
+                                    <input asp-for="Transaction.IdCountry" type="hidden" name="CountrySelection" value="" />
+                                    <span asp-validation-for="Transaction.IdCountry"></span>
+                                    <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" value="" />
+                                    <span asp-validation-for="Transaction.IdProcess"></span>
+                                    <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" value="" />
+                                    <span asp-validation-for="Transaction.IdActivity"></span>
+                                    <input asp-for="Transaction.IdLob" type="hidden" name="LobSelection" value="" />
+                                    <span asp-validation-for="Transaction.IdLob"></span>
+                                    <input asp-for="Transaction.IdStatus" type="hidden" name="StatusSelection" value="" />
+                                    <span asp-validation-for="Transaction.IdStatus"></span>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="PolicyNumer">Policy Number</label>
-                                    <input type="text" class="form-control" id="policynumber1" placeholder="Enter policy number">
+                                    <span asp-validation-for="Transaction.IdNumber"></span>
+                                    <label asp-for="Transaction.IdNumber">Policy Number</label>
+                                    <input asp-for="Transaction.IdNumber" class="form-control" id="policynumber1" placeholder="Enter policy number">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="Amount">Amount</label>
-                                    <input type="text" class="form-control" id="amount1" placeholder="Enter amount">
+                                    <span asp-validation-for="Transaction.Premium"></span>
+                                    <label asp-for="Transaction.Premium">Premium</label>
+                                    <input asp-for="Transaction.Premium" class="form-control" id="amount1" placeholder="Enter amount">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="ReceivedDate">Received Date</label>
+                                    <span asp-validation-for="Transaction.ReceivedDate"></span>
+                                    <label asp-for="Transaction.ReceivedDate">Received Date</label>
                                     <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control form-date" />
+                                        <input asp-for="Transaction.ReceivedDate" class="form-control form-date" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -308,15 +318,16 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="Comment">Comment</label>
-                                    <input type="text" class="form-control" id="comment1" placeholder="Enter comment" style="height:84px">
+                                    <span asp-validation-for="Transaction.Comment"></span>
+                                    <label asp-for="Transaction.Comment">Comment</label>
+                                    <input asp-for="Transaction.Comment" class="form-control" id="comment1" placeholder="Enter comment">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="InceptionDate">Inception Date</label>
+                                    <label asp-for="Transaction.InceptionDate">Inception Date</label>
                                     <div class='input-group date' id='datetimepicker2'>
-                                        <input type='text' class="form-control form-date" />
+                                        <input asp-for="Transaction.InceptionDate" class="form-control form-date" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -325,9 +336,9 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="BoundDate">Bound Date</label>
+                                    <label asp-for="Transaction.DateReceived">Bound Date</label>
                                     <div class='input-group date' id='datetimepicker3'>
-                                        <input type='text' class="form-control form-date" />
+                                        <input asp-for="Transaction.DateReceived" class="form-control form-date" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -348,8 +359,8 @@
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="priorityCheck">
-                                    <label class="form-check-label" for="gridCheck">
+                                    <input asp-for="Transaction.Priority" class="form-check-input" id="priorityCheck">
+                                    <label asp-for="Transaction.Priority" class="form-check-label" for="gridCheck">
                                         High priority
                                     </label>
                                 </div>
@@ -361,6 +372,7 @@
             </div>
         </div>
 
+        @{ var tempDateDemo = DateTime.Now;}
         <div class="col-lg-4">
             <div class="sidebar-nav-fixed pull-right affix">
                 <div class="row">
@@ -379,7 +391,7 @@
                                 <tr class="active">
                                     <td>123456</td>
                                     <td>EA1234PH</td>
-                                    <td>@DateTime.Now</td>
+                                    <td>@tempDateDemo</td>
                                     <td>Completed</td>
                                 </tr>
                             </tbody>
@@ -403,19 +415,19 @@
                                 <tr class="active">
                                     <td>123456</td>
                                     <td>EA1457PH</td>
-                                    <td>@DateTime.Now</td>
+                                    <td>@tempDateDemo</td>
                                     <td>Pending</td>
                                 </tr>
                                 <tr>
                                     <td>234567</td>
                                     <td>EA7894PH</td>
-                                    <td>@DateTime.Now</td>
+                                    <td>@tempDateDemo</td>
                                     <td>Pending</td>
                                 </tr>
                                 <tr class="active">
                                     <td>567894</td>
                                     <td>EA5555PH</td>
-                                    <td>@DateTime.Now</td>
+                                    <td>@tempDateDemo</td>
                                     <td>Pending</td>
                                 </tr>
                             </tbody>

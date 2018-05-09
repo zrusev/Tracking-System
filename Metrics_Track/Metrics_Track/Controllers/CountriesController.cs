@@ -34,7 +34,7 @@
             {
                 cvm.MiningList.Add(model);
             }
-
+            
             return View(cvm);
         }
 
@@ -58,11 +58,17 @@
                                    string insuredName, string tranRequestor, int originalId, short statusCode, short priority, string attachments,
                                    DateTime inceptionDate, DateTime dateReceived)
         {
+
+            if (!ModelState.IsValid)
+            {
+
+            }
+
             var identityId = this.transaction.AddTransaction(145, 15, processId, activityId, lobId, processId, processId, processId, receivedDate, startDate,
                                                             DateTime.Now, 1, comment, numberId, string.Empty, string.Empty, premium, "EUR",
                                                             string.Empty, string.Empty, 0, 1, 0, string.Empty, inceptionDate, dateReceived);
 
-            return Json(new { Status = "Transaction has been uploaded successfully!", newId = identityId });
+            return Json(new { newId = identityId });
         }
 
         public JsonResult GetMining(int id)
