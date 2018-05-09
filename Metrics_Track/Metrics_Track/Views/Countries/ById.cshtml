@@ -71,6 +71,10 @@
 
             $("#submittranform").submit(function (e) {
                 e.preventDefault();
+                $(this).find("[data-valmsg-replace]")
+                    .removeClass("field-validation-error")
+                    .addClass("field-validation-valid")
+                    .empty();
                 $(this).data("validator").settings.ignore = "";
                 if ($(this).valid()) {
                     $.ajax({
@@ -109,11 +113,11 @@
                     });
                 } else { 
                     var validator = $(this).validate();
-                    var outputText = '';
-                    $.each(validator.errorMap, function (index, value) {
-                        outputText += value + "\n";
+                    $.each(validator.errorList, function (key, value) {
+                        $errorSpan = $("span[data-valmsg-for='" + value.element.id.replace('_', '.') + "']");
+                        $errorSpan.html("<span style='color:red'>" + value.message + "</span>");
+                        $errorSpan.show();
                     });
-                    alert(outputText);
                 }
             });
 
@@ -297,12 +301,28 @@
                                 <div class="form-group">
                                     <span asp-validation-for="Transaction.IdCountry" class="text-danger"></span>
                                     <input asp-for="Transaction.IdCountry" type="hidden" name="CountrySelection" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
                                     <span asp-validation-for="Transaction.IdProcess" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" />
+                                    <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" />                                    
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
                                     <span asp-validation-for="Transaction.IdActivity" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" />
+                                    <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" />                                    
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
                                     <span asp-validation-for="Transaction.IdLob" class="text-danger"></span>
                                     <input asp-for="Transaction.IdLob" type="hidden" name="LobSelection" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
                                     <span asp-validation-for="Transaction.IdStatus" class="text-danger"></span>
                                     <input asp-for="Transaction.IdStatus" type="hidden" name="StatusSelection" />
                                 </div>
