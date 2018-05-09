@@ -71,7 +71,7 @@
 
             $("#submittranform").submit(function (e) {
                 e.preventDefault();
-                $(this).validate();
+                $(this).data("validator").settings.ignore = "";
                 if ($(this).valid()) {
                     $.ajax({
                         type: "Post",
@@ -83,14 +83,22 @@
                             lobId: $('input[name=LobSelection]').val(),
                             receivedDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
                             startDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
+                            statusId: $('input[name=StatusSelection]').val(),
                             comment: $("#comment1").val(),
                             numberId: $("#policynumber1").val(),
                             premium: $("#amount1").val(),
                             inceptionDate: ($("#datetimepicker2").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
                             dateReceived: ($("#datetimepicker3").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss")
                         },
-                        success: function (success) {
-                            alert(" New transaction id: " + success.newId)
+                        success: function (data) {
+                            if (data.success) {
+                                alert("New transaction id: " + data.newId);
+                            }
+                            else {
+                                $.each(data.errors, function (ind, err) {
+                                    alert(err);
+                                });
+                            }
                         },
                         error: function (ex) {
                             var r = jQuery.parseJSON(response.responseText);
@@ -99,6 +107,13 @@
                             alert("ExceptionType: " + r.ExceptionType);
                         }
                     });
+                } else { 
+                    var validator = $(this).validate();
+                    var outputText = '';
+                    $.each(validator.errorMap, function (index, value) {
+                        outputText += value + "\n";
+                    });
+                    alert(outputText);
                 }
             });
 
@@ -280,16 +295,16 @@
                         <form id="submittranform" method="post">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <input asp-for="Transaction.IdCountry" type="hidden" name="CountrySelection" value="" />
                                     <span asp-validation-for="Transaction.IdCountry" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" value="" />
+                                    <input asp-for="Transaction.IdCountry" type="hidden" name="CountrySelection" />
                                     <span asp-validation-for="Transaction.IdProcess" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" value="" />
+                                    <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" />
                                     <span asp-validation-for="Transaction.IdActivity" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdLob" type="hidden" name="LobSelection" value="" />
+                                    <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" />
                                     <span asp-validation-for="Transaction.IdLob" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdStatus" type="hidden" name="StatusSelection" value="" />
+                                    <input asp-for="Transaction.IdLob" type="hidden" name="LobSelection" />
                                     <span asp-validation-for="Transaction.IdStatus" class="text-danger"></span>
+                                    <input asp-for="Transaction.IdStatus" type="hidden" name="StatusSelection" />
                                 </div>
                             </div>
                             <div class="form-row">

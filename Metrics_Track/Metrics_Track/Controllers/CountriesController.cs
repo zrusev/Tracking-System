@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using System;
+    using System.Linq;
     public class CountriesController : Controller
     {   
         private readonly ICountry countries;
@@ -58,17 +59,16 @@
                                    string insuredName, string tranRequestor, int originalId, short statusCode, short priority, string attachments,
                                    DateTime inceptionDate, DateTime dateReceived)
         {
-
             if (!ModelState.IsValid)
             {
-
+                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() });
             }
 
             var identityId = this.transaction.AddTransaction(145, 15, processId, activityId, lobId, processId, processId, processId, receivedDate, startDate,
-                                                            DateTime.Now, 1, comment, numberId, string.Empty, string.Empty, premium, "EUR",
+                                                            DateTime.Now, statusId, comment, numberId, string.Empty, string.Empty, premium, "EUR",
                                                             string.Empty, string.Empty, 0, 1, 0, string.Empty, inceptionDate, dateReceived);
 
-            return Json(new { newId = identityId });
+            return Json(new { success = true, newId = identityId });
         }
 
         public JsonResult GetMining(int id)
