@@ -71,32 +71,35 @@
 
             $("#submittranform").submit(function (e) {
                 e.preventDefault();
-                $.ajax({
-                    type: "Post",
-                    url: '@Url.Action("SubmitTransaction")',
-                    dataType: "json",
-                    data: {
-                        processId: $('input[name=ProcessSelection]').val(),
-                        activityId: $('input[name=ActivitySelection]').val(),
-                        lobId: $('input[name=LobSelection]').val(),
-                        receivedDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
-                        startDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
-                        comment: $("#comment1").val(),
-                        numberId: $("#policynumber1").val(),
-                        premium: $("#amount1").val(),
-                        inceptionDate: ($("#datetimepicker2").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
-                        dateReceived: ($("#datetimepicker3").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss")
-                    },
-                    success: function (success) {
-                        alert(" New transaction id: " + success.newId)
-                    },
-                    error: function (ex) {
-                        var r = jQuery.parseJSON(response.responseText);
-                        alert("Message: " + r.Message);
-                        alert("StackTrace: " + r.StackTrace);
-                        alert("ExceptionType: " + r.ExceptionType);
-                    }
-                });
+                $(this).validate();
+                if ($(this).valid()) {
+                    $.ajax({
+                        type: "Post",
+                        url: '@Url.Action("SubmitTransaction")',
+                        dataType: "json",
+                        data: {
+                            processId: $('input[name=ProcessSelection]').val(),
+                            activityId: $('input[name=ActivitySelection]').val(),
+                            lobId: $('input[name=LobSelection]').val(),
+                            receivedDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
+                            startDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
+                            comment: $("#comment1").val(),
+                            numberId: $("#policynumber1").val(),
+                            premium: $("#amount1").val(),
+                            inceptionDate: ($("#datetimepicker2").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
+                            dateReceived: ($("#datetimepicker3").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss")
+                        },
+                        success: function (success) {
+                            alert(" New transaction id: " + success.newId)
+                        },
+                        error: function (ex) {
+                            var r = jQuery.parseJSON(response.responseText);
+                            alert("Message: " + r.Message);
+                            alert("StackTrace: " + r.StackTrace);
+                            alert("ExceptionType: " + r.ExceptionType);
+                        }
+                    });
+                }
             });
 
             $(function () {
@@ -269,7 +272,6 @@
                                 <option id=@status.IdMining value=@status.State>@status.State</option>
                             }
                         </select>
-                        @*<input class="btn btn-primary" name="submitButton" id="btnSave" value="Save" type="button">*@
                         <hr />
                     </div>
                 </div>
@@ -279,35 +281,35 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <input asp-for="Transaction.IdCountry" type="hidden" name="CountrySelection" value="" />
-                                    <span asp-validation-for="Transaction.IdCountry"></span>
+                                    <span asp-validation-for="Transaction.IdCountry" class="text-danger"></span>
                                     <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" value="" />
-                                    <span asp-validation-for="Transaction.IdProcess"></span>
+                                    <span asp-validation-for="Transaction.IdProcess" class="text-danger"></span>
                                     <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" value="" />
-                                    <span asp-validation-for="Transaction.IdActivity"></span>
+                                    <span asp-validation-for="Transaction.IdActivity" class="text-danger"></span>
                                     <input asp-for="Transaction.IdLob" type="hidden" name="LobSelection" value="" />
-                                    <span asp-validation-for="Transaction.IdLob"></span>
+                                    <span asp-validation-for="Transaction.IdLob" class="text-danger"></span>
                                     <input asp-for="Transaction.IdStatus" type="hidden" name="StatusSelection" value="" />
-                                    <span asp-validation-for="Transaction.IdStatus"></span>
+                                    <span asp-validation-for="Transaction.IdStatus" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <span asp-validation-for="Transaction.IdNumber"></span>
                                     <label asp-for="Transaction.IdNumber">Policy Number</label>
+                                    <span asp-validation-for="Transaction.IdNumber" class="text-danger"></span>
                                     <input asp-for="Transaction.IdNumber" class="form-control" id="policynumber1" placeholder="Enter policy number">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <span asp-validation-for="Transaction.Premium"></span>
                                     <label asp-for="Transaction.Premium">Premium</label>
+                                    <span asp-validation-for="Transaction.Premium" class="text-danger"></span>
                                     <input asp-for="Transaction.Premium" class="form-control" id="amount1" placeholder="Enter amount">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <span asp-validation-for="Transaction.ReceivedDate"></span>
                                     <label asp-for="Transaction.ReceivedDate">Received Date</label>
+                                    <span asp-validation-for="Transaction.ReceivedDate" class="text-danger"></span>
                                     <div class='input-group date' id='datetimepicker1'>
                                         <input asp-for="Transaction.ReceivedDate" class="form-control form-date" />
                                         <span class="input-group-addon">
@@ -317,15 +319,16 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group">
-                                    <span asp-validation-for="Transaction.Comment"></span>
+                                <div class="form-group">                                    
                                     <label asp-for="Transaction.Comment">Comment</label>
+                                    <span asp-validation-for="Transaction.Comment" class="text-danger"></span>
                                     <input asp-for="Transaction.Comment" class="form-control" id="comment1" placeholder="Enter comment">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label asp-for="Transaction.InceptionDate">Inception Date</label>
+                                    <span asp-validation-for="Transaction.InceptionDate" class="text-danger"></span>
                                     <div class='input-group date' id='datetimepicker2'>
                                         <input asp-for="Transaction.InceptionDate" class="form-control form-date" />
                                         <span class="input-group-addon">
@@ -337,6 +340,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label asp-for="Transaction.DateReceived">Bound Date</label>
+                                    <span asp-validation-for="Transaction.DateReceived" class="text-danger"></span>
                                     <div class='input-group date' id='datetimepicker3'>
                                         <input asp-for="Transaction.DateReceived" class="form-control form-date" />
                                         <span class="input-group-addon">
