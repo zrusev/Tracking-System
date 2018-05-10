@@ -1,6 +1,6 @@
 namespace Metrics_Track.Infrastructure.Extensions
 {
-    using Metrics_Track.Services.Services;
+    using Metrics_Track.Services.Contracts;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
     public static class EmailSenderExtensions

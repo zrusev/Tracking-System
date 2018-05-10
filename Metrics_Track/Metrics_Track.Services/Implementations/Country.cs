@@ -1,7 +1,13 @@
 ﻿namespace Metrics_Track.Services.Implementations
 {
+    using Contracts;
     using Metrics_Track.Data.Models;
-    using Services;
+    using Models.Activity;
+    using Models.Country;
+    using Models.Lob;
+    using Models.Process;
+    using Models.ProcessMap;
+    using Models.Status;
     using System.Collections.Generic;
     using System.Linq;
     public class Country : ICountry
@@ -12,7 +18,7 @@
         {
             this.db = db;
         }
-        public IEnumerable<CountryDataModel> ById(int id)
+        public IEnumerable<CountryModel> ById(int id)
         {
             var query = from trlUserCountry in this.db.TrelUserCountry
                         join tblCountry in this.db.TblCountry on trlUserCountry.IdCountry equals tblCountry.IdCountry into UserCountry_Table
@@ -48,7 +54,7 @@
                         join tblTowerCategory in this.db.TblTowerCategory on leftProcessTowerCategory.IdTowerCategory equals tblTowerCategory.IdTowerCategory into TowerCategory_Table
                             from leftTowerCategory in TowerCategory_Table.DefaultIfEmpty()
                         where leftLogin.IdLogin == id
-                        select new ProcessMapDataModel
+                        select new ProcessMapModel
                         {
                             IdCountry = leftUserCountry.IdCountry,
                             Country = leftUserCountry.Country,
@@ -72,7 +78,7 @@
                         };
 
 
-            List<CountryDataModel> countries = new List<CountryDataModel>();
+            List<CountryModel> countries = new List<CountryModel>();
             
             foreach (var item in query)
             {
@@ -89,7 +95,7 @@
                         //Add new LOB if missing
                         if (!countries[countryIndex].ProcessList[processIndex].LobList.Any(l => l.ID_Lob.Equals(item.IdLob)))
                         {
-                            countries[countryIndex].ProcessList[processIndex].LobList.Add(new LobDataModel
+                            countries[countryIndex].ProcessList[processIndex].LobList.Add(new LobModel
                             {
                                 ID_Lob = item.IdLob,
                                 Lob = item.Lob
@@ -99,7 +105,7 @@
                         //Add new activity if missing
                         if (!countries[countryIndex].ProcessList[processIndex].ActivityList.Any(a => a.ID_Activity.Equals(item.IdActivity)))
                         {
-                            countries[countryIndex].ProcessList[processIndex].ActivityList.Add(new ActivityDataModel
+                            countries[countryIndex].ProcessList[processIndex].ActivityList.Add(new ActivityModel
                             {
                                 ID_Activity = item.IdActivity,
                                 Activity = item.Activity
@@ -109,7 +115,7 @@
                         //Add new status if missing
                         if (!countries[countryIndex].ProcessList[processIndex].StatusList.Any(s => s.ID_Status.Equals(item.IdStatus)))
                         {
-                            countries[countryIndex].ProcessList[processIndex].StatusList.Add(new StatusDataModel
+                            countries[countryIndex].ProcessList[processIndex].StatusList.Add(new StatusModel
                             {
                                 ID_Status = item.IdStatus,
                                 Status = item.Status
@@ -119,7 +125,7 @@
                     else
                     {
                         //Add new process if missing
-                        countries[countryIndex].ProcessList.Add(new ProcessDataModel
+                        countries[countryIndex].ProcessList.Add(new ProcessModel
                         {
                             ID_Process = item.IdProcess,
                             Process = item._ProcessMap
@@ -129,41 +135,41 @@
                 else
                 {
                     //Add new country
-                    countries.Add(new CountryDataModel
+                    countries.Add(new CountryModel
                     {
                         ID_Country = item.IdCountry,
                         Country = item.Country,
-                        ProcessList = new List<ProcessDataModel>()
+                        ProcessList = new List<ProcessModel>()
                         {
                             //Add new process
-                            new ProcessDataModel
+                            new ProcessModel
                             {
                                 ID_Process = item.IdProcess,
                                 Process = item._ProcessMap,
                                 ActivityList =
-                                    new List<ActivityDataModel>()
+                                    new List<ActivityModel>()
                                     {
                                         //Add new activity
-                                        new ActivityDataModel
+                                        new ActivityModel
                                         {
                                             ID_Activity = item.IdActivity,
                                             Activity = item.Activity
                                         }
                                     },
                                 LobList =
-                                    new List<LobDataModel>()
+                                    new List<LobModel>()
                                     {
                                         //Add new lob
-                                        new LobDataModel
+                                        new LobModel
                                         {
                                             ID_Lob = item.IdLob,
                                             Lob = item.Lob
                                         }
                                     },
-                                StatusList = new List<StatusDataModel>()
+                                StatusList = new List<StatusModel>()
                                 {
                                     //Add new status
-                                    new StatusDataModel
+                                    new StatusModel
                                     {
                                         ID_Status = item.IdStatus,
                                         Status = item.Status

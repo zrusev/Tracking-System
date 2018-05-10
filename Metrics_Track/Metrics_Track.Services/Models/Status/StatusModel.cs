@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Data.Models
+﻿namespace Metrics_Track.Services.Models.Status
 {
-    public class StatusDataModel
+    public class StatusModel
     {
         public int ID_Status { get; set; }
 

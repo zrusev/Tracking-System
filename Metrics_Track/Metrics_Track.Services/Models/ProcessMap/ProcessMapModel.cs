@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Data.Models
+﻿namespace Metrics_Track.Services.Models.ProcessMap
 {
-    public class ProcessMapDataModel
+    public class ProcessMapModel
     {
         public int IdCountry { get; set; }
 

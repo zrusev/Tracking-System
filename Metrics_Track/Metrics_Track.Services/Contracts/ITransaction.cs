@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Services.Services
+﻿namespace Metrics_Track.Services.Contracts
 {
     using System;
     public interface ITransaction

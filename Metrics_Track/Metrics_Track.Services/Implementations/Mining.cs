@@ -1,7 +1,8 @@
 ﻿namespace Metrics_Track.Services.Implementations
 {
+    using Contracts;
     using Metrics_Track.Data.Models;
-    using Services;
+    using Models.Mining;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -30,11 +31,11 @@
             this.db.SaveChanges();
         }
 
-        public IEnumerable<MiningDataModel> ById(int id)
+        public IEnumerable<MiningModel> ById(int id)
         {
             var minings = this.db.TblMining
                         .Where(t => t.TrelUserMining.Any(i => i.IdLogin == id))
-                        .Select(m => new MiningDataModel
+                        .Select(m => new MiningModel
                         {
                             IdMining = m.IdMining,
                             State = m.State

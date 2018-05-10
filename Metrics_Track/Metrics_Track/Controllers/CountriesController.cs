@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Controllers
 {
-    using Metrics_Track.Services.Services;
+    using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using System;

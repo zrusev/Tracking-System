@@ -1,9 +1,8 @@
 ﻿namespace Metrics_Track.Services.Implementations
 {
+    using Contracts;
     using Metrics_Track.Data.Models;
-    using Services;
     using System;
-
     public class Transaction : ITransaction
     {
         private readonly TrackerDbContext db;

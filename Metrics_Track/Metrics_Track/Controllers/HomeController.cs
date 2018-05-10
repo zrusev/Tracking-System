@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Controllers
 {
-    using Metrics_Track.Data.Models;
+    using Metrics_Track.Models;
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
     public class HomeController : Controller

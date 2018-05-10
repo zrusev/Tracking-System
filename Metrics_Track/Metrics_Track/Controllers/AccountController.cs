@@ -1,7 +1,8 @@
 ﻿namespace Metrics_Track.Controllers
 {
     using Metrics_Track.Data.Models;
-    using Metrics_Track.Services.Services;
+    using Metrics_Track.Infrastructure.Extensions;
+    using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,6 @@
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using Metrics_Track.Infrastructure.Extensions;
 
     [Authorize]
     [Route("[controller]/[action]")]

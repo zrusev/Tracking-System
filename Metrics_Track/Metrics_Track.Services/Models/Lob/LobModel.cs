@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Data.Models
+﻿namespace Metrics_Track.Services.Models.Lob
 {
-    public class LobDataModel
+    public class LobModel
     {
         public int ID_Lob { get; set; }
 

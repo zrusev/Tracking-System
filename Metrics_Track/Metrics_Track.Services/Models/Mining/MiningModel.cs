@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Data.Models
+﻿namespace Metrics_Track.Services.Models.Mining
 {
-    public class MiningDataModel
+    public class MiningModel
     {
         public int IdMining { get; set; }
 

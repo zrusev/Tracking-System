@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Data.Models
+﻿namespace Metrics_Track.Services.Models.Activity
 {
-    public class ActivityDataModel
+    public class ActivityModel
     {
         public int ID_Activity { get; set; }
 

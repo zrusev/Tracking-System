@@ -1,9 +1,8 @@
-﻿namespace Metrics_Track.Data.Models
+﻿namespace Metrics_Track.Services.Models.Transaction
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-
-    public class TransactionDataModel
+    public class TransactionModel
     {
         public int TransactionId { get; set; }
 

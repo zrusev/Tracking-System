@@ -2,7 +2,7 @@
 {
     using Metrics_Track.Data.Models;
     using Metrics_Track.Services.Implementations;
-    using Metrics_Track.Services.Services;
+    using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -23,7 +23,11 @@
             services.AddDbContext<TrackerDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options =>  
+                     {options.Password.RequireUppercase = false;
+                      options.Password.RequireDigit = false;
+                      options.Password.RequireNonAlphanumeric = false;
+                      options.Password.RequireUppercase = false;})
                 .AddEntityFrameworkStores<TrackerDbContext>()
                 .AddDefaultTokenProviders();
 
