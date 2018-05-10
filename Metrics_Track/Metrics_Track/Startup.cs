@@ -9,6 +9,8 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Metrics_Track.Infrastructure.Extensions;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -55,6 +57,8 @@
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseAntiforgeryTokens();
 
             app.UseMvc(routes =>
             {

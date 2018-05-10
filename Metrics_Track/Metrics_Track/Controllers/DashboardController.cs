@@ -18,6 +18,7 @@
             this.transaction = transaction;
         }
 
+        [HttpGet]
         [Route("dashboard/users/{id}")]
         public IActionResult Users(int id)
         {
@@ -40,7 +41,6 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult UpdateStatus(string type, string comment)
         {
             int id = 145;
@@ -56,7 +56,6 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult SubmitTransaction(int processId, int activityId, int lobId,
                                    DateTime receivedDate, DateTime startDate, DateTime completeDate, int statusId, string comment,
                                    string numberId, string partnerId, string contactId, double premium, string currCode,
