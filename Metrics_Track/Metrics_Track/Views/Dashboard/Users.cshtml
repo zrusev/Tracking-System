@@ -76,12 +76,14 @@
                     .addClass("field-validation-valid")
                     .empty();
                 $(this).data("validator").settings.ignore = "";
+                var token = $('input[name="__RequestVerificationToken"]', $(this)).val();
                 if ($(this).valid()) {
                     $.ajax({
                         type: "Post",
                         url: '@Url.Action("SubmitTransaction")',
                         dataType: "json",
                         data: {
+                            __RequestVerificationToken: token,
                             processId: $('input[name=ProcessSelection]').val(),
                             activityId: $('input[name=ActivitySelection]').val(),
                             lobId: $('input[name=LobSelection]').val(),
@@ -130,11 +132,16 @@
 
         function UpdateStatus(activityType, activityComment) {
             $("#currentstatus").empty();
+            var token = $('input[name="__RequestVerificationToken"]', $("#submittranform")).val();
             $.ajax({
                 type: "Post",
                 url: '@Url.Action("UpdateStatus")',
                 dataType: "json",
-                data: { type: activityType, comment: activityComment },
+                data: {
+                    __RequestVerificationToken: token,
+                    type: activityType,
+                    comment: activityComment
+                },
                 success: onSuccess2,
                 error: function (ex) {
                     var r = jQuery.parseJSON(response.responseText);

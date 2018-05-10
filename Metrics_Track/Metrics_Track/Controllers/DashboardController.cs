@@ -5,21 +5,21 @@
     using Models;
     using System;
     using System.Linq;
-    public class CountriesController : Controller
+    public class DashboardController : Controller
     {   
         private readonly ICountry countries;
         private readonly IMining mining;
         private readonly ITransaction transaction;
 
-        public CountriesController(ICountry countries, IMining mining, ITransaction transaction)
+        public DashboardController(ICountry countries, IMining mining, ITransaction transaction)
         {
             this.countries = countries;
             this.mining = mining;
             this.transaction = transaction;
         }
 
-        [Route("Countries/ById/{id}")]
-        public IActionResult ById(int id)
+        [Route("dashboard/users/{id}")]
+        public IActionResult Users(int id)
         {
             var modelCountries = this.countries.ById(id);
             var modelMining = this.mining.ById(id);
@@ -39,6 +39,8 @@
             return View(cvm);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateStatus(string type, string comment)
         {
             int id = 145;
@@ -53,6 +55,8 @@
             return Json(new { Status = activityType });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult SubmitTransaction(int processId, int activityId, int lobId,
                                    DateTime receivedDate, DateTime startDate, DateTime completeDate, int statusId, string comment,
                                    string numberId, string partnerId, string contactId, double premium, string currCode,
