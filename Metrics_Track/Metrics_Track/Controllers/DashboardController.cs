@@ -5,11 +5,16 @@
     using Models;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
+
     public class DashboardController : Controller
     {   
         private readonly ICountry countries;
         private readonly IMining mining;
         private readonly ITransaction transaction;
+
+        private const int TestLoginID = 145;
+        private const string AppVersion = "3.0.0.0";
 
         public DashboardController(ICountry countries, IMining mining, ITransaction transaction)
         {
@@ -41,14 +46,14 @@
         }
 
         [HttpPost]
-        public IActionResult UpdateStatus(string type, string comment)
+        public async Task<IActionResult> UpdateStatus(string type, string comment)
         {
-            int id = 145;
+            int id = TestLoginID;
             string activityType = type;
             DateTime stamp = DateTime.Now;
             string activityCommment = comment;
-            short sandbox = 1;
-            string version = null;
+            short sandbox = await this.mining.GetUserSandboxAsync(id);
+            string version = AppVersion;
 
             this.mining.AddUserActivity(id, activityType, stamp, activityCommment, sandbox, version);
 
@@ -56,20 +61,21 @@
         }
 
         [HttpPost]
-        public IActionResult SubmitTransaction(int processId, int activityId, int lobId,
-                                   DateTime receivedDate, DateTime startDate, DateTime completeDate, int statusId, string comment,
-                                   string numberId, string partnerId, string contactId, double premium, string currCode,
-                                   string insuredName, string tranRequestor, int originalId, short statusCode, short priority, string attachments,
-                                   DateTime inceptionDate, DateTime dateReceived)
+        public IActionResult SubmitTransaction(int countryId, int processId, int activityId, int lobId,
+                                               DateTime receivedDate, DateTime startDate, DateTime completeDate, int statusId, string comment,
+                                               string numberId, string partnerId, string contactId, double premium, string currCode,
+                                               string insuredName, string tranRequestor, int originalId, short statusCode, short priority, string attachments,
+                                               DateTime inceptionDate, DateTime dateReceived)
         {
             if (!ModelState.IsValid)
             {
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() });
             }
 
-            var identityId = this.transaction.AddTransaction(145, 15, processId, activityId, lobId, processId, processId, processId, receivedDate, startDate,
-                                                            DateTime.Now, statusId, comment, numberId, string.Empty, string.Empty, premium, "EUR",
-                                                            string.Empty, string.Empty, 0, 1, 0, string.Empty, inceptionDate, dateReceived);
+            var identityId = this.transaction.AddTransaction(TestLoginID, countryId, processId, activityId, lobId, processId, processId, processId, 
+                                                            receivedDate, startDate, DateTime.Now, statusId, comment, numberId, partnerId,
+                                                            contactId, premium, currCode, insuredName, tranRequestor, originalId, 1, 0, attachments, 
+                                                            inceptionDate, dateReceived);
 
             return Json(new { success = true, newId = identityId });
         }

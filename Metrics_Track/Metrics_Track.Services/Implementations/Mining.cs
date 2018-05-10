@@ -6,6 +6,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     public class Mining : IMining
     {
         private readonly TrackerDbContext db;
@@ -43,6 +44,22 @@
                         .ToList();
 
             return minings;
+        }
+
+        public Task<short> GetUserSandboxAsync(int id) {
+
+            TaskCompletionSource<short> tcs = new TaskCompletionSource<short>();
+
+            Task.Run(() =>
+            {
+                short result = this.db.TblLogin
+                              .Where(u => u.IdLogin == id)
+                              .Select(s => s.Sandbox)
+                              .FirstOrDefault();
+                tcs.SetResult(result);
+            });
+
+            return tcs.Task;
         }
     }
 }
