@@ -132,7 +132,6 @@
         });
 
         function UpdateStatus(activityType, activityComment) {
-            $("#currentstatus").empty();
             var token = $('input[name="__RequestVerificationToken"]', $("#submittranform")).val();
             $.ajax({
                 type: "Post",
@@ -143,7 +142,9 @@
                     type: activityType,
                     comment: activityComment
                 },
-                success: onSuccess2,
+                success: function (response) {
+                    document.getElementById("currentstatus").innerHTML = response.status;
+                },
                 error: function (ex) {
                     var r = jQuery.parseJSON(response.responseText);
                     alert("Message: " + r.Message);
@@ -153,11 +154,7 @@
             });
             return false;
         }
-
-        function onSuccess2(response) {
-            $("#currentstatus").append("<span>" + response.status + "</span>");
-        }
-
+        
         function LoadData() {
             $("#tblMining tbody tr").remove();
             $.ajax({
@@ -166,7 +163,16 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: { id: 145 },
-                success: onSuccess,
+                success: function (ajaxResponse) {
+                    var rows = '';
+                    $.each(ajaxResponse, function (index, ajaxResponse) {
+                        rows = "<tr>"
+                            + "<td>" + ajaxResponse.idMining + "</td>"
+                            + "<td>" + ajaxResponse.state + "</td>"
+                            + "</tr>";
+                        $('#tblMining tbody').append(rows);
+                    })
+                },
                 error: function (ex) {
                     var r = jQuery.parseJSON(response.responseText);
                     alert("Message: " + r.Message);
@@ -176,18 +182,7 @@
             });
             return false;
          }
-
-        function onSuccess(ajaxResponse) {
-            var rows = '';
-            $.each(ajaxResponse, function (index, ajaxResponse) {
-                rows = "<tr>"
-                    + "<td>" + ajaxResponse.idMining + "</td>"
-                    + "<td>" + ajaxResponse.state + "</td>"
-                    + "</tr>";
-                $('#tblMining tbody').append(rows);
-            })
-        }
-
+        
         function GetTokens() {
             var countryId = parseInt($('#country .in').attr("id").split("-")[1]);
             var processId = parseInt($('#process' + '-' + countryId + ' .in').attr("id").split("-")[1]);
@@ -198,83 +193,80 @@
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <p>&nbsp;</p>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="panel-group" id="country">
-                @foreach (var country in Model.CountryList)
-                {
-                    <div class="panel panel-default">
-                        <div class="panel-heading" style="background-color:#D1D0DE">
-                            <h4 class="panel-title">
-                                <a class="list-group-item" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold; cursor:default">@country.Country</a>
-                            </h4>
-                        </div>
-                        <div id="country-@country.ID_Country" class="panel-collapse collapse">
-                            <div class="panel-body" style="background-color:#D1D0DE">
-                                <div class="
-                                     " id="process-@country.ID_Country">
-                                    <div class="panel panel-default">
-                                        @foreach (var process in country.ProcessList)
-                                        {
-                                            <div class="panel">
-                                                <a class="list-group-item small" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4; padding-bottom: 5px; padding-top: 5px; cursor:default">@process.Process</a>
-                                            </div>
+<div class="row" style="padding-top:20px">
+    <div class="col-lg-4">
+        <div class="panel-group" id="country">
+            @foreach (var country in Model.CountryList)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color:#D1D0DE">
+                        <h4 class="panel-title">
+                            <a class="list-group-item" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold; cursor:default">@country.Country</a>
+                        </h4>
+                    </div>
+                    <div id="country-@country.ID_Country" class="panel-collapse collapse">
+                        <div class="panel-body" style="background-color:#D1D0DE">
+                            <div class="
+                                 " id="process-@country.ID_Country">
+                                <div class="panel panel-default">
+                                    @foreach (var process in country.ProcessList)
+                                    {
+                                        <div class="panel">
+                                            <a class="list-group-item small" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4; padding-bottom: 5px; padding-top: 5px; cursor:default">@process.Process</a>
+                                        </div>
 
-                                            <div class="panel-collapse collapse" id="process-@process.ID_Process">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-sm-4">
-                                                            <h6>Line of business</h6>
-                                                            <div class="btn-group-vertical center-block" data-toggle="buttons" id="Lob">
-                                                                @foreach (var lob in process.LobList)
-                                                                {
-                                                                    <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
-                                                                        <input class="form-check-label" type="radio" autocomplete="off" id="@lob.ID_Lob">@lob.Lob
-                                                                    </label>
-                                                                }
-                                                            </div>
+                                        <div class="panel-collapse collapse" id="process-@process.ID_Process">
+                                            <div class="panel-body">
+                                                <div class="row" style="text-align:center">
+                                                    <div class="col-sm-4">
+                                                        <h6>Line of business</h6>
+                                                        <div class="btn-group-vertical center-block" data-toggle="buttons" id="Lob">
+                                                            @foreach (var lob in process.LobList)
+                                                            {
+                                                                <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
+                                                                    <input class="form-check-label" type="radio" autocomplete="off" id="@lob.ID_Lob">@lob.Lob
+                                                                </label>
+                                                            }
                                                         </div>
-                                                        <div class="col-sm-4">
-                                                            <h6>Activity</h6>
-                                                            <div class="btn-group-vertical center-block" data-toggle="buttons" id="Activity">
-                                                                @foreach (var activity in process.ActivityList)
-                                                                {
-                                                                    <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
-                                                                        <input class="form-check-label" type="radio" autocomplete="off" id="@activity.ID_Activity">@activity.Activity
-                                                                    </label>
-                                                                }
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <h6>Activity</h6>
+                                                        <div class="btn-group-vertical center-block" data-toggle="buttons" id="Activity">
+                                                            @foreach (var activity in process.ActivityList)
+                                                            {
+                                                                <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
+                                                                    <input class="form-check-label" type="radio" autocomplete="off" id="@activity.ID_Activity">@activity.Activity
+                                                                </label>
+                                                            }
                                                         </div>
-                                                        <div class="col-sm-4">
-                                                            <h6>Status</h6>
-                                                            <div class="btn-group-vertical center-block" data-toggle="buttons" id="Status">
-                                                                @foreach (var status in process.StatusList)
-                                                                {
-                                                                    <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
-                                                                        <input class="form-check-label" type="radio" autocomplete="off" id="@status.ID_Status">@status.Status
-                                                                    </label>
-                                                                }
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <h6>Status</h6>
+                                                        <div class="btn-group-vertical center-block" data-toggle="buttons" id="Status">
+                                                            @foreach (var status in process.StatusList)
+                                                            {
+                                                                <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
+                                                                    <input class="form-check-label" type="radio" autocomplete="off" id="@status.ID_Status">@status.Status
+                                                                </label>
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        }
-                                    </div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
-                }
-            </div>
+                </div>
+            }
         </div>
+    </div>
 
-        <div class="col-lg-4">
-            <div class="sidebar-nav-fixed pull-right affix">
+    <div class="col-lg-4">
+        <div class="sidebar-nav-fixed pull-right affix">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="panel-heading" style="background-color:#D1D0DE">
@@ -286,11 +278,15 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-4" style="padding-top:20px">
                         <label>Update status</label>
                     </div>
                 </div>
+            </div>
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-4">
                         <select id="useractivity" style="width:100%; height:30px">
@@ -302,6 +298,8 @@
                         <hr />
                     </div>
                 </div>
+            </div>
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-4">
                         <form id="submittranform" method="post">
@@ -314,13 +312,13 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <span asp-validation-for="Transaction.IdProcess" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" />                                    
+                                    <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" />
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <span asp-validation-for="Transaction.IdActivity" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" />                                    
+                                    <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" />
                                 </div>
                             </div>
                             <div class="form-row">
@@ -362,7 +360,7 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group">                                    
+                                <div class="form-group">
                                     <label asp-for="Transaction.Comment">Comment</label>
                                     <span asp-validation-for="Transaction.Comment" class="text-danger"></span>
                                     <input asp-for="Transaction.Comment" class="form-control" id="comment1" placeholder="Enter comment">
@@ -418,71 +416,98 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        @{ var tempDateDemo = DateTime.Now;}
-        <div class="col-lg-4">
-            <div class="sidebar-nav-fixed pull-right affix">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <h4>My previous transaction</h4>
-                        <table class="table table-bordered table-condensed">
-                            <thead>
-                                <tr style="background-color:#D1D0DE">
-                                    <th>Transaction ID</th>
-                                    <th>Policy Number</th>
-                                    <th>Received Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="active">
-                                    <td>123456</td>
-                                    <td>EA1234PH</td>
-                                    <td>@tempDateDemo</td>
-                                    <td>Completed</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    @{ var tempDateDemo = DateTime.Now;}
+    <div class="col-lg-4">
+        <div class="sidebar-nav-fixed pull-right affix">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h4>My previous transaction</h4>
+                    <table class="table table-bordered table-condensed transaction">
+                        <thead>
+                            <tr style="background-color:#D1D0DE">
+                                <th class="row-process">Process</th>
+                                <th class="row-lob">LOB</th>
+                                <th class="row-premium">Premium</th>
+                                <th class="row-received">Received Date</th>
+                                <th class="row-docId">Doc ID</th>
+                                <th class="row-status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="active">
+                                <td>ProcessName</td>
+                                <td>LOBName</td>
+                                <td>1234</td>
+                                <td>@tempDateDemo</td>
+                                <td>123456</td>
+                                <td>Completed</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-lg-4">
-                        <h4>My pending transactions</h4>
-                        <table class="table table-bordered table-condensed">
-                            <thead>
-                                <tr style="background-color:#D1D0DE">
-                                    <th>Transaction ID</th>
-                                    <th>Policy Number</th>
-                                    <th>Received Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="active">
-                                    <td>123456</td>
-                                    <td>EA1457PH</td>
-                                    <td>@tempDateDemo</td>
-                                    <td>Pending</td>
-                                </tr>
-                                <tr>
-                                    <td>234567</td>
-                                    <td>EA7894PH</td>
-                                    <td>@tempDateDemo</td>
-                                    <td>Pending</td>
-                                </tr>
-                                <tr class="active">
-                                    <td>567894</td>
-                                    <td>EA5555PH</td>
-                                    <td>@tempDateDemo</td>
-                                    <td>Pending</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <h4>My pending transactions</h4>
+                    <table class="table table-bordered table-condensed table-hover transaction">
+                        <thead>
+                            <tr style="background-color:#D1D0DE">
+                                <th class="row-process">Process</th>
+                                <th class="row-lob">LOB</th>
+                                <th class="row-premium">Premium</th>
+                                <th class="row-received">Received Date</th>
+                                <th class="row-docId">Doc ID</th>
+                                <th class="row-status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="active">
+                                <td>ProcessName</td>
+                                <td>LOBName</td>
+                                <td>1234</td>
+                                <td>@tempDateDemo</td>
+                                <td>123456</td>
+                                <td>Completed</td>
+                            </tr>
+                            <tr>
+                                <td>ProcessName</td>
+                                <td>LOBName</td>
+                                <td>1234</td>
+                                <td>@tempDateDemo</td>
+                                <td>123456</td>
+                                <td>Completed</td>
+                            </tr>
+                            <tr class="active">
+                                <td>ProcessName</td>
+                                <td>LOBName</td>
+                                <td>1234</td>
+                                <td>@tempDateDemo</td>
+                                <td>123456</td>
+                                <td>Completed</td>
+                            </tr>
+                            <tr>
+                                <td>ProcessName</td>
+                                <td>LOBName</td>
+                                <td>1234</td>
+                                <td>@tempDateDemo</td>
+                                <td>123456</td>
+                                <td>Completed</td>
+                            </tr>
+                            <tr class="active">
+                                <td>ProcessName</td>
+                                <td>LOBName</td>
+                                <td>1234</td>
+                                <td>@tempDateDemo</td>
+                                <td>123456</td>
+                                <td>Completed</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-
     </div>
 </div>

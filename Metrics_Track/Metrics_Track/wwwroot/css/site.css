@@ -50,4 +50,44 @@
     width: 100%;
 }
 
+.transaction {
+    font-size: 9px;
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+}
 
+.transaction thead {
+    font-size: 11px;
+}
+
+.transaction td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Column widths are based on these cells */
+.row-process {
+    width: 20%;
+}
+
+.row-lob {
+    width: 15%;
+}
+
+.row-premium {
+    width: 15%;
+}
+
+.row-received {
+    width: 25%;
+}
+
+.row-docId {
+    width: 10%;
+}
+
+.row-status {
+    width: 15%;
+}
