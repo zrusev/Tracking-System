@@ -51,7 +51,7 @@
 }
 
 .transaction {
-    font-size: 9px;
+    font-size: 11px;
     table-layout: fixed;
     width: 100%;
     white-space: nowrap;
@@ -67,7 +67,6 @@
     text-overflow: ellipsis;
 }
 
-/* Column widths are based on these cells */
 .row-process {
     width: 20%;
 }
@@ -90,4 +89,14 @@
 
 .row-status {
     width: 15%;
+}
+
+.dashboard {
+    padding-top: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.panel-height {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }

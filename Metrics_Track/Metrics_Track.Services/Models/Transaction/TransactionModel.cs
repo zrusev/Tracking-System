@@ -27,6 +27,8 @@
         public int? IdTower { get; set; }
 
         [Required(ErrorMessage = "Received date is required.")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd hh:mm:ss tt}")]
         public DateTime ReceivedDate { get; set; }
 
         public DateTime? StartDate { get; set; }
