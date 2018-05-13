@@ -27,8 +27,7 @@
         public int? IdTower { get; set; }
 
         [Required(ErrorMessage = "Received date is required.")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd hh:mm:ss tt}")]
+        [DataType(DataType.Text)]
         public DateTime ReceivedDate { get; set; }
 
         public DateTime? StartDate { get; set; }
@@ -79,8 +78,10 @@
 
         public DateTime? QualityInspectionDate { get; set; }
 
+        [DataType(DataType.Text)]
         public DateTime? InceptionDate { get; set; }
 
+        [DataType(DataType.Text)]
         public DateTime? DateReceived { get; set; }
 
         public double? IdleHours { get; set; }
