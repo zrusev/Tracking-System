@@ -1,15 +1,14 @@
 ﻿namespace Metrics_Track
 {
+    using AutoMapper;
     using Metrics_Track.Data.Models;
-    using Metrics_Track.Services.Implementations;
-    using Metrics_Track.Services.Contracts;
+    using Metrics_Track.Infrastructure.Extensions;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Metrics_Track.Infrastructure.Extensions;
 
     public class Startup
     {
@@ -33,16 +32,17 @@
                 .AddEntityFrameworkStores<TrackerDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<ICountry, Country>();
-            services.AddTransient<IMining, Mining>();
-            services.AddTransient<ITransaction, Transaction>();
+            services.AddAutoMapper();
+
+            services.AddDomainServices();
 
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseDatabaseMigration();
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
