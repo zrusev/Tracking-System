@@ -20,6 +20,7 @@
         public short Sandbox { get; set; }
         public string Site { get; set; }
         public int? SsphIdUser { get; set; }
+
         public ICollection<tbl_UserActivity> TblUserActivity { get; set; }
         public ICollection<tbl_VolumeMain> TblVolumeMain { get; set; }
         public ICollection<trel_UserCountry> TrelUserCountry { get; set; }

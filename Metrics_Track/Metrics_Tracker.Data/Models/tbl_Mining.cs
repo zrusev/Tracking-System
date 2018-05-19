@@ -5,11 +5,13 @@
     {
         public tbl_Mining()
         {
-            TrelUserMining = new HashSet<trel_UserMining>();
+            this.TrelUserMining = new List<trel_UserMining>();
+            this.Agents = new List<trel_AgentMining>();
         }
 
         public int IdMining { get; set; }
         public string State { get; set; }
-        public ICollection<trel_UserMining> TrelUserMining { get; set; }
+        public List<trel_UserMining> TrelUserMining { get; set; }
+        public List<trel_AgentMining> Agents { get; set; }
     }
 }

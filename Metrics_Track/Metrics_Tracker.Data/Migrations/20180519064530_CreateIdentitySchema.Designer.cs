@@ -8,7 +8,7 @@
     using System;
 
     [DbContext(typeof(TrackerDbContext))]
-    [Migration("00000000000000_CreateIdentitySchema")]
+    [Migration("20180519064530_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

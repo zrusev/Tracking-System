@@ -11,6 +11,7 @@
 
         public int IdStatus { get; set; }
         public string Status { get; set; }
+
         public ICollection<tbl_VolumeMain> TblVolumeMain { get; set; }
         public ICollection<trel_ProcessStatus> TrelProcessStatus { get; set; }
     }

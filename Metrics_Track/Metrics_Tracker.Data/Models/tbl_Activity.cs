@@ -11,6 +11,7 @@
 
         public int IdActivity { get; set; }
         public string Activity { get; set; }
+
         public ICollection<tbl_VolumeMain> TblVolumeMain { get; set; }
         public ICollection<trel_ProcessActivity> TrelProcessActivity { get; set; }
     }

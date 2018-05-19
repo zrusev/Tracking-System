@@ -17,6 +17,7 @@
         public string ProductLine2 { get; set; }
         public string ProductLine3 { get; set; }
         public int? SpphIdProduct { get; set; }
+
         public ICollection<tbl_VolumeMain> TblVolumeMain { get; set; }
         public ICollection<trel_ProcessLob> TrelProcessLob { get; set; }
     }

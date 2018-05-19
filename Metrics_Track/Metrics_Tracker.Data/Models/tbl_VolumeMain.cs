@@ -37,8 +37,9 @@
         public string QualityReviewer { get; set; }
         public DateTime? QualityInspectionDate { get; set; }
         public DateTime? InceptionDate { get; set; }
-        public DateTime? DateReceived { get; set; }
+        public DateTime? DateReceivedInAig { get; set; }
         public double? IdleHours { get; set; }
+
         public tbl_Activity IdActivityNavigation { get; set; }
         public tbl_Country IdCountryNavigation { get; set; }
         public tbl_Division IdDivisionNavigation { get; set; }

@@ -11,6 +11,7 @@
 
         public int IdDivision { get; set; }
         public string Division { get; set; }
+
         public ICollection<tbl_VolumeMain> TblVolumeMain { get; set; }
         public ICollection<trel_ProcessDivision> TrelProcessDivision { get; set; }
     }

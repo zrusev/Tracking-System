@@ -10,43 +10,37 @@
         {
         }
 
-        public virtual DbSet<tbl_HolidayTable> HolidayTable { get; set; }
-        public virtual DbSet<tbl_Activity> TblActivity { get; set; }
-        public virtual DbSet<tbl_Country> TblCountry { get; set; }
-        public virtual DbSet<tbl_Division> TblDivision { get; set; }
-        public virtual DbSet<tbl_InternalErrorsLog> TblInternalErrorsLog { get; set; }
-        public virtual DbSet<tbl_L2Id> TblL2Id { get; set; }
-        public virtual DbSet<tbl_Lob> TblLob { get; set; }
-        public virtual DbSet<tbl_Login> TblLogin { get; set; }
-        public virtual DbSet<tbl_Mining> TblMining { get; set; }
-        public virtual DbSet<tbl_Objects> TblObjects { get; set; }
-        public virtual DbSet<tbl_Process> TblProcess { get; set; }
-        public virtual DbSet<tbl_ReportingUsers> TblReportingUsers { get; set; }
-        public virtual DbSet<tbl_Specific> TblSpecific { get; set; }
-        public virtual DbSet<tbl_Status> TblStatus { get; set; }
-        public virtual DbSet<tbl_Tower> TblTower { get; set; }
-        public virtual DbSet<tbl_TowerCategory> TblTowerCategory { get; set; }
-        public virtual DbSet<tbl_TrackerVer> TblTrackerVer { get; set; }
-        public virtual DbSet<tbl_UserActivity> TblUserActivity { get; set; }
-        public virtual DbSet<tbl_VolumeMain> TblVolumeMain { get; set; }
-        public virtual DbSet<trel_CountryProcess> TrelCountryProcess { get; set; }
-        public virtual DbSet<trel_ProcessActivity> TrelProcessActivity { get; set; }
-        public virtual DbSet<trel_ProcessDivision> TrelProcessDivision { get; set; }
-        public virtual DbSet<trel_ProcessLob> TrelProcessLob { get; set; }
-        public virtual DbSet<trel_ProcessStatus> TrelProcessStatus { get; set; }
-        public virtual DbSet<trel_ProcessTower> TrelProcessTower { get; set; }
-        public virtual DbSet<trel_ProcessTowerCategory> TrelProcessTowerCategory { get; set; }
-        public virtual DbSet<trel_UserCountry> TrelUserCountry { get; set; }
-        public virtual DbSet<trel_UserMining> TrelUserMining { get; set; }
-
-        // Unable to generate entity type for table 'CPS.tbl_Process_Taxonomy'. Please see the warning messages.
-        // Unable to generate entity type for table 'CPS.tbl_Reporting_Log'. Please see the warning messages.
-        // Unable to generate entity type for table 'CPS.tbl_Reporting_Ver'. Please see the warning messages.
-        // Unable to generate entity type for table 'CPS.tbl_Objects_Backup_20180221'. Please see the warning messages.
-        // Unable to generate entity type for table 'CPS.STG_Quality_Integration'. Please see the warning messages.
-        // Unable to generate entity type for table 'CPS.tbl_Audit_Corrections'. Please see the warning messages.
-        // Unable to generate entity type for table 'CPS.tbl_Level2'. Please see the warning messages.
-        // Unable to generate entity type for table 'CPS.tbl_Precalc_6mnt_AHT'. Please see the warning messages.
+        public DbSet<tbl_HolidayTable> HolidayTable { get; set; }
+        public DbSet<tbl_Activity> TblActivity { get; set; }
+        public DbSet<tbl_Country> TblCountry { get; set; }
+        public DbSet<tbl_Division> TblDivision { get; set; }
+        public DbSet<tbl_InternalErrorsLog> TblInternalErrorsLog { get; set; }
+        public DbSet<tbl_L2Id> TblL2Id { get; set; }
+        public DbSet<tbl_Lob> TblLob { get; set; }
+        public DbSet<tbl_Login> TblLogin { get; set; }
+        public DbSet<tbl_Mining> TblMining { get; set; }
+        public DbSet<tbl_Objects> TblObjects { get; set; }
+        public DbSet<tbl_Process> TblProcess { get; set; }
+        public DbSet<tbl_ReportingUsers> TblReportingUsers { get; set; }
+        public DbSet<tbl_Specific> TblSpecific { get; set; }
+        public DbSet<tbl_Status> TblStatus { get; set; }
+        public DbSet<tbl_Tower> TblTower { get; set; }
+        public DbSet<tbl_TowerCategory> TblTowerCategory { get; set; }
+        public DbSet<tbl_TrackerVer> TblTrackerVer { get; set; }
+        public DbSet<tbl_UserActivity> TblUserActivity { get; set; }
+        public DbSet<tbl_VolumeMain> TblVolumeMain { get; set; }
+        public DbSet<trel_CountryProcess> TrelCountryProcess { get; set; }
+        public DbSet<trel_ProcessActivity> TrelProcessActivity { get; set; }
+        public DbSet<trel_ProcessDivision> TrelProcessDivision { get; set; }
+        public DbSet<trel_ProcessLob> TrelProcessLob { get; set; }
+        public DbSet<trel_ProcessStatus> TrelProcessStatus { get; set; }
+        public DbSet<trel_ProcessTower> TrelProcessTower { get; set; }
+        public DbSet<trel_ProcessTowerCategory> TrelProcessTowerCategory { get; set; }
+        public DbSet<trel_UserCountry> TrelUserCountry { get; set; }
+        public DbSet<trel_UserMining> TrelUserMining { get; set; }
+        public DbSet<tbl_QualityIntegration> TblQualityIntegration { get; set; }
+        public DbSet<trel_AgentCountry> TrelAgentCountry { get; set; }
+        public DbSet<trel_AgentMining> Trel_AgentMining { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -297,6 +291,23 @@
                 entity.Property(e => e.SpphIdProcess).HasColumnName("SPPH_ID_PROCESS");
             });
 
+            builder.Entity<tbl_QualityIntegration>(entity =>
+            {
+                entity.ToTable("tbl_Quality_Integration", "CPS");
+
+                entity.HasIndex(e => e.TransactionId)
+                    .HasName("C_Unique_Transaction_ID")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.QualityPtsScored).HasColumnName("Quality_Pts_Scored");
+
+                entity.Property(e => e.QualityPtsTotal).HasColumnName("Quality_Pts_Total");
+
+                entity.Property(e => e.TransactionId).HasColumnName("Transaction_ID");
+            });
+
             builder.Entity<tbl_ReportingUsers>(entity =>
             {
                 entity.HasKey(e => e.IdUser);
@@ -423,8 +434,8 @@
                     .HasColumnName("Currency_Code")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.DateReceived)
-                    .HasColumnName("Date_Received")
+                entity.Property(e => e.DateReceivedInAig)
+                    .HasColumnName("Date_Received_in_AIG")
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.IdActivity).HasColumnName("ID_Activity");
@@ -754,6 +765,36 @@
                     .WithMany(p => p.TrelUserMining)
                     .HasForeignKey(d => d.IdMining)
                     .HasConstraintName("FK_trel_UserMining_tbl_Mining");
+            });
+
+            builder.Entity<trel_AgentCountry>(entity =>
+            {
+                entity.HasKey(i => new { i.IdAgent, i.IdCountry });
+
+                entity.ToTable("trel_AgentCountry", "CPS");
+
+                entity.HasOne(a => a.Country)
+                    .WithMany(c => c.Agents)
+                    .HasForeignKey(a => a.IdCountry);
+
+                entity.HasOne(c => c.Agent)
+                    .WithMany(a => a.Countries)
+                    .HasForeignKey(c => c.IdAgent);
+            });
+
+            builder.Entity<trel_AgentMining>(entity =>
+            {
+                entity.HasKey(i => new { i.IdAgent, i.IdMining });
+
+                entity.ToTable("trel_AgentMining", "CPS");
+
+                entity.HasOne(m => m.Agent)
+                    .WithMany(a => a.Minings)
+                    .HasForeignKey(m => m.IdAgent);
+
+                entity.HasOne(a => a.Mining)
+                    .WithMany(m => m.Agents)
+                    .HasForeignKey(a => a.IdMining);
             });
 
             base.OnModelCreating(builder);

@@ -45,7 +45,7 @@
                 Priority = priority,
                 Attachments = attachments,
                 InceptionDate = inceptionDate,
-                DateReceived = dateReceived
+                DateReceivedInAig = dateReceived
             };
 
             this.db.TblVolumeMain.Add(currentTransaction);

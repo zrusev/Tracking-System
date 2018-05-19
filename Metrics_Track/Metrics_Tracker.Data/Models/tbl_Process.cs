@@ -28,6 +28,7 @@
         public string NiceQueue { get; set; }
         public string Group { get; set; }
         public int? SpphIdProcess { get; set; }
+
         public ICollection<tbl_VolumeMain> TblVolumeMain { get; set; }
         public ICollection<trel_CountryProcess> TrelCountryProcess { get; set; }
         public ICollection<trel_ProcessActivity> TrelProcessActivity { get; set; }

@@ -11,6 +11,7 @@
 
         public int IdTower { get; set; }
         public string Tower { get; set; }
+
         public ICollection<tbl_VolumeMain> TblVolumeMain { get; set; }
         public ICollection<trel_ProcessTower> TrelProcessTower { get; set; }
     }
