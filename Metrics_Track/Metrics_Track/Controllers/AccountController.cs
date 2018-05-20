@@ -7,9 +7,12 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Logging;
     using Models.AccountViewModels;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -21,17 +24,20 @@
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ICountry _country;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ICountry country)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _country = country;
         }
 
         [TempData]
@@ -58,7 +64,8 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -205,8 +212,15 @@
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
+            var countries = _country.All();
+
+            var viewModel = new RegisterViewModel
+            {
+                Countries = GetCountriesListItems()
+            };
+
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -217,7 +231,14 @@
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var listOfCountries = new List<trel_AgentCountry>();
+                foreach (var item in model.IdCountries)
+                {
+                    var country = new trel_AgentCountry { IdCountry = item };
+                    listOfCountries.Add(country);
+                }
+                
+                var user = new User { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Countries = listOfCountries };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -234,9 +255,16 @@
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
+            model.Countries = GetCountriesListItems();
             return View(model);
         }
+
+        private IEnumerable<SelectListItem> GetCountriesListItems()
+            => _country.All().Select(c => new SelectListItem
+            {
+                Value = c.ID_Country.ToString(),
+                Text = c.Country
+            });
 
         [HttpPost]
         [ValidateAntiForgeryToken]

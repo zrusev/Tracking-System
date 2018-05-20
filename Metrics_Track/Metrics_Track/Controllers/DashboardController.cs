@@ -6,29 +6,40 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Authorization;
+    using Metrics_Track.Data.Models;
 
     public class DashboardController : Controller
     {   
         private readonly ICountry countries;
         private readonly IMining mining;
         private readonly ITransaction transaction;
+        private readonly UserManager<User> userManager;
 
         private const int TestLoginID = 145;
         private const string AppVersion = "3.0.0.0";
 
-        public DashboardController(ICountry countries, IMining mining, ITransaction transaction)
+        public DashboardController(ICountry countries, IMining mining, ITransaction transaction, UserManager<User> userManager)
         {
             this.countries = countries;
             this.mining = mining;
             this.transaction = transaction;
+            this.userManager = userManager;
         }
 
         [HttpGet]
-        [Route("dashboard/users/{id}")]
-        public IActionResult Users(int id)
+        [Authorize]
+        [Route("dashboard/users")]
+        public async Task<IActionResult> Users()
         {
-            var modelCountries = this.countries.ById(id);
-            var modelMining = this.mining.ById(id);
+            var user = await userManager.GetUserAsync(User);
+
+            var userId = userManager.GetUserId(User);
+
+            var modelCountries = this.countries.ById(userId);
+
+            var modelMining = this.mining.ById(1);
 
             var cvm = new CountryViewModel();
 
@@ -46,6 +57,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> UpdateStatus(string type, string comment)
         {
             int id = TestLoginID;
@@ -61,6 +73,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult SubmitTransaction(int countryId, int processId, int activityId, int lobId,
                                                DateTime receivedDate, DateTime startDate, DateTime completeDate, int statusId, string comment,
                                                string numberId, string partnerId, string contactId, double premium, string currCode,

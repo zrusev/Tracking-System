@@ -45,7 +45,7 @@
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString =
-                @"Server=(LocalDB)\LocalDB;Database=Tracking_System;Trusted_Connection=True;MultipleActiveResultSets=true;";
+                @"Server=(LocalDB)\LocalDB;Database=EMEAMRDB;Trusted_Connection=True;MultipleActiveResultSets=true;";
 
             if (!optionsBuilder.IsConfigured)
             {

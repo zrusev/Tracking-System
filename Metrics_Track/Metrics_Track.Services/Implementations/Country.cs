@@ -12,18 +12,32 @@
     using System.Linq;
     public class Country : ICountry
     {
+        private const string CountrySite = "Sofia";
+
         private readonly TrackerDbContext db;
 
         public Country(TrackerDbContext db)
         {
             this.db = db;
         }
-        public IEnumerable<CountryModel> ById(int id)
+
+        public IEnumerable<CountryModel> All()
+            => this.db
+                  .TblCountry
+                  .Where(s => s.RefSite == CountrySite)
+                  .Select(l => new CountryModel
+                  {
+                     ID_Country = l.IdCountry,
+                     Country = l.Country
+                  })
+                  .ToList();
+
+        public IEnumerable<CountryModel> ById(string id)
         {
-            var query = from trlUserCountry in this.db.TrelUserCountry
+            var query = from trlUserCountry in this.db.TrelAgentCountry
                         join tblCountry in this.db.TblCountry on trlUserCountry.IdCountry equals tblCountry.IdCountry into UserCountry_Table
                             from leftUserCountry in UserCountry_Table.DefaultIfEmpty()
-                        join tblLogin in this.db.TblLogin on trlUserCountry.IdLogin equals tblLogin.IdLogin into Login_Table
+                        join tblLogin in this.db.Users on trlUserCountry.IdAgent equals tblLogin.Id into Login_Table
                             from leftLogin in Login_Table.DefaultIfEmpty()
                         join trlCountryProcess in this.db.TrelCountryProcess on leftUserCountry.IdCountry equals trlCountryProcess.IdCountry into CountryProcess_Table
                             from leftCountryProcess in CountryProcess_Table.DefaultIfEmpty()
@@ -53,7 +67,7 @@
                             from leftProcessTowerCategory in ProcessTowerCategory_Table.DefaultIfEmpty()
                         join tblTowerCategory in this.db.TblTowerCategory on leftProcessTowerCategory.IdTowerCategory equals tblTowerCategory.IdTowerCategory into TowerCategory_Table
                             from leftTowerCategory in TowerCategory_Table.DefaultIfEmpty()
-                        where leftLogin.IdLogin == id
+                        where leftLogin.Id == id
                         select new ProcessMapModel
                         {
                             IdCountry = leftUserCountry.IdCountry,
@@ -61,8 +75,8 @@
                             IdProcess = leftProcess.IdProcess,
                             _ProcessMap = leftProcess.ProcessMap,
                             FunctionName = leftProcess.FunctionName,
-                            IdLogin = leftLogin.IdLogin,
-                            DisplayName = leftLogin.DisplayName,
+                            IdLogin = leftLogin.Id,
+                            DisplayName = leftLogin.FirstName,
                             IdActivity = leftActivity.IdActivity,
                             Activity = leftActivity.Activity,
                             IdLob = leftLob.IdLob,

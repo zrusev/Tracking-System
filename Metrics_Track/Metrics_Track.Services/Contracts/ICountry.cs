@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     public interface ICountry
     {
-        IEnumerable<CountryModel> ById(int id);
+        IEnumerable<CountryModel> ById(string id);
+
+        IEnumerable<CountryModel> All();
     }
 }

@@ -12,7 +12,7 @@
 
         public string _ProcessMap { get; set; }
 
-        public int IdLogin { get; set; }
+        public string IdLogin { get; set; }
 
         public string DisplayName { get; set; }
 
