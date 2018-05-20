@@ -30,7 +30,7 @@
 
         [HttpGet]
         [Authorize]
-        [Route("dashboard/users")]
+        [Route("dashboard")]
         public async Task<IActionResult> Users()
         {
             var user = await userManager.GetUserAsync(User);

@@ -14,11 +14,17 @@
         [Required(ErrorMessage = "Process selection is required.")]
         public int IdProcess { get; set; }
 
+        public string Process { get; set; }
+
         [Required(ErrorMessage = "Activity selection is required.")]
         public int IdActivity { get; set; }
 
+        public string Activity { get; set; }
+
         [Required(ErrorMessage = "LOB selection is required.")]
         public int IdLob { get; set; }
+
+        public string Lob { get; set; }
 
         public int? IdDivision { get; set; }
 
@@ -36,6 +42,8 @@
 
         [Required(ErrorMessage = "Status selection is required.")]
         public int IdStatus { get; set; }
+
+        public int Status { get; set; }
 
         public string Comment { get; set; }
 

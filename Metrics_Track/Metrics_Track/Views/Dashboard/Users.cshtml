@@ -22,13 +22,17 @@
             $('.btn-default').on('click', function () {
                 var division = $(this).parent().attr("id");
                 var selection = $(this).find('input').attr('id');
+                var selectionName = $(this).text().trim();
 
                 if (division == "Lob") {
                     $('input[name=LobSelection]').val(selection);
+                    $('input[name=LobName]').val(selectionName);
                 } else if (division == "Activity") {
                     $('input[name=ActivitySelection]').val(selection);
+                    $('input[name=ActivityName]').val(selectionName);
                 } else if (division == "Status") {
                     $('input[name=StatusSelection]').val(selection);
+                    $('input[name=StatusName]').val(selectionName);
                 }
             });
 
@@ -41,6 +45,7 @@
                     }
 
                     $('input[name=ProcessSelection]').val("");
+                    $('input[name=ProcessName]').val("");
                     //console.log("hide");
                 } else {
                     var btns = $(this).parent().next().find(".btn-group-vertical label");
@@ -49,16 +54,21 @@
                     });
 
                     var selection = $(this).data("id");
+                    var selectionName = $(this).text().trim();
 
                     if (division == "#country") {
                         $('input[name=CountrySelection]').val(selection);
                     } else {
                         $('input[name=ProcessSelection]').val(selection);
+                        $('input[name=ProcessName]').val(selectionName);
                     }
 
                     $('input[name=ActivitySelection]').val("");
+                    $('input[name=ActivityName]').val("");
                     $('input[name=LobSelection]').val("");
+                    $('input[name=LobName]').val("");
                     $('input[name=StatusSelection]').val("");
+                    $('input[name=StatusName]').val("");
                     //console.log("show");
                 }
             });
@@ -99,7 +109,16 @@
                         },
                         success: function (data) {
                             if (data.success) {
-                                alert("New transaction id: " + data.newId);
+                                var process = $('input[name=ProcessName]').val();
+                                var lob = $('input[name=LobName]').val();
+                                var premium = $("#amount1").val();
+                                var receivedDate = ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss");
+                                var id = data.newId;
+                                var status = $('input[name=StatusName]').val();
+
+                                var table = $("#previousTransactionTable");
+                                $("#previousTransactionTable > tbody").html("");
+                                table.append("<tr class=active><td>" + process + "</td><td>" + lob + "</td><td>" + premium + "</td><td>" + receivedDate + "</td><td>" + id + "</td><td>" + status + "</td></tr>");
                             }
                             else {
                                 $.each(data.errors, function (ind, err) {
@@ -291,6 +310,7 @@
                     <option id=@status.IdMining value=@status.State>@status.State</option>
                 }
                 </select>
+                <hr />
             </div>
         </div>
         <div class="container-fluid">
@@ -310,8 +330,20 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
+                            <span asp-validation-for="Transaction.Process" class="text-danger"></span>
+                            <input asp-for="Transaction.Process" type="hidden" name="ProcessName" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
                             <span asp-validation-for="Transaction.IdActivity" class="text-danger"></span>
                             <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <span asp-validation-for="Transaction.Activity" class="text-danger"></span>
+                            <input asp-for="Transaction.Activity" type="hidden" name="ActivityName" />
                         </div>
                     </div>
                     <div class="form-row">
@@ -322,8 +354,20 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
+                            <span asp-validation-for="Transaction.Lob" class="text-danger"></span>
+                            <input asp-for="Transaction.Lob" type="hidden" name="LobName" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
                             <span asp-validation-for="Transaction.IdStatus" class="text-danger"></span>
                             <input asp-for="Transaction.IdStatus" type="hidden" name="StatusSelection" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <span asp-validation-for="Transaction.Status" class="text-danger"></span>
+                            <input asp-for="Transaction.Status" type="hidden" name="StatusName" />
                         </div>
                     </div>
                     <div class="form-row">
@@ -413,7 +457,7 @@
 
     <div class="col-lg-6">
         <h4>My previous transaction</h4>
-        <table class="table table-bordered table-condensed transaction">
+        <table class="table table-bordered table-condensed transaction" id="previousTransactionTable">
             <thead>
                 <tr style="background-color:#D1D0DE">
                     <th class="row-process">Process</th>
@@ -426,12 +470,12 @@
             </thead>
             <tbody>
                 <tr class="active">
-                    <td>ProcessName</td>
-                    <td>LOBName</td>
-                    <td>1234</td>
-                    <td>@tempDateDemo</td>
-                    <td>123456</td>
-                    <td>Completed</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
