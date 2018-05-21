@@ -95,14 +95,16 @@
                     if (data.success) {
                         var process = $('input[name=ProcessName]').val();
                         var lob = $('input[name=LobName]').val();
-                        var premium = $("#amount1").val();
+                        var premiumAmount = $("input[id=amount1]").val();
                         var receivedDate = ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss");
                         var id = data.newId;
                         var status = $('input[name=StatusName]').val();
 
                         var table = $("#previousTransactionTable");
                         $("#previousTransactionTable > tbody").html("");
-                        table.append("<tr class=active><td>" + process + "</td><td>" + lob + "</td><td>" + premium + "</td><td>" + receivedDate + "</td><td>" + id + "</td><td>" + status + "</td></tr>");
+                        table.append("<tr class=active><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td>" + id + "</td><td>" + status + "</td></tr>");
+
+                        resetForm($("#submittranform"));
                     }
                     else {
                         $.each(data.errors, function (ind, err) {
@@ -180,6 +182,12 @@ function LoadData() {
         }
     });
     return false;
+}
+
+function resetForm($form) {
+    $form.find('input:text, input:password, input:file, select, textarea').val('');
+    $form.find('input:radio, input:checkbox')
+        .removeAttr('checked').removeAttr('selected');
 }
 
 function GetTokens() {
