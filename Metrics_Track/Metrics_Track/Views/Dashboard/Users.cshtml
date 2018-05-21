@@ -194,7 +194,7 @@
                             <div class="form-group">
                                 <label asp-for="Transaction.Comment">Comment</label>
                                 <span asp-validation-for="Transaction.Comment" class="text-danger"></span>
-                                <input asp-for="Transaction.Comment" class="form-control" id="comment1" placeholder="Enter comment">
+                                <textarea asp-for="Transaction.Comment" class="form-control" id="comment1" placeholder="Enter comment"></textarea>
                             </div>
                         </div>
                         <div class="form-row">
@@ -273,6 +273,12 @@
                     </tr>
                 </tbody>
             </table>
+            <input type="hidden" id="previousProcessId" value="" />
+            <input type="hidden" id="previousLobId" value="" />
+            <input type="hidden" id="previousPremium" value="" />
+            <input type="hidden" id="previousReceivedDate" value="" />
+            <input type="hidden" id="previousDocId" value="" />
+            <input type="hidden" id="previousStatusId" value="" />
 
             <h4>My pending transactions</h4>
             <table class="table table-bordered table-condensed table-hover transaction">

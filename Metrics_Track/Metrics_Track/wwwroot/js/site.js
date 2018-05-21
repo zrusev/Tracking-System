@@ -95,16 +95,23 @@
                     if (data.success) {
                         var process = $('input[name=ProcessName]').val();
                         var lob = $('input[name=LobName]').val();
-                        var premiumAmount = $("input[id=amount1]").val();
+                        var premiumAmount = data.prem;
                         var receivedDate = ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss");
                         var id = data.newId;
                         var status = $('input[name=StatusName]').val();
 
                         var table = $("#previousTransactionTable");
                         $("#previousTransactionTable > tbody").html("");
-                        table.append("<tr class=active><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td>" + id + "</td><td>" + status + "</td></tr>");
+                        table.append("<tr class=active><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td><button type=\"button\" class=\"btn btn-info btn-xs\"><a class=\"tblbtn\" href=\"#\">" + id + "</a></button></td><td>" + status + "</td></tr>");
 
-                        resetForm($("#submittranform"));
+                        $("#previousProcessId").val($('input[name=ProcessSelection]').val());
+                        $("#previousLobId").val($('input[name=LobSelection]').val());
+                        $("#previousPremium").val(premiumAmount);
+                        $("#previousReceivedDate").val(receivedDate); 
+                        $("#previousDocId").val(id);
+                        $("#previousStatusId").val($('input[name=StatusSelection]').val());
+
+                        resetForm($("#submittranform"));                        
                     }
                     else {
                         $.each(data.errors, function (ind, err) {
@@ -121,8 +128,6 @@
             });
         } else {
             var validator = $(this).validate();
-            //var validator = $(this).validat();
-
             $.each(validator.errorList, function (key, value) {
                 $errorSpan = $("span[data-valmsg-for='" + value.element.id.replace('_', '.') + "']");
                 $errorSpan.html("<span style='color:red'>" + value.message + "</span>");

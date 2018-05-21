@@ -90,7 +90,7 @@
                                                             contactId, premium, currCode, insuredName, tranRequestor, originalId, 1, 0, attachments, 
                                                             inceptionDate, dateReceived);
 
-            return Json(new { success = true, newId = identityId });
+            return Json(new { success = true, newId = identityId, prem = premium });
         }
 
         public JsonResult GetMining(int id)
