@@ -43,7 +43,7 @@
         [Required(ErrorMessage = "Status selection is required.")]
         public int IdStatus { get; set; }
 
-        public int Status { get; set; }
+        public string Status { get; set; }
 
         public string Comment { get; set; }
 

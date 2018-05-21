@@ -84,7 +84,7 @@
 }
 
 .row-docId {
-    width: 10%;
+    width: 15%;
 }
 
 .row-status {
@@ -99,4 +99,8 @@
 .panel-height {
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.field-validation-error {
+    color: Red;
 }

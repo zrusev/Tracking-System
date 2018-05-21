@@ -119,18 +119,14 @@
             });
         } else {
             var validator = $(this).validate();
+            //var validator = $(this).validat();
+
             $.each(validator.errorList, function (key, value) {
                 $errorSpan = $("span[data-valmsg-for='" + value.element.id.replace('_', '.') + "']");
                 $errorSpan.html("<span style='color:red'>" + value.message + "</span>");
-                $errorSpan.show();
+                //$errorSpan.show();
             });
         }
-    });
-
-    $(function () {
-        $('#datetimepicker1').datetimepicker();
-        $('#datetimepicker2').datetimepicker();
-        $('#datetimepicker3').datetimepicker();
     });
 });
 
