@@ -7,14 +7,20 @@
     public class CountryViewModel
     {
         public int ID_Country { get; set; }
+
         public List<CountryModel> CountryList { get; set; }
+
         public List<MiningModel> MiningList { get; set; }
+
         public TransactionModel Transaction { get; set; }
+
+        public List<PendingListModel> PendingList { get; set; }
 
         public CountryViewModel()
         {
             this.CountryList = new List<CountryModel>();
             this.MiningList = new List<MiningModel>();
+            this.PendingList = new List<PendingListModel>();
         }
     }
 }

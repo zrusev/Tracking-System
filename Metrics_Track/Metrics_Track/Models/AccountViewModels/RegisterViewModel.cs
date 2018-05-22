@@ -41,6 +41,8 @@
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Country")]
+        [Required(ErrorMessage = "{0} is required.")]
         public int[] IdCountries { get; set; }
         public IEnumerable<SelectListItem> Countries { get; set; }
     }

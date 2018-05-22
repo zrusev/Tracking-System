@@ -63,8 +63,9 @@
         UpdateStatus(type, comment);
     });
 
-    $("#submittranform").submit(function (e) {
+    $("#submittranform").on('submit', function (e) {
         e.preventDefault();
+        e.stopImmediatePropagation();
         $(this).find("[data-valmsg-replace]")
             .removeClass("field-validation-error")
             .addClass("field-validation-valid")
@@ -102,8 +103,13 @@
 
                         var table = $("#previousTransactionTable");
                         $("#previousTransactionTable > tbody").html("");
-                        table.append("<tr class=active><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td><button type=\"button\" class=\"btn btn-info btn-xs\"><a class=\"tblbtn\" href=\"#\">" + id + "</a></button></td><td>" + status + "</td></tr>");
+                        var newRow = "<tr><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td><button type=\"button\" class=\"btn btn-info btn-xs\"><a class=\"tblbtn\" href=\"#\">" + id + "</a></button></td><td>" + status + "</td></tr>";
+                        table.append(newRow);
 
+                        if (data.pending) {
+                            $(newRow).insertBefore("#pendingTransactionTable > tbody > tr:first");
+                        }
+                        
                         $("#previousProcessId").val($('input[name=ProcessSelection]').val());
                         $("#previousLobId").val($('input[name=LobSelection]').val());
                         $("#previousPremium").val(premiumAmount);

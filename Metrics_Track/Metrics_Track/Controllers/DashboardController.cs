@@ -15,27 +15,58 @@
         private readonly ICountry countries;
         private readonly IMining mining;
         private readonly ITransaction transaction;
+        private readonly IPendingList pendingList;
         private readonly UserManager<User> userManager;
 
+        private const int IdStatusConst = 5;
+        private const int StatusCodeConst = 2;
+
+        private const int sandbox = 0;
         private const int TestLoginID = 145;
         private const string AppVersion = "3.0.0.0";
 
-        public DashboardController(ICountry countries, IMining mining, ITransaction transaction, UserManager<User> userManager)
+        public DashboardController(ICountry countries, IMining mining, ITransaction transaction, IPendingList pendingList, UserManager<User> userManager)
         {
             this.countries = countries;
             this.mining = mining;
             this.transaction = transaction;
+            this.pendingList = pendingList;
             this.userManager = userManager;
         }
 
         [HttpGet]
         [Authorize]
-        [Route("dashboard")]
-        public async Task<IActionResult> Users()
+        [Route("dashboard/users")]
+        public async Task<IActionResult> Dashboard()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await userManager.GetUserAsync(User);
+
+                var userId = userManager.GetUserId(User);
+
+                return RedirectToAction("users", "dashboard", new { id = userId});
+            }
+
+            return View();            
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("dashboard/users/{id}")]
+        public async Task<IActionResult> Users(string id)
         {
             var user = await userManager.GetUserAsync(User);
-
+            
             var userId = userManager.GetUserId(User);
+
+            if (!id.Equals(userId))
+            {
+                return NotFound();
+            }
+
+            var modelPendings = await Task.Run(() =>
+                this.pendingList.All(StatusCodeConst, sandbox));
 
             var modelCountries = this.countries.ById(userId);
 
@@ -51,6 +82,11 @@
             foreach (var model in modelMining)
             {
                 cvm.MiningList.Add(model);
+            }
+
+            foreach (var model in modelPendings)
+            {
+                cvm.PendingList.Add(model);
             }
             
             return View(cvm);
@@ -85,12 +121,23 @@
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() });
             }
 
+            if (statusId == IdStatusConst)
+            {
+                statusCode = StatusCodeConst;
+            }
+            else
+            {
+                statusCode = 1;
+            }
+
             var identityId = this.transaction.AddTransaction(TestLoginID, countryId, processId, activityId, lobId, processId, processId, processId, 
                                                             receivedDate, startDate, DateTime.Now, statusId, comment, numberId, partnerId,
-                                                            contactId, premium, currCode, insuredName, tranRequestor, originalId, 1, 0, attachments, 
+                                                            contactId, premium, currCode, insuredName, tranRequestor, originalId, statusCode, 0, attachments, 
                                                             inceptionDate, dateReceived);
 
-            return Json(new { success = true, newId = identityId, prem = premium });
+            var addToPendings = (statusId == IdStatusConst) ? true : false;
+
+            return Json(new { success = true, newId = identityId, prem = premium, pending = addToPendings });
         }
 
         public JsonResult GetMining(int id)

@@ -30,6 +30,7 @@
                      ID_Country = l.IdCountry,
                      Country = l.Country
                   })
+                  .OrderBy(n => n.Country)
                   .ToList();
 
         public IEnumerable<CountryModel> ById(string id)

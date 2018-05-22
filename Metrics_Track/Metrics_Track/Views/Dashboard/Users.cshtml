@@ -247,9 +247,7 @@
             </div>
         </div>
 
-        @{ var tempDateDemo = DateTime.Now;}
-
-        <div class="col-lg-6">
+        <div class="col-lg-6" style="padding-right: 20px; padding-left: 0px;">
             <h4>My previous transaction</h4>
             <table class="table table-bordered table-condensed transaction" id="previousTransactionTable">
                 <thead>
@@ -281,7 +279,7 @@
             <input type="hidden" id="previousStatusId" value="" />
 
             <h4>My pending transactions</h4>
-            <table class="table table-bordered table-condensed table-hover transaction">
+            <table class="table table-bordered table-condensed table-hover transaction" id="pendingTransactionTable">
                 <thead>
                     <tr style="background-color:#D1D0DE">
                         <th class="row-process">Process</th>
@@ -293,30 +291,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="active">
-                        <td>ProcessName</td>
-                        <td>LOBName</td>
-                        <td>1234</td>
-                        <td>@tempDateDemo</td>
-                        <td>123456</td>
-                        <td>Completed</td>
+                    @for (int i = 0; i < Model.PendingList.Count; i++)
+                    {
+                    <tr> @* class="@(i % 2 == 1 ? "active" : "")" *@
+                        <td>@Model.PendingList[i].Process</td>
+                        <td>@Model.PendingList[i].Lob</td>
+                        <td>@Model.PendingList[i].Premium</td>
+                        <td>@Model.PendingList[i].ReceivedDate</td>
+                        <td><button type="button" class="btn btn-info btn-xs"><a class="tblbtn" href="#">@Model.PendingList[i].TransactionId</a></button></td>
+                        <td>@Model.PendingList[i].Status</td>
                     </tr>
-                    <tr>
-                        <td>ProcessName</td>
-                        <td>LOBName</td>
-                        <td>1234</td>
-                        <td>@tempDateDemo</td>
-                        <td>123456</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr class="active">
-                        <td>ProcessName</td>
-                        <td>LOBName</td>
-                        <td>1234</td>
-                        <td>@tempDateDemo</td>
-                        <td>123456</td>
-                        <td>Completed</td>
-                    </tr>
+                    }
                 </tbody>
             </table>
         </div>
