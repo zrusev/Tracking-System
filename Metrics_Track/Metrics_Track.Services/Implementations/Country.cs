@@ -9,7 +9,10 @@
     using Models.ProcessMap;
     using Models.Status;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
+
     public class Country : ICountry
     {
         private const string CountrySite = "Sofia";
@@ -33,9 +36,8 @@
                   .OrderBy(n => n.Country)
                   .ToList();
 
-        public IEnumerable<CountryModel> ById(string id)
-        {
-            var query = from trlUserCountry in this.db.TrelAgentCountry
+        public async Task<List<ProcessMapModel>> ProcessMapByIdAsync(string id)
+            =>  await (from trlUserCountry in this.db.TrelAgentCountry
                         join tblCountry in this.db.TblCountry on trlUserCountry.IdCountry equals tblCountry.IdCountry into UserCountry_Table
                             from leftUserCountry in UserCountry_Table.DefaultIfEmpty()
                         join tblLogin in this.db.Users on trlUserCountry.IdAgent equals tblLogin.Id into Login_Table
@@ -90,12 +92,14 @@
                             Tower = leftProcess.ProcessMap,
                             IdTowerCategory = leftProcess.IdProcess,
                             TowerCategory = leftProcess.ProcessMap
-                        };
+                        }).ToListAsync();
 
 
+        public List<CountryModel> CountryList(List<ProcessMapModel> processModel)
+        {
             List<CountryModel> countries = new List<CountryModel>();
-            
-            foreach (var item in query)
+
+            foreach (var item in processModel)
             {
                 //If a country is present check for missing children
                 if (countries.Any(c => c.ID_Country.Equals(item.IdCountry)))
@@ -106,7 +110,7 @@
                     if (countries[countryIndex].ProcessList.Any(p => p.ID_Process.Equals(item.IdProcess)))
                     {
                         int processIndex = countries[countryIndex].ProcessList.FindIndex(i => i.ID_Process.Equals(item.IdProcess));
-                        
+
                         //Add new LOB if missing
                         if (!countries[countryIndex].ProcessList[processIndex].LobList.Any(l => l.ID_Lob.Equals(item.IdLob)))
                         {
@@ -195,7 +199,6 @@
                     });
                 }
             }
-
             return countries;
         }
     }

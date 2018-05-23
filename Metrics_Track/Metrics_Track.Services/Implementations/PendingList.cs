@@ -2,9 +2,11 @@
 {
     using Contracts;
     using Metrics_Track.Data.Models;
+    using Microsoft.EntityFrameworkCore;
     using Models.Transaction;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class PendingList : IPendingList
     {
@@ -15,8 +17,8 @@
             this.db = db;
         }
 
-        public List<PendingListModel> All(short statusCode, short sandbox)
-        => this.db.TblVolumeMain
+        public async Task<List<PendingListModel>> AllAsync(short statusCode, short sandbox)
+        => await this.db.TblVolumeMain
                 .Where(d => d.IdLogin == 145 &&  d.StatusCode == statusCode && d.Sandbox == sandbox)
                 .Select(t => new PendingListModel
                 {
@@ -32,6 +34,6 @@
                     Status = t.IdStatusNavigation.Status
                 })
                 .OrderByDescending(d => d.TransactionId)
-                .ToList();
+                .ToListAsync();
     }
 }

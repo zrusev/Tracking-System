@@ -2,9 +2,10 @@
 {
     using Models.Transaction;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IPendingList
     {
-        List<PendingListModel> All(short statusCode, short sandbox);
+        Task<List<PendingListModel>> AllAsync(short statusCode, short sandbox);
     }
 }

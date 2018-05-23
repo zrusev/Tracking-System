@@ -63,10 +63,11 @@
                 return RedirectToAction(nameof(Index));
             }
 
-            var modelPendings = await Task.Run(() =>
-                this.pendingList.All(StatusCodeConst, sandbox));
+            var modelPendings = await this.pendingList.AllAsync(StatusCodeConst, sandbox);
 
-            var modelCountries = this.countries.ById(userId);
+            var processMap = await this.countries.ProcessMapByIdAsync(userId);
+
+            var modelCountries = this.countries.CountryList(processMap);
 
             var modelMining = this.mining.ById(1);
 
