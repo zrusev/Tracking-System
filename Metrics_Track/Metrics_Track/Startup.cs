@@ -36,6 +36,8 @@
 
             services.AddDomainServices();
 
+            services.AddRouting(options => options.LowercaseUrls = true);
+
             services.AddMvc();
         }
 
@@ -58,10 +60,15 @@
 
             app.UseAuthentication();
 
-            app.UseAntiforgeryTokens();
+            app.UseAntiforgeryTokens();            
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                 name: "dashboard",
+                 template: "{id}",
+                 defaults: new { controller = "Dashboard", action = "Index" });
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

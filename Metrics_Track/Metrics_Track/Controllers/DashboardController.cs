@@ -36,8 +36,7 @@
 
         [HttpGet]
         [Authorize]
-        [Route("dashboard/users")]
-        public async Task<IActionResult> Dashboard()
+        public async Task<IActionResult> Index()
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -45,7 +44,7 @@
 
                 var userId = userManager.GetUserId(User);
 
-                return RedirectToAction("users", "dashboard", new { id = userId});
+                return RedirectToAction(nameof(Accounts), new { id = userId});
             }
 
             return View();            
@@ -53,16 +52,15 @@
 
         [HttpGet]
         [Authorize]
-        [Route("dashboard/users/{id}")]
-        public async Task<IActionResult> Users(string id)
+        public async Task<IActionResult> Accounts(string id)
         {
             var user = await userManager.GetUserAsync(User);
             
             var userId = userManager.GetUserId(User);
 
-            if (!id.Equals(userId))
+            if (string.IsNullOrEmpty(id) || !id.Equals(userId))
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var modelPendings = await Task.Run(() =>
