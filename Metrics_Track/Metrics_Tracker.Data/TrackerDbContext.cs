@@ -797,6 +797,18 @@
                     .HasForeignKey(a => a.IdMining);
             });
 
+            builder.HasSequence<int>("SequenceIds", schema: "CPS")
+                .StartsAt(1000)
+                .IncrementsBy(1);
+
+            builder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.IdLogin).HasColumnName("ID_Login");
+
+                entity.Property(i => i.IdLogin)
+                .HasDefaultValueSql("NEXT VALUE FOR CPS.SequenceIds");
+            });
+                
             base.OnModelCreating(builder);
         }
     }

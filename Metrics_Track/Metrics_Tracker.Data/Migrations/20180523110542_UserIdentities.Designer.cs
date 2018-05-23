@@ -11,9 +11,10 @@ using System;
 namespace Metrics_Track.Data.Migrations
 {
     [DbContext(typeof(TrackerDbContext))]
-    partial class TrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180523110542_UserIdentities")]
+    partial class UserIdentities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -459,8 +460,6 @@ namespace Metrics_Track.Data.Migrations
                     b.Property<int?>("IdLogin")
                         .HasColumnName("ID_Login");
 
-                    b.Property<string>("IdUserNavigationId");
-
                     b.Property<string>("MetricsTrackVer")
                         .HasColumnName("Metrics_Track_Ver")
                         .HasMaxLength(255);
@@ -473,8 +472,6 @@ namespace Metrics_Track.Data.Migrations
                     b.HasKey("IdUserActivity");
 
                     b.HasIndex("IdLogin");
-
-                    b.HasIndex("IdUserNavigationId");
 
                     b.ToTable("tbl_UserActivity","CPS");
                 });
@@ -540,8 +537,6 @@ namespace Metrics_Track.Data.Migrations
 
                     b.Property<int?>("IdTowerCategory")
                         .HasColumnName("ID_TowerCategory");
-
-                    b.Property<string>("IdUserNavigationId");
 
                     b.Property<double?>("IdleHours")
                         .ValueGeneratedOnAdd()
@@ -623,8 +618,6 @@ namespace Metrics_Track.Data.Migrations
                     b.HasIndex("IdTower");
 
                     b.HasIndex("IdTowerCategory");
-
-                    b.HasIndex("IdUserNavigationId");
 
                     b.HasIndex("TransactionId", "StartDate", "OriginalId", "CompleteDate", "StatusCode")
                         .HasName("NonClusteredIndex-20180216-113906");
@@ -1027,10 +1020,6 @@ namespace Metrics_Track.Data.Migrations
                         .WithMany("TblUserActivity")
                         .HasForeignKey("IdLogin")
                         .HasConstraintName("FK_tbl_UserActivity_tbl_Login");
-
-                    b.HasOne("Metrics_Track.Data.Models.User", "IdUserNavigation")
-                        .WithMany("TblUserActivity")
-                        .HasForeignKey("IdUserNavigationId");
                 });
 
             modelBuilder.Entity("Metrics_Track.Data.Models.tbl_VolumeMain", b =>
@@ -1079,10 +1068,6 @@ namespace Metrics_Track.Data.Migrations
                         .WithMany("TblVolumeMain")
                         .HasForeignKey("IdTowerCategory")
                         .HasConstraintName("FK_tbl_Volume_Main_tbl_TowerCategory");
-
-                    b.HasOne("Metrics_Track.Data.Models.User", "IdUserNavigation")
-                        .WithMany("TblVolumeMain")
-                        .HasForeignKey("IdUserNavigationId");
                 });
 
             modelBuilder.Entity("Metrics_Track.Data.Models.trel_AgentCountry", b =>
