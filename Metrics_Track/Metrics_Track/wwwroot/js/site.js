@@ -57,7 +57,10 @@
         }
     });
 
-    $("#useractivity").change(function () {
+    $("#useractivity").change(function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
         var type = $(this).val();
         var comment = $("#comment1").val();
         UpdateStatus(type, comment);
@@ -83,6 +86,9 @@
                     processId: $('input[name=ProcessSelection]').val(),
                     activityId: $('input[name=ActivitySelection]').val(),
                     lobId: $('input[name=LobSelection]').val(),
+                    divisionId: $('input[name=ProcessSelection]').val(),
+                    towerCategoryId: $('input[name=ProcessSelection]').val(),
+                    towerId: $('input[name=ProcessSelection]').val(),
                     receivedDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
                     startDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
                     statusId: $('input[name=StatusSelection]').val(),
@@ -101,13 +107,14 @@
                         var id = data.newId;
                         var status = $('input[name=StatusName]').val();
 
-                        var table = $("#previousTransactionTable");
+                        var previousTable = $("#previousTransactionTable");
                         $("#previousTransactionTable > tbody").html("");
                         var newRow = "<tr><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td><button type=\"button\" class=\"btn btn-info btn-xs\"><a class=\"tblbtn\" href=\"#\">" + id + "</a></button></td><td>" + status + "</td></tr>";
-                        table.append(newRow);
+                        previousTable.append(newRow);
 
                         if (data.pending) {
-                            $(newRow).insertBefore("#pendingTransactionTable > tbody > tr:first");
+                            var pendingTable = $("#pendingTransactionTable");
+                            pendingTable.append(newRow);
                         }
                         
                         $("#previousProcessId").val($('input[name=ProcessSelection]').val());
@@ -196,6 +203,10 @@ function LoadData() {
 }
 
 function resetForm($form) {
+    $("#datetimepicker1").val('');
+    $("#datetimepicker2").val('');
+    $("#datetimepicker3").val('');
+
     $form.find('input:text, input:password, input:file, select, textarea').val('');
     $form.find('input:radio, input:checkbox')
         .removeAttr('checked').removeAttr('selected');

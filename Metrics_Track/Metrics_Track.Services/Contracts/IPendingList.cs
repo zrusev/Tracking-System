@@ -6,6 +6,6 @@
 
     public interface IPendingList
     {
-        Task<List<PendingListModel>> AllAsync(short statusCode, short sandbox);
+        Task<List<PendingListModel>> AllAsync(int idLogin, short statusCode, short sandbox);
     }
 }

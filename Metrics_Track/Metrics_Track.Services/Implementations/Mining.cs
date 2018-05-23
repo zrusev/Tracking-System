@@ -2,7 +2,9 @@
 {
     using Contracts;
     using Metrics_Track.Data.Models;
+    using Microsoft.EntityFrameworkCore;
     using Models.Mining;
+    using Models.User;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,7 +18,7 @@
             this.db = db;
         }
 
-        public void AddUserActivity(int id, string type, DateTime stamp, string commment, short sandbox, string version)
+        public void AddUserActivity(int id, string type, DateTime stamp, string commment, short sandbox)
         {
             var currentActivity = new tbl_UserActivity
             {
@@ -24,8 +26,7 @@
                 Type = type,
                 ChangeStamp = stamp,
                 Comment = commment,
-                Sandbox = sandbox,
-                MetricsTrackVer = version
+                Sandbox = sandbox
             };
             
             this.db.TblUserActivity.Add(currentActivity);
@@ -46,20 +47,13 @@
             return minings;
         }
 
-        public Task<short> GetUserSandboxAsync(int id) {
-
-            TaskCompletionSource<short> tcs = new TaskCompletionSource<short>();
-
-            Task.Run(() =>
-            {
-                short result = this.db.TblLogin
-                              .Where(u => u.IdLogin == id)
-                              .Select(s => s.Sandbox)
-                              .FirstOrDefault();
-                tcs.SetResult(result);
-            });
-
-            return tcs.Task;
-        }
+        public async Task<UserDetailsModel> UserDetailsAsync()
+            => await this.db.Users
+                    .Select(u => new UserDetailsModel
+                    {
+                        IdLogin = u.IdLogin,
+                        Sandbox = u.Sandbox
+                    })
+                    .FirstOrDefaultAsync();         
     }
 }
