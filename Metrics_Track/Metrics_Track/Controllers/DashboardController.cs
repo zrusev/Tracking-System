@@ -1,15 +1,16 @@
 ﻿namespace Metrics_Track.Controllers
 {
+    using Metrics_Track.Data.Models;
     using Metrics_Track.Services.Contracts;
+    using Metrics_Track.Services.Models.Transaction;
+    using Metrics_Track.Services.Models.User;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Authorization;
-    using Metrics_Track.Data.Models;
-    using System.Collections.Generic;
 
     public class DashboardController : Controller
     {   
@@ -19,6 +20,7 @@
         private readonly IPendingList pendingList;
         private readonly UserManager<User> userManager;
 
+        private const int CompleteTransactionIdStatusCode = 1;
         private const int PendingIdStatusCode = 5;
         private const int PendingTransactionCode = 2;
 
@@ -92,50 +94,54 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> UpdateStatus(string type, string commment)
+        public async Task<IActionResult> UpdateStatus(UserActivityModel model)
         {
-            DateTime stamp = DateTime.Now;
 
-            var userDetails = await this.mining.UserDetailsAsync();            
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() });
+            }
 
-            this.mining.AddUserActivity(userDetails.IdLogin, type, stamp, commment, userDetails.Sandbox);
+            var userDetails = await this.mining.UserDetailsAsync();
 
-            return Json(new { Status = type });
+            model.IdLogin = userDetails.IdLogin;
+            model.ChangeStamp = DateTime.Now;
+            model.Sandbox = userDetails.Sandbox;
+
+            this.mining.AddUserActivity(model);
+
+            return Json(new { Status = model.Type });
         }
 
         [HttpPost]
         [Authorize]
-        public async  Task<IActionResult> SubmitTransaction(int countryId, int processId, int activityId, int lobId, int divisionId, int towerCategoryId, int towerId, 
-                                                            DateTime receivedDate, DateTime startDate, DateTime completeDate, 
-                                                            int statusId, string comment, string numberId, string partnerId, string contactId, double premium, string currCode,
-                                                            string insuredName, string tranRequestor, int? originalId, short statusCode, short priority, string attachments, 
-                                                            DateTime inceptionDate, DateTime dateReceived)
+        public async  Task<IActionResult> SubmitTransaction(TransactionModel model)
         {
             if (!ModelState.IsValid)
             {
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() });
             }
 
-            if (statusId == PendingIdStatusCode)
+            if (model.IdStatus == PendingIdStatusCode)
             {
-                statusCode = PendingTransactionCode;
+                model.StatusCode = PendingTransactionCode;
             }
             else
             {
-                statusCode = 1;
+                model.StatusCode = CompleteTransactionIdStatusCode;
             }
 
             var userDetails = await this.mining.UserDetailsAsync();
 
-            var identityId = this.transaction.AddTransaction(userDetails.IdLogin, countryId, processId, activityId, lobId, processId, processId, processId, 
-                                                            receivedDate, startDate, DateTime.Now, 
-                                                            statusId, comment, numberId, partnerId,contactId, premium, currCode, 
-                                                            insuredName, tranRequestor, originalId, statusCode, priority, userDetails.Sandbox, attachments, 
-                                                            inceptionDate, dateReceived);
+            model.IdLogin = userDetails.IdLogin;
+            model.CompleteDate = DateTime.Now;
+            model.Sandbox = userDetails.Sandbox;
 
-            var addToPendings = (statusId == PendingIdStatusCode) ? true : false;
+            var identityId = this.transaction.AddTransaction(model);
 
-            return Json(new { success = true, newId = identityId, prem = premium, pending = addToPendings });
+            var addToPendings = (model.IdStatus == PendingIdStatusCode) ? true : false;
+
+            return Json(new { success = true, newId = identityId, prem = model.Premium, pending = addToPendings });
         }
 
         public JsonResult GetMining(int id)

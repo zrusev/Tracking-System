@@ -2,7 +2,7 @@
 {
     using Contracts;
     using Metrics_Track.Data.Models;
-    using System;
+    using Models.Transaction;
     public class Transaction : ITransaction
     {
         private readonly TrackerDbContext db;
@@ -12,41 +12,37 @@
             this.db = db;
         }
 
-        public int AddTransaction(int loginId, int countryId, int processId, int activityId, int lobId, int divisionId, int towerCategoryId, int towerId, 
-                                   DateTime receivedDate, DateTime startDate, DateTime completeDate, 
-                                   int statusId, string comment, string numberId, string partnerId, string contactId, double premium, string currCode, 
-                                   string insuredName, string tranRequestor, int? originalId, short statusCode, short priority, short sandbox, string attachments, 
-                                   DateTime inceptionDate, DateTime dateReceived)
+        public int AddTransaction(TransactionModel model)
         {
             var currentTransaction = new tbl_VolumeMain
             {
-                IdLogin = loginId,
-                IdCountry = countryId,
-                IdProcess = processId,
-                IdActivity = activityId,
-                IdLob = lobId,
-                IdDivision = divisionId,                
-                IdTowerCategory = towerCategoryId,
-                IdTower = towerId,
-                ReceivedDate = receivedDate,
-                StartDate = startDate,
-                CompleteDate = completeDate,
-                IdStatus = statusId,
-                Comment = comment,
-                IdNumber = numberId,
-                IdPartner = partnerId,
-                IdContract = contactId,
-                Premium = premium,
-                CurrencyCode = currCode,
-                InsuredName = insuredName,
-                TransactionRequestor = tranRequestor,
-                OriginalId = originalId,
-                StatusCode = statusCode,
-                Priority = priority,
-                Sandbox = sandbox,
-                Attachments = attachments,
-                InceptionDate = inceptionDate,
-                DateReceivedInAig = dateReceived
+                IdLogin = model.IdLogin,
+                IdCountry = model.IdCountry,
+                IdProcess = model.IdProcess,
+                IdActivity = model.IdActivity,
+                IdLob = model.IdLob,
+                IdDivision = model.IdDivision,                
+                IdTowerCategory = model.IdTowerCategory,
+                IdTower = model.IdTower,
+                ReceivedDate = model.ReceivedDate,
+                StartDate = model.StartDate,
+                CompleteDate = model.CompleteDate,
+                IdStatus = model.IdStatus,
+                Comment = model.Comment,
+                IdNumber = model.IdNumber,
+                IdPartner = model.IdPartner,
+                IdContract = model.IdContract,
+                Premium = model.Premium,
+                CurrencyCode = model.CurrencyCode,
+                InsuredName = model.InsuredName,
+                TransactionRequestor = model.TransactionRequestor,
+                OriginalId = model.OriginalId,
+                StatusCode = model.StatusCode,
+                Priority = model.Priority,
+                Sandbox = model.Sandbox,
+                Attachments = model.Attachments,
+                InceptionDate = model.InceptionDate,
+                DateReceivedInAig = model.DateReceivedInAig
             };
 
             this.db.TblVolumeMain.Add(currentTransaction);

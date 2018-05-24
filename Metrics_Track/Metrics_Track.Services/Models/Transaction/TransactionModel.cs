@@ -53,8 +53,7 @@
 
         public string IdContract { get; set; }
 
-        [Required(ErrorMessage = "Premium amount is required.")]
-        public double Premium { get; set; }
+        public double? Premium { get; set; }
 
         public string CurrencyCode { get; set; }
 
@@ -68,7 +67,10 @@
 
         public short? StatusCode { get; set; }
 
-        public short? Priority { get; set; }
+        public short? Priority => this.IsPriority == true ? (short)1 : (short)0;
+
+        [Display(Name = "High priority")]
+        public bool IsPriority { get; set; }
 
         public string Attachments { get; set; }
 
@@ -90,7 +92,7 @@
         public DateTime? InceptionDate { get; set; }
 
         [DataType(DataType.Text)]
-        public DateTime? DateReceived { get; set; }
+        public DateTime? DateReceivedInAig { get; set; }
 
         public double? IdleHours { get; set; }
     }

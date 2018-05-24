@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Infrastructure.Mapping
+﻿namespace Metrics_Track.Common.Mapping
 {
     using AutoMapper;
 

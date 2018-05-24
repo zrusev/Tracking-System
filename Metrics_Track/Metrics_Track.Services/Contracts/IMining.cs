@@ -8,7 +8,9 @@
     public interface IMining
     {
         IEnumerable<MiningModel> ById(int id);
-        void AddUserActivity(int id, string type, DateTime stamp, string commment, short sandbox);
+
+        void AddUserActivity(UserActivityModel model);
+
         Task<UserDetailsModel> UserDetailsAsync();
     }
 }

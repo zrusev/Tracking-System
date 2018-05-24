@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Infrastructure.Mapping
 {
     using AutoMapper;
+    using Metrics_Track.Common.Mapping;
     using System;
     using System.Linq;
     public class AutoMapperProfile : Profile

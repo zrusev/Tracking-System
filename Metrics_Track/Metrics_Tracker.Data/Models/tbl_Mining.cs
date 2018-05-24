@@ -10,8 +10,11 @@
         }
 
         public int IdMining { get; set; }
+
         public string State { get; set; }
+
         public List<trel_UserMining> TrelUserMining { get; set; }
+
         public List<trel_AgentMining> Agents { get; set; }
     }
 }

@@ -5,13 +5,13 @@
         var selection = $(this).find('input').attr('id');
         var selectionName = $(this).text().trim();
 
-        if (division == "Lob") {
+        if (division === "Lob") {
             $('input[name=LobSelection]').val(selection);
             $('input[name=LobName]').val(selectionName);
-        } else if (division == "Activity") {
+        } else if (division === "Activity") {
             $('input[name=ActivitySelection]').val(selection);
             $('input[name=ActivityName]').val(selectionName);
-        } else if (division == "Status") {
+        } else if (division === "Status") {
             $('input[name=StatusSelection]').val(selection);
             $('input[name=StatusName]').val(selectionName);
         }
@@ -22,7 +22,7 @@
         var division = $(this).data("parent");
 
         if ($(this).attr("aria-expanded") === 'true') {
-            if (division == "#country") {
+            if (division === "#country") {
                 $('input[name=CountrySelection]').val("");
             }
 
@@ -38,7 +38,7 @@
             var selection = $(this).data("id");
             var selectionName = $(this).text().trim();
 
-            if (division == "#country") {
+            if (division === "#country") {
                 $('input[name=CountrySelection]').val(selection);
             } else {
                 $('input[name=ProcessSelection]').val(selection);
@@ -59,28 +59,26 @@
     $("#useractivity").on('change', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
-
-        var activityType = $(this).val();
-        var activityComment = $("#comment1").val();        
+       
         var token = $('input[name="__RequestVerificationToken"]', $("#submittranform")).val();
+        var jsonObject = {
+            Type : $(this).val(),
+            Comment: $("#comment1").val()
+        };
 
         $.ajax({
-            type: "Post",
+            type: 'POST',
+            dataType: 'json',
             url: '/dashboard/UpdateStatus',
-            dataType: "json",
             data: {
-                __RequestVerificationToken: token,
-                type: activityType,
-                comment: activityComment
+                "__RequestVerificationToken": token,
+                model: jsonObject
             },
             success: function (response) {
                 document.getElementById("currentstatus").innerHTML = response.status;
             },
-            error: function (ex) {
-                var r = jQuery.parseJSON(response.responseText);
-                alert("Message: " + r.Message);
-                alert("StackTrace: " + r.StackTrace);
-                alert("ExceptionType: " + r.ExceptionType);
+            error: function (response) {
+                alert(response.responseText);
             }
         });
         return false;
@@ -90,54 +88,63 @@
     $("#submittranform").on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
+
         $(this).find("[data-valmsg-replace]")
             .removeClass("field-validation-error")
             .addClass("field-validation-valid")
             .empty();
         $(this).data("validator").settings.ignore = "";
+
         var token = $('input[name="__RequestVerificationToken"]', $(this)).val();
+        var jsonObject = {
+            IdCountry : $('input[name=CountrySelection]').val(),
+            IdProcess : $('input[name=ProcessSelection]').val(),
+            IdActivity : $('input[name=ActivitySelection]').val(),
+            IdLob : $('input[name=LobSelection]').val(),
+            IdDivision : $('input[name=ProcessSelection]').val(),
+            IdTowerCategory : $('input[name=ProcessSelection]').val(),
+            IdTower : $('input[name=ProcessSelection]').val(),
+            ReceivedDate: moment($("#Transaction_ReceivedDate").val()).isValid() ? moment($("#Transaction_ReceivedDate").val()).format("YYYY-MM-DD HH:mm:ss") : null,
+            StartDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
+            IdStatus : $('input[name=StatusSelection]').val(),
+            Comment : $("#comment1").val(),
+            IdNumber : $("#policynumber1").val(),
+            Premium: $("#amount1").val(),
+            IsPriority: $("#priorityCheck").val(),
+            InceptionDate: moment($("#Transaction_InceptionDate").val()).isValid() ? moment($("#Transaction_InceptionDate").val()).format("YYYY-MM-DD HH:mm:ss") : null,
+            DateReceivedInAig: moment($("#Transaction_DateReceivedInAig").val()).isValid() ? moment($("#Transaction_DateReceivedInAig").val()).format("YYYY-MM-DD HH:mm:ss") : null
+        };
+
         if ($(this).valid()) {
             $.ajax({
-                type: "Post",
+                type: 'POST',
+                dataType: 'json',
                 url: '/dashboard/SubmitTransaction',
-                dataType: "json",
                 data: {
-                    __RequestVerificationToken: token,
-                    countryId: $('input[name=CountrySelection]').val(),
-                    processId: $('input[name=ProcessSelection]').val(),
-                    activityId: $('input[name=ActivitySelection]').val(),
-                    lobId: $('input[name=LobSelection]').val(),
-                    divisionId: $('input[name=ProcessSelection]').val(),
-                    towerCategoryId: $('input[name=ProcessSelection]').val(),
-                    towerId: $('input[name=ProcessSelection]').val(),
-                    receivedDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
-                    startDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
-                    statusId: $('input[name=StatusSelection]').val(),
-                    comment: $("#comment1").val(),
-                    numberId: $("#policynumber1").val(),
-                    premium: $("#amount1").val(),
-                    inceptionDate: ($("#datetimepicker2").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
-                    dateReceived: ($("#datetimepicker3").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss")
+                    "__RequestVerificationToken" : token,
+                    model: jsonObject
                 },
                 success: function (data) {
                     if (data.success) {
+                        //Add to pending transactions
                         var process = $('input[name=ProcessName]').val();
                         var lob = $('input[name=LobName]').val();
                         var premiumAmount = data.prem;
-                        var receivedDate = ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss");
+                        var receivedDate = moment($("#Transaction_ReceivedDate").val()).format("YYYY-MM-DD HH:mm:ss");
                         var id = data.newId;
                         var status = $('input[name=StatusName]').val();
 
                         var previousTable = $("#previousTransactionTable");
                         $("#previousTransactionTable > tbody").html("");
-                        var newRow = "<tr><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td><button type=\"button\" class=\"btn btn-info btn-xs\"><a class=\"tblbtn\" href=\"#\">" + id + "</a></button></td><td>" + status + "</td></tr>";
+                        var newRow = "<tr><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td><button type=\"button\" class=\"btn btn-info btn-xs\">" + id + "</button></td><td>" + status + "</td></tr>";
                         previousTable.append(newRow);
 
                         if (data.pending) {
                             var pendingTable = $("#pendingTransactionTable");
                             pendingTable.append(newRow);
                         }
-                        
+
+                        //Last transaction
                         $("#previousProcessId").val($('input[name=ProcessSelection]').val());
                         $("#previousLobId").val($('input[name=LobSelection]').val());
                         $("#previousPremium").val(premiumAmount);
@@ -145,7 +152,11 @@
                         $("#previousDocId").val(id);
                         $("#previousStatusId").val($('input[name=StatusSelection]').val());
 
-                        resetForm($("#submittranform"));                        
+                        //Clear form
+                        var sectionBoxCheck = $("#sectionCheck").prop('checked');
+                        var receivedBoxCheck = $("#receivedCheck").prop('checked');
+                        var priorityBoxCheck = $("#priorityCheck").prop('checked');
+                        resetForm($("#submittranform"), sectionBoxCheck, receivedBoxCheck, priorityBoxCheck);                        
                     }
                     else {
                         $.each(data.errors, function (ind, err) {
@@ -153,11 +164,8 @@
                         });
                     }
                 },
-                error: function (ex) {
-                    var r = jQuery.parseJSON(response.responseText);
-                    alert("Message: " + r.Message);
-                    alert("StackTrace: " + r.StackTrace);
-                    alert("ExceptionType: " + r.ExceptionType);
+                error: function (response) {
+                    alert(response.responseText);
                 }
             });
         } else {
@@ -188,7 +196,7 @@ function LoadData() {
                     + "<td>" + ajaxResponse.state + "</td>"
                     + "</tr>";
                 $('#tblMining tbody').append(rows);
-            })
+            });
         },
         error: function (ex) {
             var r = jQuery.parseJSON(response.responseText);
@@ -201,14 +209,21 @@ function LoadData() {
 }
 
 //Reset form
-function resetForm($form) {
-    $("#datetimepicker1").val('');
-    $("#datetimepicker2").val('');
-    $("#datetimepicker3").val('');
+function resetForm($form, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck) {
+    var sBox = sectionBoxCheck == true ? "#sectionCheck" : '';
+    var rBox = receivedBoxCheck == true ? "#receivedCheck" : '';
+    var pBox = priorityBoxCheck == true ? "#priorityCheck" : '';
 
-    $form.find('input:text, input:password, input:file, select, textarea').val('');
-    $form.find('input:radio, input:checkbox')
-        .removeAttr('checked').removeAttr('selected');
+    if (sectionBoxCheck == true) {
+        //do nothing
+    } else if (receivedBoxCheck == true) {
+        $form.find('input:text, input:password, input:file, select, textarea').not('#Transaction_ReceivedDate').val('');
+    } else if (priorityBoxCheck == true) {
+        $form.find('input:text, input:password, input:file, select, textarea').not('#Transaction_ReceivedDate').val('');
+    } else {
+        $form.find('input:text, input:password, input:file, select, textarea').val('');
+    }
+    var t = $form.find('input:radio, input:checkbox').filter(sBox | rBox | pBox).prop('checked', true);
 }
 
 //Get tokens
