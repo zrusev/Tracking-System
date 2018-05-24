@@ -1,8 +1,5 @@
 ﻿$(function () {
-    $('#btnSave').click(function () {
-        UpdateStatus()
-    });
-
+    //Select process node
     $('.btn-default').on('click', function () {
         var division = $(this).parent().attr("id");
         var selection = $(this).find('input').attr('id');
@@ -20,6 +17,7 @@
         }
     });
 
+    //Select country node
     $(".list-group-item").on("click", function () {
         var division = $(this).data("parent");
 
@@ -57,15 +55,38 @@
         }
     });
 
-    $("#useractivity").change(function (e) {
+    //Update status
+    $("#useractivity").on('change', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        var type = $(this).val();
-        var comment = $("#comment1").val();
-        UpdateStatus(type, comment);
+        var activityType = $(this).val();
+        var activityComment = $("#comment1").val();        
+        var token = $('input[name="__RequestVerificationToken"]', $("#submittranform")).val();
+
+        $.ajax({
+            type: "Post",
+            url: '/dashboard/UpdateStatus',
+            dataType: "json",
+            data: {
+                __RequestVerificationToken: token,
+                type: activityType,
+                comment: activityComment
+            },
+            success: function (response) {
+                document.getElementById("currentstatus").innerHTML = response.status;
+            },
+            error: function (ex) {
+                var r = jQuery.parseJSON(response.responseText);
+                alert("Message: " + r.Message);
+                alert("StackTrace: " + r.StackTrace);
+                alert("ExceptionType: " + r.ExceptionType);
+            }
+        });
+        return false;
     });
 
+    //Submit form
     $("#submittranform").on('submit', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
@@ -150,30 +171,7 @@
     });
 });
 
-function UpdateStatus(activityType, activityComment) {
-    var token = $('input[name="__RequestVerificationToken"]', $("#submittranform")).val();
-    $.ajax({
-        type: "Post",
-        url: '/dashboard/UpdateStatus',
-        dataType: "json",
-        data: {
-            __RequestVerificationToken: token,
-            type: activityType,
-            comment: activityComment
-        },
-        success: function (response) {
-            document.getElementById("currentstatus").innerHTML = response.status;
-        },
-        error: function (ex) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-            alert("StackTrace: " + r.StackTrace);
-            alert("ExceptionType: " + r.ExceptionType);
-        }
-    });
-    return false;
-}
-
+//Get activities
 function LoadData() {
     $("#tblMining tbody tr").remove();
     $.ajax({
@@ -202,6 +200,7 @@ function LoadData() {
     return false;
 }
 
+//Reset form
 function resetForm($form) {
     $("#datetimepicker1").val('');
     $("#datetimepicker2").val('');
@@ -212,6 +211,7 @@ function resetForm($form) {
         .removeAttr('checked').removeAttr('selected');
 }
 
+//Get tokens
 function GetTokens() {
     var countryId = parseInt($('#country .in').attr("id").split("-")[1]);
     var processId = parseInt($('#process' + '-' + countryId + ' .in').attr("id").split("-")[1]);
