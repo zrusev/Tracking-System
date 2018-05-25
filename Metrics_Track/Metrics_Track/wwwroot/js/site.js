@@ -221,6 +221,7 @@ function resetForm($form, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck) {
     } else if (priorityBoxCheck == true) {
         $form.find('input:text, input:password, input:file, select, textarea').not('#Transaction_ReceivedDate').val('');
     } else {
+        $('.panel-collapse').each(function (index) { $(this).removeClass('in') }); //Collapse all panels
         $form.find('input:text, input:password, input:file, select, textarea').val('');
     }
     var t = $form.find('input:radio, input:checkbox').filter(sBox | rBox | pBox).prop('checked', true);

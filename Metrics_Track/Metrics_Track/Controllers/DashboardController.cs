@@ -53,24 +53,20 @@
         [Authorize]
         public async Task<IActionResult> Accounts(string id)
         {
-            var user = await userManager.GetUserAsync(User);
-            
-            var userId = userManager.GetUserId(User);
+            var currentUser = await this.GetUserDetailsAsync();
 
-            if (string.IsNullOrEmpty(id) || !id.Equals(userId))
+            if (string.IsNullOrEmpty(id) || !id.Equals(currentUser.Id))
             {
                 return RedirectToAction(nameof(Index));
             }
+            
+            var modelPendings = await this.pendingList.AllAsync(currentUser.IdLogin, PendingTransactionCode, currentUser.Sandbox);
 
-            var userDetails = await this.mining.UserDetailsAsync();
-
-            var modelPendings = await this.pendingList.AllAsync(userDetails.IdLogin, PendingTransactionCode, userDetails.Sandbox);
-
-            var processMap = await this.countries.ProcessMapByIdAsync(userId);
+            var processMap = await this.countries.ProcessMapByIdAsync(currentUser.Id);
 
             var modelCountries = this.countries.CountryList(processMap);
 
-            var modelMining = this.mining.ById(userDetails.IdLogin);
+            var modelMining = this.mining.ById(currentUser.IdLogin);
 
             var cvm = new CountryViewModel();
 
@@ -102,11 +98,11 @@
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() });
             }
 
-            var userDetails = await this.mining.UserDetailsAsync();
+            var currentUser = await this.GetUserDetailsAsync();
 
-            model.IdLogin = userDetails.IdLogin;
+            model.IdLogin = currentUser.IdLogin;
             model.ChangeStamp = DateTime.Now;
-            model.Sandbox = userDetails.Sandbox;
+            model.Sandbox = currentUser.Sandbox;
 
             this.mining.AddUserActivity(model);
 
@@ -131,11 +127,11 @@
                 model.StatusCode = CompleteTransactionIdStatusCode;
             }
 
-            var userDetails = await this.mining.UserDetailsAsync();
+            var currentUser = await this.GetUserDetailsAsync();
 
-            model.IdLogin = userDetails.IdLogin;
+            model.IdLogin = currentUser.IdLogin;
             model.CompleteDate = DateTime.Now;
-            model.Sandbox = userDetails.Sandbox;
+            model.Sandbox = currentUser.Sandbox;
 
             var identityId = this.transaction.AddTransaction(model);
 
@@ -149,5 +145,6 @@
             var modelMining = this.mining.ById(id);
             return Json(modelMining);
         }
+        private async Task<User> GetUserDetailsAsync() => await userManager.GetUserAsync(User);
     }
 }
