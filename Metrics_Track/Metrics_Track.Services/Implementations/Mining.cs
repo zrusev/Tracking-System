@@ -35,7 +35,7 @@
         public IEnumerable<MiningModel> ById(int id)
              => this.db
                     .TblMining
-                    .Where(t => t.TrelUserMining.Any(i => i.IdLogin == id))
+                    .Where(t => t.Countries.Any(i => i.IdCountry == id))
                     .ProjectTo<MiningModel>()
                     .ToList();
 
@@ -43,6 +43,23 @@
             => await this.db
                     .Users
                     .ProjectTo<UserDetailsModel>()
-                    .FirstOrDefaultAsync();         
+                    .FirstOrDefaultAsync();
+
+        public IQueryable<IEnumerable<MiningModel>> MiningByUserId(string id)
+            =>  this.db
+                .TrelAgentCountry
+                .Where(a => a.IdAgent == id)
+                .Select(c => new
+                {
+                    countryId = c.IdCountry,
+                    countryToMiningTrel = c.Country.Minings
+                })
+                .Select(d => d.countryToMiningTrel
+                                .Where(c => c.IdCountry == d.countryId)
+                                .Select(k => new MiningModel
+                                {
+                                    IdMining = k.Mining.IdMining,
+                                    State = k.Mining.State
+                                }));
     }
 }

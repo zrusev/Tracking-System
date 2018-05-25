@@ -24,7 +24,5 @@
         public int IdLogin { get; set; }
 
         public List<trel_AgentCountry> Countries { get; set; } = new List<trel_AgentCountry>();
-
-        public List<trel_AgentMining> Minings { get; set; } = new List<trel_AgentMining>();
     }
 }

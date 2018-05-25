@@ -1,10 +1,10 @@
 ﻿namespace Metrics_Track.Data.Models
 {
-    public class trel_AgentMining
+    public class trel_CountryMining
     {
-        public string IdAgent { get; set; }
+        public int IdCountry { get; set; }
 
-        public User Agent { get; set; }
+        public tbl_Country Country { get; set; }
 
         public int IdMining { get; set; }
 

@@ -9,14 +9,25 @@
             this.TrelCountryProcess = new List<trel_CountryProcess>();
             this.TrelUserCountry = new List<trel_UserCountry>();
             this.Agents = new List<trel_AgentCountry>();
+            this.Minings = new List<trel_CountryMining>();
         }
+
         public int IdCountry { get; set; }
+
         public string Country { get; set; }
+
         public string RefSite { get; set; }
+
         public int? SpphIdCountry { get; set; }
+
         public List<tbl_VolumeMain> TblVolumeMain { get; set; }
+
         public List<trel_CountryProcess> TrelCountryProcess { get; set; }
+
         public List<trel_UserCountry> TrelUserCountry { get; set; }
+
         public List<trel_AgentCountry> Agents { get; set; }
+
+        public List<trel_CountryMining> Minings { get; set; }
     }
 }

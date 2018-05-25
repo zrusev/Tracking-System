@@ -6,7 +6,7 @@
         public tbl_Mining()
         {
             this.TrelUserMining = new List<trel_UserMining>();
-            this.Agents = new List<trel_AgentMining>();
+            this.Countries = new List<trel_CountryMining>();
         }
 
         public int IdMining { get; set; }
@@ -15,6 +15,6 @@
 
         public List<trel_UserMining> TrelUserMining { get; set; }
 
-        public List<trel_AgentMining> Agents { get; set; }
+        public List<trel_CountryMining> Countries { get; set; }
     }
 }

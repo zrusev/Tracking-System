@@ -2,6 +2,7 @@
 {
     using Metrics_Track.Data.Models;
     using Metrics_Track.Services.Contracts;
+    using Metrics_Track.Services.Models.Mining;
     using Metrics_Track.Services.Models.Transaction;
     using Metrics_Track.Services.Models.User;
     using Microsoft.AspNetCore.Authorization;
@@ -66,7 +67,7 @@
 
             var modelCountries = this.countries.CountryList(processMap);
 
-            var modelMining = this.mining.ById(currentUser.IdLogin);
+            var modelMining = this.mining.MiningByUserId(currentUser.Id);
 
             var cvm = new CountryViewModel();
 
@@ -77,7 +78,7 @@
 
             foreach (var model in modelMining)
             {
-                cvm.MiningList.Add(model);
+                //cvm.MiningList.Add();
             }
 
             foreach (var model in modelPendings)

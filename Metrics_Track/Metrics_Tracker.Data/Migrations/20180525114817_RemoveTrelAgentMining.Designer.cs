@@ -11,9 +11,10 @@ using System;
 namespace Metrics_Track.Data.Migrations
 {
     [DbContext(typeof(TrackerDbContext))]
-    partial class TrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180525114817_RemoveTrelAgentMining")]
+    partial class RemoveTrelAgentMining
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -637,19 +638,6 @@ namespace Metrics_Track.Data.Migrations
                     b.ToTable("trel_AgentCountry","CPS");
                 });
 
-            modelBuilder.Entity("Metrics_Track.Data.Models.trel_CountryMining", b =>
-                {
-                    b.Property<int>("IdCountry");
-
-                    b.Property<int>("IdMining");
-
-                    b.HasKey("IdCountry", "IdMining");
-
-                    b.HasIndex("IdMining");
-
-                    b.ToTable("trel_CountryMining","CPS");
-                });
-
             modelBuilder.Entity("Metrics_Track.Data.Models.trel_CountryProcess", b =>
                 {
                     b.Property<int>("IdCp")
@@ -1079,19 +1067,6 @@ namespace Metrics_Track.Data.Migrations
                     b.HasOne("Metrics_Track.Data.Models.tbl_Country", "Country")
                         .WithMany("Agents")
                         .HasForeignKey("IdCountry")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Metrics_Track.Data.Models.trel_CountryMining", b =>
-                {
-                    b.HasOne("Metrics_Track.Data.Models.tbl_Country", "Country")
-                        .WithMany("Minings")
-                        .HasForeignKey("IdCountry")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Metrics_Track.Data.Models.tbl_Mining", "Mining")
-                        .WithMany("Countries")
-                        .HasForeignKey("IdMining")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

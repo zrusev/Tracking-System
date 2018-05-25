@@ -40,7 +40,7 @@
         public DbSet<trel_UserMining> TrelUserMining { get; set; }
         public DbSet<tbl_QualityIntegration> TblQualityIntegration { get; set; }
         public DbSet<trel_AgentCountry> TrelAgentCountry { get; set; }
-        public DbSet<trel_AgentMining> Trel_AgentMining { get; set; }
+        public DbSet<trel_CountryMining> TrelCountryMining { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -782,18 +782,18 @@
                     .HasForeignKey(c => c.IdAgent);
             });
 
-            builder.Entity<trel_AgentMining>(entity =>
+            builder.Entity<trel_CountryMining>(entity =>
             {
-                entity.HasKey(i => new { i.IdAgent, i.IdMining });
+                entity.HasKey(i => new { i.IdCountry, i.IdMining });
 
-                entity.ToTable("trel_AgentMining", "CPS");
+                entity.ToTable("trel_CountryMining", "CPS");
 
-                entity.HasOne(m => m.Agent)
-                    .WithMany(a => a.Minings)
-                    .HasForeignKey(m => m.IdAgent);
+                entity.HasOne(m => m.Country)
+                    .WithMany(c => c.Minings)
+                    .HasForeignKey(m => m.IdCountry);
 
-                entity.HasOne(a => a.Mining)
-                    .WithMany(m => m.Agents)
+                entity.HasOne(c => c.Mining)
+                    .WithMany(m => m.Countries)
                     .HasForeignKey(a => a.IdMining);
             });
 
