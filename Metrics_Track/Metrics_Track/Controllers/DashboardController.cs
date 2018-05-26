@@ -78,7 +78,7 @@
 
             foreach (var model in modelMining)
             {
-                //cvm.MiningList.Add();
+                cvm.MiningList.Add(model);
             }
 
             foreach (var model in modelPendings)

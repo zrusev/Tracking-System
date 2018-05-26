@@ -94,10 +94,6 @@
             <div class="container-fluid">
                 <div class="row">
                     <label>Update status</label>
-                </div>
-            </div>
-            <div class="container-fluid">
-                <div class="row">
                     <select id="useractivity" style="width:100%; height:30px">
                         @foreach (var status in Model.MiningList)
                         {
@@ -111,75 +107,12 @@
                 <div class="row">
                     <form id="submittranform" method="post">
                         <div class="form-row">
-                            <div class="form-group-sm">
-                                <span asp-validation-for="Transaction.IdCountry" class="text-danger"></span>
-                                <input asp-for="Transaction.IdCountry" type="hidden" name="CountrySelection" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group-sm">
-                                <span asp-validation-for="Transaction.IdProcess" class="text-danger"></span>
-                                <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group-sm">
-                                <span asp-validation-for="Transaction.Process" class="text-danger"></span>
-                                <input asp-for="Transaction.Process" type="hidden" name="ProcessName" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group-sm">
-                                <span asp-validation-for="Transaction.IdActivity" class="text-danger"></span>
-                                <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group-sm">
-                                <span asp-validation-for="Transaction.Activity" class="text-danger"></span>
-                                <input asp-for="Transaction.Activity" type="hidden" name="ActivityName" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group-sm">
-                                <span asp-validation-for="Transaction.IdLob" class="text-danger"></span>
-                                <input asp-for="Transaction.IdLob" type="hidden" name="LobSelection" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group-sm">
-                                <span asp-validation-for="Transaction.Lob" class="text-danger"></span>
-                                <input asp-for="Transaction.Lob" type="hidden" name="LobName" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group-sm">
-                                <span asp-validation-for="Transaction.IdStatus" class="text-danger"></span>
-                                <input asp-for="Transaction.IdStatus" type="hidden" name="StatusSelection" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <span asp-validation-for="Transaction.Status" class="text-danger"></span>
-                                <input asp-for="Transaction.Status" type="hidden" name="StatusName" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
+                            <div class="form-group col-lg-6" style="padding-left:0px;">
                                 <label asp-for="Transaction.IdNumber">Policy Number</label>
                                 <span asp-validation-for="Transaction.IdNumber" class="text-danger"></span>
                                 <input asp-for="Transaction.IdNumber" class="form-control" id="policynumber1" placeholder="Enter policy number">
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label asp-for="Transaction.Premium">Premium</label>
-                                <span asp-validation-for="Transaction.Premium" class="text-danger"></span>
-                                <input asp-for="Transaction.Premium" class="form-control" id="amount1" placeholder="Enter amount">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
+                            <div class="form-group col-lg-6" style="padding-right:0px;">
                                 <label asp-for="Transaction.ReceivedDate">Received Date</label>
                                 <span asp-validation-for="Transaction.ReceivedDate" class="text-danger"></span>
                                 <div class='input-group date' id='datetimepicker1'>
@@ -191,14 +124,24 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label asp-for="Transaction.Comment">Comment</label>
-                                <span asp-validation-for="Transaction.Comment" class="text-danger"></span>
-                                <textarea asp-for="Transaction.Comment" class="form-control" id="comment1" placeholder="Enter comment"></textarea>
+                            <div class="form-group col-lg-6" style="padding-left:0px;">
+                                <label asp-for="Transaction.Premium">Premium</label>
+                                <span asp-validation-for="Transaction.Premium" class="text-danger"></span>
+                                <input asp-for="Transaction.Premium" class="form-control" id="amount1" placeholder="Enter amount">
+                            </div>
+                            <div class="form-group col-lg-6" style="padding-right:0px">
+                                <label asp-for="Transaction.Premium">Premium</label>
+                                <span asp-validation-for="Transaction.Premium" class="text-danger"></span>
+                                <input asp-for="Transaction.Premium" class="form-control" id="amount1" placeholder="Enter amount">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label asp-for="Transaction.Comment">Comment</label>
+                            <span asp-validation-for="Transaction.Comment" class="text-danger"></span>
+                            <textarea asp-for="Transaction.Comment" class="form-control" id="comment1" placeholder="Enter comment"></textarea>
+                        </div>
                         <div class="form-row">
-                            <div class="form-group">
+                            <div class="form-group col-lg-6" style="padding-left:0px;">
                                 <label asp-for="Transaction.InceptionDate">Inception Date</label>
                                 <span asp-validation-for="Transaction.InceptionDate" class="text-danger"></span>
                                 <div class='input-group date' id='datetimepicker2'>
@@ -208,9 +151,7 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
+                            <div class="form-group col-lg-6" style="padding-right:0px;">
                                 <label asp-for="Transaction.DateReceivedInAig">Bound Date</label>
                                 <span asp-validation-for="Transaction.DateReceivedInAig" class="text-danger"></span>
                                 <div class='input-group date' id='datetimepicker3'>
@@ -221,25 +162,67 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sectionCheck">
-                                <label class="form-check-label" for="gridCheck">
-                                    Lock sections
-                                </label>
+                        <div class="form-row">
+                            <div class="form-check-input col-lg-4">
+                                <div class="form-group-sm">
+                                    <input class="form-check-input" type="checkbox" id="sectionCheck">
+                                    <label class="form-check-label" for="sectionCheck">
+                                        Lock sections
+                                    </label>
+                                </div>
+                                <div class="form-group-sm">
+                                    <input class="form-check-input" type="checkbox" id="receivedCheck">
+                                    <label class="form-check-label" for="receivedCheck">
+                                        Lock received date
+                                    </label>
+                                </div>
+                                <div class="form-group-sm">
+                                    <input asp-for="Transaction.IsPriority" class="form-check-input" id="priorityCheck" />
+                                    <label asp-for="Transaction.IsPriority" class="form-check-label" for="priorityCheck"></label>
+                                </div>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="receivedCheck">
-                                <label class="form-check-label" for="gridCheck">
-                                    Lock received date
-                                </label>
+                            <div class="form-group col-lg-5">
+                                <div class="form-group-sm">
+                                    <span asp-validation-for="Transaction.IdCountry" class="text-danger"></span>
+                                    <input asp-for="Transaction.IdCountry" type="hidden" name="CountrySelection" />
+                                </div>
+                                <div class="form-group-sm">
+                                    <span asp-validation-for="Transaction.IdProcess" class="text-danger"></span>
+                                    <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" />
+                                </div>
+                                <div class="form-group-sm">
+                                    <span asp-validation-for="Transaction.Process" class="text-danger"></span>
+                                    <input asp-for="Transaction.Process" type="hidden" name="ProcessName" />
+                                </div>
+                                <div class="form-group-sm">
+                                    <span asp-validation-for="Transaction.IdActivity" class="text-danger"></span>
+                                    <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" />
+                                </div>
+                                <div class="form-group-sm">
+                                    <span asp-validation-for="Transaction.Activity" class="text-danger"></span>
+                                    <input asp-for="Transaction.Activity" type="hidden" name="ActivityName" />
+                                </div>
+                                <div class="form-group-sm">
+                                    <span asp-validation-for="Transaction.IdLob" class="text-danger"></span>
+                                    <input asp-for="Transaction.IdLob" type="hidden" name="LobSelection" />
+                                </div>
+                                <div class="form-group-sm">
+                                    <span asp-validation-for="Transaction.Lob" class="text-danger"></span>
+                                    <input asp-for="Transaction.Lob" type="hidden" name="LobName" />
+                                </div>
+                                <div class="form-group-sm">
+                                    <span asp-validation-for="Transaction.IdStatus" class="text-danger"></span>
+                                    <input asp-for="Transaction.IdStatus" type="hidden" name="StatusSelection" />
+                                </div>
+                                <div class="form-group-sm">
+                                    <span asp-validation-for="Transaction.Status" class="text-danger"></span>
+                                    <input asp-for="Transaction.Status" type="hidden" name="StatusName" />
+                                </div>
                             </div>
-                            <div class="form-check">
-                                <input asp-for="Transaction.IsPriority" class="form-check-input" id="priorityCheck" />
-                                <label asp-for="Transaction.IsPriority" class="form-check-label" for="gridCheck"></label>
+                            <div class="form-group col-lg-3" style="padding-right:0px;">
+                                <button type="submit" class="btn btn-lg pull-right" style="color:white; background-color:#00A4E4;">Submit</button>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
@@ -331,8 +314,6 @@
             });
         })
     </script>
-
-    <script src="~/js/site.js"></script>
 
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

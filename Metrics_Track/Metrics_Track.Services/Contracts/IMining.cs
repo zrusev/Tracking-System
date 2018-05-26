@@ -14,6 +14,6 @@
 
         Task<UserDetailsModel> UserDetailsAsync();
 
-        IQueryable<IEnumerable<MiningModel>> MiningByUserId(string id);
+        IEnumerable<MiningModel> MiningByUserId(string id);
     }
 }

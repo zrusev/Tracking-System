@@ -45,21 +45,22 @@
                     .ProjectTo<UserDetailsModel>()
                     .FirstOrDefaultAsync();
 
-        public IQueryable<IEnumerable<MiningModel>> MiningByUserId(string id)
+        public IEnumerable<MiningModel> MiningByUserId(string id)
             =>  this.db
-                .TrelAgentCountry
-                .Where(a => a.IdAgent == id)
-                .Select(c => new
-                {
-                    countryId = c.IdCountry,
-                    countryToMiningTrel = c.Country.Minings
-                })
-                .Select(d => d.countryToMiningTrel
-                                .Where(c => c.IdCountry == d.countryId)
-                                .Select(k => new MiningModel
-                                {
-                                    IdMining = k.Mining.IdMining,
-                                    State = k.Mining.State
-                                }));
-    }
+                    .TrelAgentCountry
+                    .Where(a => a.IdAgent == id)
+                    .Select(c => new
+                    {
+                        countryId = c.IdCountry,
+                        countryToMiningTrel = c.Country.Minings
+                    })
+                    .Select(d => d.countryToMiningTrel
+                                    .Where(c => c.IdCountry == d.countryId)
+                                    .Select(k => new MiningModel
+                                    {
+                                        IdMining = k.Mining.IdMining,
+                                        State = k.Mining.State
+                                    }))
+                                    .FirstOrDefault();
+    }               
 }

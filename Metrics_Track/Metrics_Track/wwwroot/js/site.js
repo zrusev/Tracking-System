@@ -1,58 +1,31 @@
 ﻿$(function () {
     //Select process node
     $('.btn-default').on('click', function () {
-        var division = $(this).parent().attr("id");
         var selection = $(this).find('input').attr('id');
         var selectionName = $(this).text().trim();
+        var division = $(this).parent().attr("id");
 
-        if (division === "Lob") {
-            $('input[name=LobSelection]').val(selection);
-            $('input[name=LobName]').val(selectionName);
-        } else if (division === "Activity") {
-            $('input[name=ActivitySelection]').val(selection);
-            $('input[name=ActivityName]').val(selectionName);
-        } else if (division === "Status") {
-            $('input[name=StatusSelection]').val(selection);
-            $('input[name=StatusName]').val(selectionName);
+        switch (division) {
+            case "Lob":
+                $('input[name=LobSelection]').val(selection);
+                $('input[name=LobName]').val(selectionName);
+                break;
+            case "Activity":
+                $('input[name=ActivitySelection]').val(selection);
+                $('input[name=ActivityName]').val(selectionName);
+                break;
+            case "Status":
+                $('input[name=StatusSelection]').val(selection);
+                $('input[name=StatusName]').val(selectionName);
+                break;
         }
     });
 
     //Select country node
     $(".list-group-item").on("click", function () {
         var division = $(this).data("parent");
-
-        if ($(this).attr("aria-expanded") === 'true') {
-            if (division === "#country") {
-                $('input[name=CountrySelection]').val("");
-            }
-
-            $('input[name=ProcessSelection]').val("");
-            $('input[name=ProcessName]').val("");
-            //console.log("hide");
-        } else {
-            var btns = $(this).parent().next().find(".btn-group-vertical label");
-            btns.each(function (index, item) {
-                item.classList.remove('active');
-            });
-
-            var selection = $(this).data("id");
-            var selectionName = $(this).text().trim();
-
-            if (division === "#country") {
-                $('input[name=CountrySelection]').val(selection);
-            } else {
-                $('input[name=ProcessSelection]').val(selection);
-                $('input[name=ProcessName]').val(selectionName);
-            }
-
-            $('input[name=ActivitySelection]').val("");
-            $('input[name=ActivityName]').val("");
-            $('input[name=LobSelection]').val("");
-            $('input[name=LobName]').val("");
-            $('input[name=StatusSelection]').val("");
-            $('input[name=StatusName]').val("");
-            //console.log("show");
-        }
+        var isAriaExpanded = $(this).attr("aria-expanded") === 'true' ? true : false;
+        ExpandCollapseAria($(this), isAriaExpanded, division);
     });
 
     //Update status
@@ -128,6 +101,7 @@
                     if (data.success) {
                         //Add to pending transactions
                         var process = $('input[name=ProcessName]').val();
+                        var processIdentifier = "#process-" + $('input[name=ProcessSelection]').val();
                         var lob = $('input[name=LobName]').val();
                         var premiumAmount = data.prem;
                         var receivedDate = moment($("#Transaction_ReceivedDate").val()).format("YYYY-MM-DD HH:mm:ss");
@@ -156,7 +130,7 @@
                         var sectionBoxCheck = $("#sectionCheck").prop('checked');
                         var receivedBoxCheck = $("#receivedCheck").prop('checked');
                         var priorityBoxCheck = $("#priorityCheck").prop('checked');
-                        resetForm($("#submittranform"), sectionBoxCheck, receivedBoxCheck, priorityBoxCheck);                        
+                        ResetForm($("#submittranform"), processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck);                        
                     }
                     else {
                         $.each(data.errors, function (ind, err) {
@@ -178,6 +152,49 @@
         }
     });
 });
+
+//Set values
+function ExpandCollapseAria(currentElement, isAriaExpanded, division) {
+    if (isAriaExpanded) {
+        if (division === "#country") {
+            $('input[name=CountrySelection]').val("");
+
+            var processIdentifier = "#process-" + $('input[name=ProcessSelection]').val();
+            var btns = currentElement.parent().next().find(".btn-group-vertical label");
+            btns.each(function (index, item) {
+                item.classList.remove('active');
+            });
+            $(processIdentifier).attr('aria-expanded', false);
+            $(processIdentifier).prev().children().attr('aria-expanded', false);
+            $(processIdentifier).removeClass('in');
+        }
+        $('input[name=ProcessSelection]').val("");
+        $('input[name=ProcessName]').val("");
+        $('input[name=ActivitySelection]').val("");
+        $('input[name=ActivityName]').val("");
+        $('input[name=LobSelection]').val("");
+        $('input[name=LobName]').val("");
+        $('input[name=StatusSelection]').val("");
+        $('input[name=StatusName]').val("");
+        //console.log("hide");
+    } else {
+        var btns = currentElement.parent().next().find(".btn-group-vertical label");
+        btns.each(function (index, item) {
+            item.classList.remove('active');
+        });
+
+        var selection = currentElement.data("id");
+        var selectionName = currentElement.text().trim();
+
+        if (division === "#country") {
+            $('input[name=CountrySelection]').val(selection);
+        } else {
+            $('input[name=ProcessSelection]').val(selection);
+            $('input[name=ProcessName]').val(selectionName);
+        }
+        //console.log("show");
+    }
+};
 
 //Get activities
 function LoadData() {
@@ -209,27 +226,27 @@ function LoadData() {
 }
 
 //Reset form
-function resetForm($form, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck) {
+function ResetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck) {
     var sBox = sectionBoxCheck == true ? "#sectionCheck" : '';
     var rBox = receivedBoxCheck == true ? "#receivedCheck" : '';
     var pBox = priorityBoxCheck == true ? "#priorityCheck" : '';
+    var rValue = receivedBoxCheck == true ? "#Transaction_ReceivedDate" : '';
 
     if (sectionBoxCheck == true) {
         //do nothing
-    } else if (receivedBoxCheck == true) {
-        $form.find('input:text, input:password, input:file, select, textarea').not('#Transaction_ReceivedDate').val('');
-    } else if (priorityBoxCheck == true) {
-        $form.find('input:text, input:password, input:file, select, textarea').not('#Transaction_ReceivedDate').val('');
     } else {
-        $('.panel-collapse').each(function (index) { $(this).removeClass('in') }); //Collapse all panels
-        $form.find('input:text, input:password, input:file, select, textarea').val('');
+        $form.find('input:text, input:password, input:file, select, textarea').not(rValue).val('');
+        ExpandCollapseAria($(processIdentifier), true, '');
+        $(processIdentifier).attr('aria-expanded', false);
+        $(processIdentifier).prev().children().attr('aria-expanded', false);
+        $(processIdentifier).removeClass('in');
     }
-    var t = $form.find('input:radio, input:checkbox').filter(sBox | rBox | pBox).prop('checked', true);
+
+    $form.find('input:radio, input:checkbox').filter(sBox | rBox | pBox).prop('checked', true);
 }
 
 //Get tokens
 function GetTokens() {
     var countryId = parseInt($('#country .in').attr("id").split("-")[1]);
     var processId = parseInt($('#process' + '-' + countryId + ' .in').attr("id").split("-")[1]);
-    alert(countryId + ' ~ ' + processId);
 }
