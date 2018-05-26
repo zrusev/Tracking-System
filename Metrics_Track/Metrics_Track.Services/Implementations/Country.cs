@@ -66,11 +66,11 @@
                             from leftProcessTower in ProcessTower_Table.DefaultIfEmpty()
                         join tblTower in this.db.TblTower on leftProcessTower.IdTower equals tblTower.IdTower into Tower_Table
                             from leftTower in Tower_Table.DefaultIfEmpty()
-                        join trlProcessTowerCategory in this.db.TrelProcessTowerCategory on leftProcess.IdProcess equals trlProcessTowerCategory.IdProcess into ProcessTowerCategory_Table
+                       join trlProcessTowerCategory in this.db.TrelProcessTowerCategory on leftProcess.IdProcess equals trlProcessTowerCategory.IdProcess into ProcessTowerCategory_Table
                             from leftProcessTowerCategory in ProcessTowerCategory_Table.DefaultIfEmpty()
                         join tblTowerCategory in this.db.TblTowerCategory on leftProcessTowerCategory.IdTowerCategory equals tblTowerCategory.IdTowerCategory into TowerCategory_Table
                             from leftTowerCategory in TowerCategory_Table.DefaultIfEmpty()
-                        where leftLogin.Id == id
+                        where leftLogin.Id == id                        
                         select new ProcessMapModel
                         {
                             IdCountry = leftUserCountry.IdCountry,
