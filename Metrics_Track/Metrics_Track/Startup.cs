@@ -9,6 +9,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using System;
 
     public class Startup
     {
@@ -38,6 +39,13 @@
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options => {
+                options.Cookie.Name = ".MetricsTrack.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
+            });
+
             services.AddMvc();
         }
 
@@ -55,6 +63,8 @@
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseSession();
 
             app.UseStaticFiles();
 

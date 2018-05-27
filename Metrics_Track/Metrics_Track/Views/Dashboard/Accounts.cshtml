@@ -1,4 +1,6 @@
 ﻿@model CountryViewModel
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json;
 
 @{
     ViewBag.Title = $"{Model.CountryList.FirstOrDefault().Country}";
@@ -112,6 +114,31 @@
                                 <span asp-validation-for="Transaction.IdNumber" class="text-danger"></span>
                                 <input asp-for="Transaction.IdNumber" class="form-control" id="policynumber1" placeholder="Enter policy number">
                             </div>
+                            <div class="form-group col-lg-4">
+                                <label asp-for="Transaction.Premium">Premium</label>
+                                <span asp-validation-for="Transaction.Premium" class="text-danger"></span>
+                                <input asp-for="Transaction.Premium" class="form-control" id="amount1" placeholder="Enter amount">
+                            </div>
+                            <div class="form-group col-lg-2" style="padding-right:0px;">
+                                <label asp-for="Transaction.CurrencyCode">Currency</label>
+                                <span asp-validation-for="Transaction.CurrencyCode" class="text-danger"></span>
+                                <input asp-for="Transaction.CurrencyCode" class="form-control" id="currCode1" placeholder="Code">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6" style="padding-left:0px;">
+                                <label asp-for="Transaction.StartDate">Start Date</label>
+                                <div class="input-group date">
+                                    @{ 
+                                        DateTime sd = (DateTime)JsonConvert.DeserializeObject(Context.Session.GetString("StartDate"));
+                                        var sDate = sd.ToString("yyyy-MM-dd HH:mm:ss");
+                                    }
+                                    <input class="form-control form-date" readonly="readonly" disabled="disabled" value="@sDate" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
                             <div class="form-group col-lg-6" style="padding-right:0px;">
                                 <label asp-for="Transaction.ReceivedDate">Received Date</label>
                                 <span asp-validation-for="Transaction.ReceivedDate" class="text-danger"></span>
@@ -123,22 +150,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-lg-6" style="padding-left:0px;">
-                                <label asp-for="Transaction.Premium">Premium</label>
-                                <span asp-validation-for="Transaction.Premium" class="text-danger"></span>
-                                <input asp-for="Transaction.Premium" class="form-control" id="amount1" placeholder="Enter amount">
-                            </div>
-                            <div class="form-group col-lg-6" style="padding-right:0px">
-                                <label asp-for="Transaction.Premium">Premium</label>
-                                <span asp-validation-for="Transaction.Premium" class="text-danger"></span>
-                                <input asp-for="Transaction.Premium" class="form-control" id="amount1" placeholder="Enter amount">
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label asp-for="Transaction.Comment">Comment</label>
                             <span asp-validation-for="Transaction.Comment" class="text-danger"></span>
-                            <textarea asp-for="Transaction.Comment" class="form-control" id="comment1" placeholder="Enter comment"></textarea>
+                            <textarea asp-for="Transaction.Comment" class="form-control" rows="5" id="comment1" placeholder="Enter comment"></textarea>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-lg-6" style="padding-left:0px;">
@@ -274,16 +289,17 @@
                 <tbody>
                     @for (int i = 0; i < Model.PendingList.Count; i++)
                     {
-                    <tr> @* class="@(i % 2 == 1 ? "active" : "")" *@
-                        <td>@Model.PendingList[i].Process</td>
-                        <td>@Model.PendingList[i].Lob</td>
-                        <td>@Model.PendingList[i].Premium</td>
-                        <td>@Model.PendingList[i].ReceivedDate.Value.ToString("yyyy-mm-dd HH:mm:ss")</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-xs">@Model.PendingList[i].TransactionId</button>
-                        </td>
-                        <td>@Model.PendingList[i].Status</td>
-                    </tr>
+                        <tr>
+                            @* class="@(i % 2 == 1 ? "active" : "")" *@
+                            <td>@Model.PendingList[i].Process</td>
+                            <td>@Model.PendingList[i].Lob</td>
+                            <td>@Model.PendingList[i].Premium</td>
+                            <td>@Model.PendingList[i].ReceivedDate.Value.ToString("yyyy-mm-dd HH:mm:ss")</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-xs">@Model.PendingList[i].TransactionId</button>
+                            </td>
+                            <td>@Model.PendingList[i].Status</td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -298,6 +314,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+
+    <script src="~/js/booster.js"></script>
 
     <script language="javascript" type="text/javascript">
         $(function () {

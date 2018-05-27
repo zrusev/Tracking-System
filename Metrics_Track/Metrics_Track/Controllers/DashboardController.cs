@@ -1,11 +1,12 @@
 ﻿namespace Metrics_Track.Controllers
 {
     using Metrics_Track.Data.Models;
+    using Metrics_Track.Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
-    using Metrics_Track.Services.Models.Mining;
     using Metrics_Track.Services.Models.Transaction;
     using Metrics_Track.Services.Models.User;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Models;
@@ -14,7 +15,7 @@
     using System.Threading.Tasks;
 
     public class DashboardController : Controller
-    {   
+    {
         private readonly ICountry countries;
         private readonly IMining mining;
         private readonly ITransaction transaction;
@@ -44,10 +45,10 @@
 
                 var userId = userManager.GetUserId(User);
 
-                return RedirectToAction(nameof(Accounts), new { id = userId});
+                return RedirectToAction(nameof(Accounts), new { id = userId });
             }
 
-            return View();            
+            return View();
         }
 
         [HttpGet]
@@ -60,7 +61,7 @@
             {
                 return RedirectToAction(nameof(Index));
             }
-            
+
             var modelPendings = await this.pendingList.AllAsync(currentUser.IdLogin, PendingTransactionCode, currentUser.Sandbox);
 
             var processMap = await this.countries.ProcessMapByIdAsync(currentUser.Id);
@@ -85,7 +86,14 @@
             {
                 cvm.PendingList.Add(model);
             }
-            
+
+            var startDate = HttpContext.Session.Get<DateTime>("StartDate");
+
+            if (startDate == default(DateTime))
+            {
+                HttpContext.Session.Set<DateTime>("StartDate", DateTime.Now);
+            }
+
             return View(cvm);
         }
 
@@ -112,7 +120,7 @@
 
         [HttpPost]
         [Authorize]
-        public async  Task<IActionResult> SubmitTransaction(TransactionModel model)
+        public async Task<IActionResult> SubmitTransaction(TransactionModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -140,6 +148,8 @@
 
             return Json(new { success = true, newId = identityId, prem = model.Premium, pending = addToPendings });
         }
+
+        public IActionResult StayAlive() => null;
 
         public JsonResult GetMining(int id)
         {
