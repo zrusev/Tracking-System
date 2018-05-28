@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Controllers
 {
     using Metrics_Track.Data.Models;
+    using Metrics_Track.Infrastructure.Attributes;
     using Metrics_Track.Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Transaction;
@@ -98,10 +99,10 @@
         }
 
         [HttpPost]
+        [AjaxOnly]
         [Authorize]
         public async Task<IActionResult> UpdateStatus(UserActivityModel model)
         {
-
             if (!ModelState.IsValid)
             {
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() });
@@ -119,6 +120,7 @@
         }
 
         [HttpPost]
+        [AjaxOnly]
         [Authorize]
         public async Task<IActionResult> SubmitTransaction(TransactionModel model)
         {

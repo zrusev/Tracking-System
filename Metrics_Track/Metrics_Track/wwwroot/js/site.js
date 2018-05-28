@@ -51,7 +51,7 @@
                 document.getElementById("currentstatus").innerHTML = response.status;
             },
             error: function (response) {
-                alert(response.responseText);
+                alert('Internal error. Please contact support.');
             }
         });
         return false;
@@ -139,7 +139,7 @@
                     }
                 },
                 error: function (response) {
-                    alert(response.responseText);
+                    alert('Internal error. Please contact support.');
                 }
             });
         } else {
@@ -235,7 +235,7 @@ function ResetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, 
     if (sectionBoxCheck == true) {
         //do nothing
     } else {
-        $form.find('input:text, input:password, input:file, select, textarea').not(rValue).val('');
+        $form.find('input:text, input:password, input:file, select, textarea').not(rValue).not("#Transaction_StartDate").val('');
         ExpandCollapseAria($(processIdentifier), true, '');
         $(processIdentifier).attr('aria-expanded', false);
         $(processIdentifier).prev().children().attr('aria-expanded', false);

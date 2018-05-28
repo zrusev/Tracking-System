@@ -1,6 +1,6 @@
 ﻿//Keep session alive
 $(function () {
-    var refreshTime = 55000; //in milliseconds
+    var refreshTime = 60000*29;
     window.setInterval(function () {
         var url = '/dashboard/StayAlive';
         $.get(url);

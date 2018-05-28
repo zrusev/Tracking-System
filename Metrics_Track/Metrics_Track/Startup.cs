@@ -29,9 +29,17 @@
                      {options.Password.RequireUppercase = false;
                       options.Password.RequireDigit = false;
                       options.Password.RequireNonAlphanumeric = false;
-                      options.Password.RequireUppercase = false;})
+                      options.Password.RequireUppercase = false;
+                     })
                 .AddEntityFrameworkStores<TrackerDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            { 
+                options.Cookie.Name = ".MetricsTrack.Identity.Application";
+                //options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
+                //options.SlidingExpiration = false;
+            });
 
             services.AddAutoMapper();
 
@@ -43,7 +51,7 @@
 
             services.AddSession(options => {
                 options.Cookie.Name = ".MetricsTrack.Session";
-                options.IdleTimeout = TimeSpan.FromMinutes(1);
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
 
             services.AddMvc();
