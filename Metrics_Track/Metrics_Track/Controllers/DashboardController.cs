@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -55,7 +56,7 @@
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Accounts(string id)
-        {
+        {            
             var currentUser = await this.GetUserDetailsAsync();
 
             if (string.IsNullOrEmpty(id) || !id.Equals(currentUser.Id))
@@ -152,6 +153,14 @@
         }
 
         public IActionResult StayAlive() => null;
+
+        [Authorize]
+        public async Task<IActionResult> MyDailyTransactions()
+        {
+            var dailyTransactionsList = await this.transaction.DailyTransactions(145);
+
+            return View(new DailyTransactionsViewModel { DailyTransactionsList = dailyTransactionsList });
+        }
 
         public JsonResult GetMining(int id)
         {

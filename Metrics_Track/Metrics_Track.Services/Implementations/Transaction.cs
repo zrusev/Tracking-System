@@ -1,8 +1,14 @@
 ﻿namespace Metrics_Track.Services.Implementations
 {
+    using AutoMapper.QueryableExtensions;
     using Contracts;
     using Metrics_Track.Data.Models;
+    using Microsoft.EntityFrameworkCore;
     using Models.Transaction;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public class Transaction : ITransaction
     {
         private readonly TrackerDbContext db;
@@ -49,6 +55,18 @@
             this.db.SaveChanges();
 
             return currentTransaction.TransactionId;
+        }
+
+        public async Task<List<DailyTransactionsListModel>> DailyTransactions(int idLogin)
+        {
+            string query = "SELECT TOP 10 [Transaction_ID],[Function Name],[Country],[Team Leader],[User Name],[Process],[Process Map],[Activity],[LOB],[ReceivedDate],[StartDate],[CompleteDate],[Comment],[ID_Number],[Status],[Premium],[Currency_Code],[MNC],[Priority],[SLA Hrs],[SLA Target],[SLA Type],[SLA Transaction],[SLA Achievment],[Handling Time],[Multi-Step Transaction],[Audit],[ID_Login] FROM [EMEAMRDB].[CPS].[SSC_View_MyTransactions] WHERE [ID_Login] = {0} AND CompleteDate >= {1}";
+
+            return await this.db
+                     .SSCViewMyTransactions
+                     .FromSql(query, idLogin, DateTime.Now.Date)
+                     .AsNoTracking()
+                     .ProjectTo<DailyTransactionsListModel>()
+                     .ToListAsync();
         }
     }
 }

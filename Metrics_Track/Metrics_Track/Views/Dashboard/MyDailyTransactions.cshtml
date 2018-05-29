@@ -1,0 +1,77 @@
+﻿@model DailyTransactionsViewModel
+@{
+    ViewData["Title"] = "MyDailyTransactions";
+}
+
+<h4>My daily transactions</h4>
+<table class="table table-bordered table-striped" style="font-size:10px;">
+    <thead>
+        <tr style="background-color:#D1D0DE">
+            <th>Transaction ID</th>
+            <th>Function Name</th>
+            <th>Country</th>
+            <th>Team Leader</th>
+            <th>User Name</th>
+            <th>Process</th>
+            <th>Process Map</th>
+            <th>Activity</th>
+            <th>LOB</th>
+            <th>ReceivedDate</th>
+            <th>StartDate</th>
+            <th>CompleteDate</th>
+            <th>Comment</th>
+            <th>ID_Number</th>
+            <th>Status</th>
+            <th>Premium</th>
+            <th>Currency_Code</th>
+            <th>MNC</th>
+            <th>Priority</th>
+            <th>SLA Hrs</th>
+            <th>SLA Target</th>
+            <th>SLA Type</th>
+            <th>SLA Transaction</th>
+            <th>SLA Achievment</th>
+            <th>Handling Time</th>
+            <th>Multi-Step Transaction</th>
+            <th>Audit</th>
+            <th>ID Login</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var element in Model.DailyTransactionsList)
+        {
+        <tr>
+            <td>@element.TransactionId</td>
+            <td>@element.FunctionName</td>
+            <td>@element.Country</td>
+            <td>@element.TeamLeader</td>
+            <td>@element.UserName</td>
+            <td>@element.Process</td>
+            <td>@element.ProcessMap</td>
+            <td>@element.Activity</td>
+            <td>@element.Lob</td>
+            <td>@element.ReceivedDate</td>
+            <td>@element.StartDate</td>
+            <td>@element.CompleteDate</td>
+            <td>@element.Comment</td>
+            <td>@element.IdNumber</td>
+            <td>@element.Status</td>
+            <td>@element.Premium</td>
+            <td>@element.CurrencyCode</td>
+            <td>@element.Mnc</td>
+            <td>@element.Priority</td>
+            <td>@element.SLAHrs</td>
+            <td>@element.SLATarget</td>
+            <td>@element.SLAType</td>
+            <td>@element.SLATransaction</td>
+            <td>@element.SLAAchievment</td>
+            <td>@element.HandlingTime</td>
+            <td>@element.MultiStepTransaction</td>
+            <td>@element.Audit</td>
+            <td>@element.IdLogin</td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+

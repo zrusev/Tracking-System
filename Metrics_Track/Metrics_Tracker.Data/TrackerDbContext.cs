@@ -41,6 +41,7 @@
         public DbSet<tbl_QualityIntegration> TblQualityIntegration { get; set; }
         public DbSet<trel_AgentCountry> TrelAgentCountry { get; set; }
         public DbSet<trel_CountryMining> TrelCountryMining { get; set; }
+        public DbSet<SSC_View_MyTransactions> SSCViewMyTransactions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -808,7 +809,41 @@
                 entity.Property(i => i.IdLogin)
                 .HasDefaultValueSql("NEXT VALUE FOR CPS.SequenceIds");
             });
-                
+
+            builder.Entity<SSC_View_MyTransactions>(entity =>
+            {
+                entity.HasKey(i => i.TransactionId);
+                entity.Property(e => e.TransactionId).HasColumnName("Transaction_ID");
+
+                entity.Property(e => e.CurrencyCode).HasColumnName("Currency_Code");
+
+                entity.Property(e => e.FunctionName).HasColumnName("Function Name");
+
+                entity.Property(e => e.IdLogin).HasColumnName("ID_Login");
+
+                entity.Property(e => e.IdNumber).HasColumnName("ID_Number");
+
+                entity.Property(e => e.ProcessMap).HasColumnName("Process Map");
+
+                entity.Property(e => e.TeamLeader).HasColumnName("Team Leader");
+
+                entity.Property(e => e.UserName).HasColumnName("User Name");
+
+                entity.Property(e => e.SLAHrs).HasColumnName("SLA Hrs");
+
+                entity.Property(e => e.SLATarget).HasColumnName("SLA Target");
+
+                entity.Property(e => e.SLAType).HasColumnName("SLA Type");
+
+                entity.Property(e => e.SLATransaction).HasColumnName("SLA Transaction");
+
+                entity.Property(e => e.SLAAchievment).HasColumnName("SLA Achievment");
+
+                entity.Property(e => e.HandlingTime).HasColumnName("Handling Time");
+
+                entity.Property(e => e.MultiStepTransaction).HasColumnName("Multi-Step Transaction");
+            });
+
             base.OnModelCreating(builder);
         }
     }
