@@ -842,6 +842,8 @@
                 entity.Property(e => e.HandlingTime).HasColumnName("Handling Time");
 
                 entity.Property(e => e.MultiStepTransaction).HasColumnName("Multi-Step Transaction");
+
+                entity.Property(e => e.AspIDLogin).HasColumnName("AspID_Login");
             });
 
             base.OnModelCreating(builder);

@@ -130,7 +130,10 @@
                         var sectionBoxCheck = $("#sectionCheck").prop('checked');
                         var receivedBoxCheck = $("#receivedCheck").prop('checked');
                         var priorityBoxCheck = $("#priorityCheck").prop('checked');
-                        ResetForm($("#submittranform"), processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck);                        
+                        ResetForm($("#submittranform"), processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck);
+
+                        //Set new startDate
+                        $("#Transaction_StartDate").val(moment(new Date(data.startDate)).format("YYYY-MM-DD HH:mm:ss"));
                     }
                     else {
                         $.each(data.errors, function (ind, err) {

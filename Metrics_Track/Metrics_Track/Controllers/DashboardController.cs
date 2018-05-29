@@ -142,6 +142,7 @@
             var currentUser = await this.GetUserDetailsAsync();
 
             model.IdLogin = currentUser.IdLogin;
+            model.StartDate = HttpContext.Session.Get<DateTime>("StartDate");
             model.CompleteDate = DateTime.Now;
             model.Sandbox = currentUser.Sandbox;
 
@@ -149,7 +150,11 @@
 
             var addToPendings = (model.IdStatus == PendingIdStatusCode) ? true : false;
 
-            return Json(new { success = true, newId = identityId, prem = model.Premium, pending = addToPendings });
+            var newStartDate = DateTime.Now;
+
+            HttpContext.Session.Set<DateTime>("StartDate", newStartDate);
+
+            return Json(new { success = true, newId = identityId, startDate = newStartDate, prem = model.Premium, pending = addToPendings });
         }
 
         public IActionResult StayAlive() => null;
@@ -157,7 +162,9 @@
         [Authorize]
         public async Task<IActionResult> MyDailyTransactions()
         {
-            var dailyTransactionsList = await this.transaction.DailyTransactions(145);
+            var currentUser = await this.GetUserDetailsAsync();
+
+            var dailyTransactionsList = await this.transaction.DailyTransactions(currentUser.IdLogin);
 
             return View(new DailyTransactionsViewModel { DailyTransactionsList = dailyTransactionsList });
         }

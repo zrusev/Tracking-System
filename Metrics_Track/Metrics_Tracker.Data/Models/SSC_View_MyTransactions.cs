@@ -58,5 +58,7 @@
         public int Audit { get; set; }
 
         public int? IdLogin { get; set; }
+
+        public int? AspIDLogin { get; set; }
     }
 }
