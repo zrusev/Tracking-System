@@ -18,7 +18,9 @@
         [MaxLength(DataConstants.UserNameMaxLength)]
         public string LastName { get; set; }
 
-        [MaxLength(DataConstants.UserNameMaxLength)]
+        public int? IdTeamLead { get; set; }
+
+        public tbl_TeamLead TeamLead { get; set; }
 
         public short Sandbox { get; set; }
         

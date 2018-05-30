@@ -42,6 +42,7 @@
         public DbSet<trel_AgentCountry> TrelAgentCountry { get; set; }
         public DbSet<trel_CountryMining> TrelCountryMining { get; set; }
         public DbSet<SSC_View_MyTransactions> SSCViewMyTransactions { get; set; }
+        public DbSet<tbl_TeamLead> TblTeamLead { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -806,8 +807,9 @@
             {
                 entity.Property(e => e.IdLogin).HasColumnName("ID_Login");
 
-                entity.Property(i => i.IdLogin)
-                .HasDefaultValueSql("NEXT VALUE FOR CPS.SequenceIds");
+                entity.Property(e => e.IdTeamLead).HasColumnName("ID_TeamLead");
+
+                entity.Property(i => i.IdLogin).HasDefaultValueSql("NEXT VALUE FOR CPS.SequenceIds");
             });
 
             builder.Entity<SSC_View_MyTransactions>(entity =>
@@ -845,6 +847,19 @@
 
                 entity.Property(e => e.AspIDLogin).HasColumnName("AspID_Login");
             });
+
+            builder.Entity<tbl_TeamLead>(entity =>
+           {
+               entity.ToTable("tbl_TeamLead", "CPS");
+
+               entity.HasKey(i => i.IdTeamLead);
+
+               entity.Property(e => e.IdTeamLead).HasColumnName("Id_TeamLead");
+
+               entity.Property(e => e.TeamLead).HasMaxLength(255);
+
+               entity.HasOne(u => u.User).WithOne(t => t.TeamLead).HasForeignKey<User>(k => k.IdTeamLead);
+           });
 
             base.OnModelCreating(builder);
         }

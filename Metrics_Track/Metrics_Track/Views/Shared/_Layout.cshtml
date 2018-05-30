@@ -30,8 +30,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-                    <li><a asp-area="" asp-controller="Dashboard" asp-action="MyDailyTransactions">My Daily Transactions</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                        <li><a asp-area="" asp-controller="Dashboard" asp-action="MyDailyTransactions">My Daily Transactions</a></li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
