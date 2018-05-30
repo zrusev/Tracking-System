@@ -12,7 +12,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -89,9 +88,14 @@
                 cvm.PendingList.Add(model);
             }
 
-            var startDate = HttpContext.Session.Get<DateTime>("StartDate");
+            var previousTransactionId = HttpContext.Session.Get<int>("PreviousTransactionId");
 
-            if (startDate == default(DateTime))
+            if (previousTransactionId != default(int))
+            {
+                cvm.PreviousTransaction = this.transaction.PreviousTransaction(previousTransactionId);
+            }
+            
+            if (HttpContext.Session.Get<DateTime>("StartDate") == default(DateTime))
             {
                 HttpContext.Session.Set<DateTime>("StartDate", DateTime.Now);
             }
@@ -151,6 +155,8 @@
             var addToPendings = (model.IdStatus == PendingIdStatusCode) ? true : false;
 
             var newStartDate = DateTime.Now;
+
+            HttpContext.Session.Set<int>("PreviousTransactionId", identityId);
 
             HttpContext.Session.Set<DateTime>("StartDate", newStartDate);
 

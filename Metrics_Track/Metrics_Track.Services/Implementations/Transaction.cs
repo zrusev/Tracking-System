@@ -7,6 +7,7 @@
     using Models.Transaction;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class Transaction : ITransaction
@@ -68,5 +69,26 @@
                      .ProjectTo<DailyTransactionsListModel>()
                      .ToListAsync();
         }
+
+        public IEnumerable<PreviousTransactionModel> PreviousTransaction(int transactionId)
+        =>  this.db
+                .TblVolumeMain
+                .Where(ti => ti.TransactionId == transactionId)
+                .Select(s => new
+                {
+                    Premium = s.Premium,
+                    ReceivedDate = s.ReceivedDate,
+                    ProcessTrel = s.IdProcessNavigation,
+                    LobTrel = s.IdLobNavigation,
+                    StatusTrel = s.IdStatusNavigation
+                }).Select(p => new PreviousTransactionModel
+                {
+                    Process = p.ProcessTrel.ProcessMap,
+                    Lob = p.LobTrel.Lob,
+                    Premium = p.Premium,
+                    ReceivedDate = p.ReceivedDate,
+                    DocId = transactionId,
+                    Status = p.StatusTrel.Status
+                });
     }
 }

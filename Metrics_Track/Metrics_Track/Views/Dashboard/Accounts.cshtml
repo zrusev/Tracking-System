@@ -257,13 +257,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="active">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr>
+                        @foreach (var element in Model.PreviousTransaction)
+                        {
+                            <td>@element.Process</td>
+                            <td>@element.Lob</td>
+                            <td>@element.Premium</td>
+                            <td>@element.ReceivedDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-xs">@element.DocId</button>
+                            </td>
+                            <td>@element.Status</td>
+                        }
                     </tr>
                 </tbody>
             </table>
@@ -294,7 +299,7 @@
                             <td>@Model.PendingList[i].Process</td>
                             <td>@Model.PendingList[i].Lob</td>
                             <td>@Model.PendingList[i].Premium</td>
-                            <td>@Model.PendingList[i].ReceivedDate.Value.ToString("yyyy-mm-dd HH:mm:ss")</td>
+                            <td>@Model.PendingList[i].ReceivedDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
                             <td>
                                 <button type="button" class="btn btn-info btn-xs">@Model.PendingList[i].TransactionId</button>
                             </td>

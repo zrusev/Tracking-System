@@ -25,7 +25,7 @@
     $(".list-group-item").on("click", function () {
         var division = $(this).data("parent");
         var isAriaExpanded = $(this).attr("aria-expanded") === 'true' ? true : false;
-        ExpandCollapseAria($(this), isAriaExpanded, division);
+        expandCollapseAria($(this), isAriaExpanded, division);
     });
 
     //Update status
@@ -78,12 +78,12 @@
             IdTowerCategory : $('input[name=ProcessSelection]').val(),
             IdTower : $('input[name=ProcessSelection]').val(),
             ReceivedDate: moment($("#Transaction_ReceivedDate").val()).isValid() ? moment($("#Transaction_ReceivedDate").val()).format("YYYY-MM-DD HH:mm:ss") : null,
-            StartDate: ($("#datetimepicker1").data("DateTimePicker").viewDate()).format("YYYY-MM-DD HH:mm:ss"),
+            StartDate: null,
             IdStatus : $('input[name=StatusSelection]').val(),
             Comment : $("#comment1").val(),
             IdNumber : $("#policynumber1").val(),
             Premium: $("#amount1").val(),
-            IsPriority: $("#priorityCheck").val(),
+            IsPriority: $("#priorityCheck").prop('checked'),
             InceptionDate: moment($("#Transaction_InceptionDate").val()).isValid() ? moment($("#Transaction_InceptionDate").val()).format("YYYY-MM-DD HH:mm:ss") : null,
             DateReceivedInAig: moment($("#Transaction_DateReceivedInAig").val()).isValid() ? moment($("#Transaction_DateReceivedInAig").val()).format("YYYY-MM-DD HH:mm:ss") : null
         };
@@ -103,7 +103,7 @@
                         var process = $('input[name=ProcessName]').val();
                         var processIdentifier = "#process-" + $('input[name=ProcessSelection]').val();
                         var lob = $('input[name=LobName]').val();
-                        var premiumAmount = data.prem;
+                        var premiumAmount = data.prem == null ? "" : data.prem;
                         var receivedDate = moment($("#Transaction_ReceivedDate").val()).format("YYYY-MM-DD HH:mm:ss");
                         var id = data.newId;
                         var status = $('input[name=StatusName]').val();
@@ -130,7 +130,7 @@
                         var sectionBoxCheck = $("#sectionCheck").prop('checked');
                         var receivedBoxCheck = $("#receivedCheck").prop('checked');
                         var priorityBoxCheck = $("#priorityCheck").prop('checked');
-                        ResetForm($("#submittranform"), processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck);
+                        resetForm($("#submittranform"), processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck);
 
                         //Set new startDate
                         $("#Transaction_StartDate").val(moment(new Date(data.startDate)).format("YYYY-MM-DD HH:mm:ss"));
@@ -157,7 +157,7 @@
 });
 
 //Set values
-function ExpandCollapseAria(currentElement, isAriaExpanded, division) {
+function expandCollapseAria(currentElement, isAriaExpanded, division) {
     if (isAriaExpanded) {
         if (division === "#country") {
             $('input[name=CountrySelection]').val("");
@@ -200,7 +200,7 @@ function ExpandCollapseAria(currentElement, isAriaExpanded, division) {
 };
 
 //Get activities
-function LoadData() {
+function loadData() {
     $("#tblMining tbody tr").remove();
     $.ajax({
         type: "Get",
@@ -229,7 +229,7 @@ function LoadData() {
 }
 
 //Reset form
-function ResetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck) {
+function resetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck) {
     var sBox = sectionBoxCheck == true ? "#sectionCheck" : '';
     var rBox = receivedBoxCheck == true ? "#receivedCheck" : '';
     var pBox = priorityBoxCheck == true ? "#priorityCheck" : '';
@@ -239,7 +239,7 @@ function ResetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, 
         //do nothing
     } else {
         $form.find('input:text, input:password, input:file, select, textarea').not(rValue).not("#Transaction_StartDate").val('');
-        ExpandCollapseAria($(processIdentifier), true, '');
+        expandCollapseAria($(processIdentifier), true, '');
         $(processIdentifier).attr('aria-expanded', false);
         $(processIdentifier).prev().children().attr('aria-expanded', false);
         $(processIdentifier).removeClass('in');
@@ -249,7 +249,7 @@ function ResetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, 
 }
 
 //Get tokens
-function GetTokens() {
+function getTokens() {
     var countryId = parseInt($('#country .in').attr("id").split("-")[1]);
     var processId = parseInt($('#process' + '-' + countryId + ' .in').attr("id").split("-")[1]);
 }

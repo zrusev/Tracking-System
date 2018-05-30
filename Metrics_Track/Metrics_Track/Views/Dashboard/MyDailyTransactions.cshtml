@@ -39,37 +39,40 @@
     <tbody>
         @foreach (var element in Model.DailyTransactionsList)
         {
-        <tr>
-            <td>@element.TransactionId</td>
-            <td>@element.FunctionName</td>
-            <td>@element.Country</td>
-            <td>@element.TeamLeader</td>
-            <td>@element.UserName</td>
-            <td>@element.Process</td>
-            <td>@element.ProcessMap</td>
-            <td>@element.Activity</td>
-            <td>@element.Lob</td>
-            <td>@element.ReceivedDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
-            <td>@element.StartDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
-            <td>@element.CompleteDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
-            <td>@element.Comment</td>
-            <td>@element.IdNumber</td>
-            <td>@element.Status</td>
-            <td>@element.Premium</td>
-            <td>@element.CurrencyCode</td>
-            <td>@element.Mnc</td>
-            <td>@element.Priority</td>
-            <td>@Math.Round((double)element.SLAHrs, 4)</td>
-            <td>@element.SLATarget</td>
-            <td>@element.SLAType</td>
-            <td>@element.SLATransaction</td>
-            <td>@element.SLAAchievment</td>
-            <td>@TimeSpan.FromDays((double)element.HandlingTime)</td>
-            <td>@element.MultiStepTransaction</td>
-            <td>@element.Audit</td>
-        </tr>
+            <tr>
+                <td>@element.TransactionId</td>
+                <td>@element.FunctionName</td>
+                <td>@element.Country</td>
+                <td>@element.TeamLeader</td>
+                <td>@element.UserName</td>
+                <td>@element.Process</td>
+                <td>@element.ProcessMap</td>
+                <td>@element.Activity</td>
+                <td>@element.Lob</td>
+                <td>@element.ReceivedDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@element.StartDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@element.CompleteDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@element.Comment</td>
+                <td>@element.IdNumber</td>
+                <td>@element.Status</td>
+                <td>@element.Premium</td>
+                <td>@element.CurrencyCode</td>
+                <td>@element.Mnc</td>
+                <td>@element.Priority</td>
+                <td>@Math.Round((double)element.SLAHrs, 4)</td>
+                <td>@element.SLATarget</td>
+                <td>@element.SLAType</td>
+                <td>@element.SLATransaction</td>
+                <td>@element.SLAAchievment</td>
+                <td>@TimeSpan.FromDays((double)element.HandlingTime)</td>
+                <td>@element.MultiStepTransaction</td>
+                <td>@element.Audit</td>
+            </tr>
         }
     </tbody>
 </table>
 
-
+@section Scripts
+{
+    <script src="~/js/booster.js"></script>
+}

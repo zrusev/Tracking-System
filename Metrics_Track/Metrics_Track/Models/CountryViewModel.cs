@@ -16,11 +16,14 @@
 
         public List<PendingListModel> PendingList { get; set; }
 
+        public IEnumerable<PreviousTransactionModel> PreviousTransaction { get; set; }
+
         public CountryViewModel()
         {
             this.CountryList = new List<CountryModel>();
             this.MiningList = new List<MiningModel>();
             this.PendingList = new List<PendingListModel>();
+            this.PreviousTransaction = new List<PreviousTransactionModel>();
         }
     }
 }
