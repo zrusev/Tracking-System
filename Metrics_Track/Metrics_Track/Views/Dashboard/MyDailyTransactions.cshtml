@@ -6,35 +6,34 @@
 <h4>My daily transactions</h4>
 <table class="table table-bordered table-striped table-condensed" style="font-size:10px;">
     <thead>
-        <tr style="background-color:#D1D0DE">
-            <th>Transaction ID</th>
-            <th>Function Name</th>
-            <th>Country</th>
-            <th>Team Leader</th>
-            <th>User Name</th>
-            <th>Process</th>
-            <th>Process Map</th>
-            <th>Activity</th>
-            <th>LOB</th>
-            <th>ReceivedDate</th>
-            <th>StartDate</th>
-            <th>CompleteDate</th>
-            <th>Comment</th>
-            <th>ID_Number</th>
-            <th>Status</th>
-            <th>Premium</th>
-            <th>Currency_Code</th>
-            <th>MNC</th>
-            <th>Priority</th>
-            <th>SLA Hrs</th>
-            <th>SLA Target</th>
-            <th>SLA Type</th>
-            <th>SLA Transaction</th>
-            <th>SLA Achievment</th>
-            <th>Handling Time</th>
-            <th>Multi-Step Transaction</th>
-            <th>Audit</th>
-            <th>ID Login</th>
+        <tr style="color: white; background-color: #00A4E4;">
+            <th style="vertical-align: top;">Transaction ID</th>
+            <th style="vertical-align: top;">Function Name</th>
+            <th style="vertical-align: top;">Country</th>
+            <th style="vertical-align: top;">Team Leader</th>
+            <th style="vertical-align: top;">User Name</th>
+            <th style="vertical-align: top;">Process</th>
+            <th style="vertical-align: top;">Process Map</th>
+            <th style="vertical-align: top;">Activity</th>
+            <th style="vertical-align: top;">LOB</th>
+            <th style="vertical-align: top;">ReceivedDate</th>
+            <th style="vertical-align: top;">StartDate</th>
+            <th style="vertical-align: top;">CompleteDate</th>
+            <th style="vertical-align: top;">Comment</th>
+            <th style="vertical-align: top;">ID Number</th>
+            <th style="vertical-align: top;">Status</th>
+            <th style="vertical-align: top;">Premium</th>
+            <th style="vertical-align: top;">Currency Code</th>
+            <th style="vertical-align: top;">MNC</th>
+            <th style="vertical-align: top;">Priority</th>
+            <th style="vertical-align: top;">SLA Hrs</th>
+            <th style="vertical-align: top;">SLA Target</th>
+            <th style="vertical-align: top;">SLA Type</th>
+            <th style="vertical-align: top;">SLA Transaction</th>
+            <th style="vertical-align: top;">SLA Achievment</th>
+            <th style="vertical-align: top;">Handling Time</th>
+            <th style="vertical-align: top;">Multi-Step Transaction</th>
+            <th style="vertical-align: top;">Audit</th>
         </tr>
     </thead>
     <tbody>
@@ -50,9 +49,9 @@
             <td>@element.ProcessMap</td>
             <td>@element.Activity</td>
             <td>@element.Lob</td>
-            <td>@element.ReceivedDate</td>
-            <td>@element.StartDate</td>
-            <td>@element.CompleteDate</td>
+            <td>@element.ReceivedDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
+            <td>@element.StartDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
+            <td>@element.CompleteDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
             <td>@element.Comment</td>
             <td>@element.IdNumber</td>
             <td>@element.Status</td>
@@ -60,15 +59,14 @@
             <td>@element.CurrencyCode</td>
             <td>@element.Mnc</td>
             <td>@element.Priority</td>
-            <td>@element.SLAHrs</td>
+            <td>@Math.Round((double)element.SLAHrs, 4)</td>
             <td>@element.SLATarget</td>
             <td>@element.SLAType</td>
             <td>@element.SLATransaction</td>
             <td>@element.SLAAchievment</td>
-            <td>@element.HandlingTime</td>
+            <td>@TimeSpan.FromDays((double)element.HandlingTime)</td>
             <td>@element.MultiStepTransaction</td>
             <td>@element.Audit</td>
-            <td>@element.AspIDLogin</td>
         </tr>
         }
     </tbody>

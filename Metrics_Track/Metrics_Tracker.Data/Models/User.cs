@@ -18,6 +18,8 @@
         [MaxLength(DataConstants.UserNameMaxLength)]
         public string LastName { get; set; }
 
+        [MaxLength(DataConstants.UserNameMaxLength)]
+
         public short Sandbox { get; set; }
         
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
