@@ -39,5 +39,24 @@
                 .OrderBy(n => n.IdTeamLead != null)
                 .ThenByDescending(l => l.IdLogin)
                 .ToListAsync();
+
+        public async Task<AdminUserListingModel> UserByIdAsync(string userId)
+            => await this.db
+                .Users
+                .Where(u => u.Id == userId)
+                .Select(u => new AdminUserListingModel
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Username = u.UserName,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    IdLogin = u.IdLogin,
+                    IdTeamLead = u.IdTeamLead,
+                    TeamLead = u.TeamLead.TeamLead,
+                    Sandbox = u.Sandbox,
+                    Countries = u.Countries.Select(c => c.Country).ToList()
+                })
+                .FirstOrDefaultAsync();
     }
 }

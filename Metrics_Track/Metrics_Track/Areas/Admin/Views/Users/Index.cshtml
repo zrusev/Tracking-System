@@ -2,11 +2,14 @@
 @{
     ViewData["Title"] = "User Administration";
 }
-<h1>@ViewData["Title"]</h1>
+<h2>@ViewData["Title"]</h2>
 
 <table class="table table-bordered table-striped table-condensed" style="font-size:10px;">
     <thead>
         <tr style="color: white; background-color: #00A4E4;">
+            <th>
+                Action
+            </th>
             <th>
                 ID Login
             </th>
@@ -26,10 +29,10 @@
                 Sandbox
             </th>
             <th>
-                Countries
+                Assigned countries
             </th>
             <th>
-                Teamlead
+                Team Leader
             </th>
         </tr>
     </thead>
@@ -37,6 +40,9 @@
         @foreach (var user in Model.Users)
         {
         <tr>
+            <th>
+                <button class="btn btn-xs" onclick="location.href='@Url.Action("ById", "Users", new { userId = user.Id })'" style="color: white; background-color: #00A4E4;">Modify</button>
+            </th>
             <th>
                 @user.IdLogin
             </th>
@@ -59,27 +65,20 @@
                 @foreach (var country in user.Countries)
                 {
                     @country.Country@((country != user.Countries.Last()) ? "; " : "")
-                }     
+                }
             </th>
             <th>
-                @if (user.IdTeamLead != null)
-                {
-                    @user.TeamLead
-                }
-                else
-                {
                 <form asp-action="AssignToTeamLead" method="post">
                     <div class="row">
                         <div class="col-md-8">
                             <input type="hidden" name="UserId" value="@user.Id" />
-                            <select name="TeamLead" asp-items="Model.TeamLeads" class="form-control" style="font-size:10px;"></select>
+                            @Html.DropDownListFor(m => m.IdTeamLead, Model.TeamLeads, user.IdTeamLead == null ? "" : user.TeamLead)
                         </div>
                         <div class="col-md-4">
-                            <input class="btn btn-sm btn-primary" type="submit" value="Assign" />
+                            <input class="btn btn-xs" type="submit" value="Assign" style="color: white; background-color: #00A4E4;" />
                         </div>
                     </div>
                 </form>
-                }
             </th>
         </tr>
         }

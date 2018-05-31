@@ -7,6 +7,8 @@
     {
         public IEnumerable<AdminUserListingModel> Users { get; set; }
 
+        public string IdTeamLead { get; set; }
+
         public IEnumerable<SelectListItem> TeamLeads { get; set; }
     }
 }

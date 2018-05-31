@@ -7,6 +7,6 @@
         public string UserId { get; set; }
 
         [Required]
-        public string TeamLead { get; set; }
+        public string IdTeamLead { get; set; }
     }
 }

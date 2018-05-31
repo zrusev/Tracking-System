@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Services.Admin.Models
 {
     using Data.Models;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
 
     public class AdminUserListingModel
@@ -22,6 +23,8 @@
         public short Sandbox { get; set; }
 
         public int IdLogin { get; set; }
+
+        public IEnumerable<SelectListItem> TeamLeads { get; set; }
 
         public List<tbl_Country> Countries { get; set; } = new List<tbl_Country>();
     }
