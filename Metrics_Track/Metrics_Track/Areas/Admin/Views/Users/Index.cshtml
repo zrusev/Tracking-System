@@ -1,0 +1,86 @@
+﻿@model UserListingsViewModel
+@{
+    ViewData["Title"] = "User Administration";
+}
+<h1>@ViewData["Title"]</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                ID Login
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                E-mail
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Sandbox
+            </th>
+            <th>
+                Countries
+            </th>
+            <th>
+                Teamlead
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+        <tr>
+            <th>
+                @user.IdLogin
+            </th>
+            <th>
+                @user.FirstName
+            </th>
+            <th>
+                @user.LastName
+            </th>
+            <th>
+                @user.Email
+            </th>
+            <th>
+                @user.Username
+            </th>
+            <th>
+                @user.Sandbox
+            </th>
+            <th>
+                @foreach (var country in user.Countries)
+                {
+                    @country.Country@((country != user.Countries.Last()) ? "; " : "")
+                }     
+            </th>
+            <th>
+                @user.TeamLead
+            </th>
+            <th>
+                <form asp-action="AddToRole" method="post">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input type="hidden" name="UserId" value="@user.Id" />
+                            <select name="Role" asp-items="Model.Roles" class="form-control"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="btn btn-sm btn-primary" type="submit" value="Add To Role" />
+                        </div>
+                    </div>
+                </form>
+            </th>
+        </tr>
+        }
+    </tbody>
+</table>
