@@ -10,6 +10,8 @@
 
     public class AdminUser : IAdminUser
     {
+        private const string AdministratorRole = "Administrator";
+
         private readonly TrackerDbContext db;
 
         public AdminUser(TrackerDbContext db)
@@ -31,9 +33,11 @@
                     IdTeamLead = u.IdTeamLead,
                     TeamLead = u.TeamLead.TeamLead,
                     Sandbox = u.Sandbox,
-                    Countries = u.Countries.Select(c => c.Country).ToList()
+                    Countries = u.Countries.Select(c => c.Country).ToList()                    
                 })
-                .OrderByDescending(l => l.IdLogin)
+                .Where(u => u.Username != AdministratorRole)
+                .OrderBy(n => n.IdTeamLead != null)
+                .ThenByDescending(l => l.IdLogin)
                 .ToListAsync();
     }
 }

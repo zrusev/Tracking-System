@@ -4,9 +4,9 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<table class="table table-bordered table-hover">
+<table class="table table-bordered table-striped table-condensed" style="font-size:10px;">
     <thead>
-        <tr>
+        <tr style="color: white; background-color: #00A4E4;">
             <th>
                 ID Login
             </th>
@@ -30,9 +30,6 @@
             </th>
             <th>
                 Teamlead
-            </th>
-            <th>
-                Action
             </th>
         </tr>
     </thead>
@@ -65,20 +62,24 @@
                 }     
             </th>
             <th>
-                @user.TeamLead
-            </th>
-            <th>
-                <form asp-action="AddToRole" method="post">
+                @if (user.IdTeamLead != null)
+                {
+                    @user.TeamLead
+                }
+                else
+                {
+                <form asp-action="AssignToTeamLead" method="post">
                     <div class="row">
                         <div class="col-md-8">
                             <input type="hidden" name="UserId" value="@user.Id" />
-                            <select name="Role" asp-items="Model.Roles" class="form-control"></select>
+                            <select name="TeamLead" asp-items="Model.TeamLeads" class="form-control" style="font-size:10px;"></select>
                         </div>
                         <div class="col-md-4">
-                            <input class="btn btn-sm btn-primary" type="submit" value="Add To Role" />
+                            <input class="btn btn-sm btn-primary" type="submit" value="Assign" />
                         </div>
                     </div>
                 </form>
+                }
             </th>
         </tr>
         }

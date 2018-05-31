@@ -54,8 +54,8 @@
                             {
                                 Email = adminEmail,
                                 UserName = adminName,
-                                FirstName = "admin",
-                                LastName = "admin",
+                                FirstName = adminName,
+                                LastName = adminName,
                                 Sandbox = 1                            
                             };
 

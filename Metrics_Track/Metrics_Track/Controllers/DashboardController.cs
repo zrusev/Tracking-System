@@ -15,6 +15,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    [Authorize(Roles = WebConstants.AgentRole)]
     public class DashboardController : Controller
     {
         private readonly ICountry countries;

@@ -1,11 +1,9 @@
 ﻿namespace Metrics_Track.Services.Admin.Models
 {
-    using AutoMapper;
-    using Common.Mapping;
     using Data.Models;
     using System.Collections.Generic;
 
-    public class AdminUserListingModel : IMapFrom<User>
+    public class AdminUserListingModel
     {
         public string Id { get; set; }
 
