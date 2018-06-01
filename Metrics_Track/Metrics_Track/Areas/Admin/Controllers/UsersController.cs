@@ -25,7 +25,7 @@
         public UsersController(
             IAdminUser users,
             ITeamLead teamLeads,
-            ICountry country
+            ICountry country,
             RoleManager<IdentityRole> roleManager,
             UserManager<User> userManager)
         {

@@ -83,6 +83,7 @@
             Comment : $("#comment1").val(),
             IdNumber : $("#policynumber1").val(),
             Premium: $("#amount1").val(),
+            CurrencyCode: $("#currCode1").val(),
             IsPriority: $("#priorityCheck").prop('checked'),
             InceptionDate: moment($("#Transaction_InceptionDate").val()).isValid() ? moment($("#Transaction_InceptionDate").val()).format("YYYY-MM-DD HH:mm:ss") : null,
             DateReceivedInAig: moment($("#Transaction_DateReceivedInAig").val()).isValid() ? moment($("#Transaction_DateReceivedInAig").val()).format("YYYY-MM-DD HH:mm:ss") : null
@@ -110,12 +111,13 @@
 
                         var previousTable = $("#previousTransactionTable");
                         $("#previousTransactionTable > tbody").html("");
-                        var newRow = "<tr><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td><button type=\"button\" class=\"btn btn-info btn-xs\">" + id + "</button></td><td>" + status + "</td></tr>";
+                        var newRow = "<tr><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td><button type=\"button\" class=\"btn btn-info btn-xs\" onclick=\"returnTransaction(" + id + ")\">" + id + "</button></td><td>" + status + "</td></tr>";
                         previousTable.append(newRow);
 
                         if (data.pending) {
                             var pendingTable = $("#pendingTransactionTable");
-                            pendingTable.append(newRow);
+                            var addIdToRow = newRow.replace("<tr>", "<tr id=\"" + id + "\">")
+                            pendingTable.append(addIdToRow);
                         }
 
                         //Last transaction
@@ -197,7 +199,109 @@ function expandCollapseAria(currentElement, isAriaExpanded, division) {
         }
         //console.log("show");
     }
-};
+}
+
+function returnTransaction(transactionId) {
+    $.ajax({
+        type: "Get",
+        url: '/dashboard/returntransaction',
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: { transactionId: transactionId },
+        success: function (response) {
+            closeOpenedProcess();
+            openClosed(response.idCountry, response.idProcess);
+
+            $("#Transaction_IdCountry").val(response.idCountry);
+            $("#Transaction_IdProcess").val(response.idProcess);
+            $('input[name=ProcessName]').val(response.process);
+            $("#Transaction_IdActivity").val(response.idActivity);
+            $('input[name=ActivityName]').val(response.activity);
+            $("#Transaction_IdLob").val(response.idLob);
+            $('input[name=LobName]').val(response.lob);
+            $("#Transaction_IdStatus").val(response.idStatus);
+            $('input[name=StatusName]').val(response.status);
+            //IdDivision, IdTowerCategory, IdTower
+            $("#Transaction_ReceivedDate").val(moment(new Date(response.receivedDate)).format("YYYY-MM-DD HH:mm:ss"));
+            //StartDate, CompleteDate
+            $("#comment1").val(response.comment);
+            $("#policynumber1").val(response.idNumber);
+            $("#amount1").val(response.premium);
+            $("#currCode1").val(response.currencyCode);
+            if (response.priority == 1) {
+                $("#priorityCheck").prop('checked', true);
+            } else {
+                $("#priorityCheck").prop('checked', false);
+            }
+            if (response.inceptionDate !== null) {
+                $("#Transaction_InceptionDate").val(moment(new Date(response.inceptionDate)).format("YYYY-MM-DD HH:mm:ss"));
+            } else {
+                $("#Transaction_InceptionDate").val('');
+            }
+            if (response.dateReceivedInAig !== null) {
+                $("#Transaction_DateReceivedInAig").val(moment(new Date(response.dateReceivedInAig)).format("YYYY-MM-DD HH:mm:ss"));
+            } else {
+                $("#Transaction_DateReceivedInAig").val('');
+            }
+            //Remove table row
+            $("#" + transactionId).remove()
+
+            var processIdentifier = "#process-" + response.idProcess;
+        },
+        error: function (ex) {
+            alert('Internal error. Please contact support.');
+        }
+    });
+    return false;
+}
+
+function closeOpenedProcess() {
+    var processIdentifier = "#process-" + $('input[name=ProcessSelection]').val();
+    expandCollapseAria($(processIdentifier), true, '');
+    $(processIdentifier).attr('aria-expanded', false);
+    $(processIdentifier).prev().children().attr('aria-expanded', false);
+    $(processIdentifier).removeClass('in');
+}
+
+function openClosed(idCountry, idProcess) {
+    var isCountryOpened = $('input[name=CountrySelection]').val();
+    if (isCountryOpened === "" || parseInt(isCountryOpened) !== idCountry) {
+        var countryIdentifier = "#country-" + idCountry;
+        $(countryIdentifier).attr('aria-expanded', true);
+        $(countryIdentifier).prev().children().attr('aria-expanded', true);
+        $(countryIdentifier).addClass('in');
+    }
+    var processIdentifier = "#process-" + idProcess;
+    $(processIdentifier).attr('aria-expanded', true);
+    $(processIdentifier).prev().children().attr('aria-expanded', true);
+    $(processIdentifier).addClass('in');
+}
+
+//Reset form
+function resetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck) {
+    var sBox = sectionBoxCheck === true ? "#sectionCheck" : '';
+    var rBox = receivedBoxCheck === true ? "#receivedCheck" : '';
+    var pBox = priorityBoxCheck === true ? "#priorityCheck" : '';
+    var rValue = receivedBoxCheck === true ? "#Transaction_ReceivedDate" : '';
+
+    if (sectionBoxCheck == true) {
+        //do nothing
+    } else {
+        $form.find('input:text, input:password, input:file, select, textarea').not(rValue).not("#Transaction_StartDate").not("#Transaction_IdCountry").val('');
+        expandCollapseAria($(processIdentifier), true, '');
+        $(processIdentifier).attr('aria-expanded', false);
+        $(processIdentifier).prev().children().attr('aria-expanded', false);
+        $(processIdentifier).removeClass('in');
+    }
+
+    $form.find('input:radio, input:checkbox').filter(sBox | rBox | pBox).prop('checked', true);
+}
+
+//Get tokens
+function getTokens() {
+    var countryId = parseInt($('#country .in').attr("id").split("-")[1]);
+    var processId = parseInt($('#process' + '-' + countryId + ' .in').attr("id").split("-")[1]);
+}
 
 //Get activities
 function loadData() {
@@ -219,37 +323,8 @@ function loadData() {
             });
         },
         error: function (ex) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-            alert("StackTrace: " + r.StackTrace);
-            alert("ExceptionType: " + r.ExceptionType);
+            alert('Internal error. Please contact support.');
         }
     });
     return false;
-}
-
-//Reset form
-function resetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck) {
-    var sBox = sectionBoxCheck == true ? "#sectionCheck" : '';
-    var rBox = receivedBoxCheck == true ? "#receivedCheck" : '';
-    var pBox = priorityBoxCheck == true ? "#priorityCheck" : '';
-    var rValue = receivedBoxCheck == true ? "#Transaction_ReceivedDate" : '';
-
-    if (sectionBoxCheck == true) {
-        //do nothing
-    } else {
-        $form.find('input:text, input:password, input:file, select, textarea').not(rValue).not("#Transaction_StartDate").val('');
-        expandCollapseAria($(processIdentifier), true, '');
-        $(processIdentifier).attr('aria-expanded', false);
-        $(processIdentifier).prev().children().attr('aria-expanded', false);
-        $(processIdentifier).removeClass('in');
-    }
-
-    $form.find('input:radio, input:checkbox').filter(sBox | rBox | pBox).prop('checked', true);
-}
-
-//Get tokens
-function getTokens() {
-    var countryId = parseInt($('#country .in').attr("id").split("-")[1]);
-    var processId = parseInt($('#process' + '-' + countryId + ' .in').attr("id").split("-")[1]);
 }

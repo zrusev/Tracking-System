@@ -27,6 +27,7 @@
         private const int CompleteTransactionIdStatusCode = 1;
         private const int PendingIdStatusCode = 5;
         private const int PendingTransactionCode = 2;
+        private const short VoidStatusCode = 3;
 
         public DashboardController(ICountry countries, IMining mining, ITransaction transaction, IPendingList pendingList, UserManager<User> userManager)
         {
@@ -162,6 +163,55 @@
             HttpContext.Session.Set<DateTime>("StartDate", newStartDate);
 
             return Json(new { success = true, newId = identityId, startDate = newStartDate, prem = model.Premium, pending = addToPendings });
+        }
+
+        [HttpGet]
+        [Authorize]
+        [AjaxOnly]
+        public async Task<IActionResult> ReturnTransaction(int transactionId)
+        {
+            if (transactionId == 0)
+                return Json(new { success = false, errors = "Invalid transaction id." });
+            
+            var transaction = this.transaction.ReturnedTransaction(transactionId);            
+            if (transaction == null)
+                return Json(new { success = false, errors = "Could not find this transaction." });            
+
+            var currentUser = await this.GetUserDetailsAsync();
+            if (transaction.IdLogin != currentUser.IdLogin || transaction.Sandbox != currentUser.Sandbox)
+                return Json(new { success = false, errors = "The transaction has been assigned to somebody else." });
+            
+            if (transaction.StatusCode != PendingTransactionCode)
+                return Json(new { success = false, errors = "The transaction is no longer pending." });            
+
+            this.transaction.UpdateStatusCode(transactionId, VoidStatusCode);
+
+            return Json(new {
+                success = true,
+                IdCountry = transaction.IdCountry,
+                
+                IdProcess = transaction.IdProcess,
+                Process = transaction.Process,
+                IdActivity = transaction.IdActivity,
+                Activity = transaction.Activity,
+                IdLob = transaction.IdLob,
+                Lob = transaction.Lob,
+                IdDivision = transaction.IdDivision,
+                IdTowerCategory = transaction.IdTowerCategory,
+                IdTower = transaction.IdTower,
+                ReceivedDate = transaction.ReceivedDate,
+                StartDate = transaction.StartDate,
+                CompleteDate = transaction.CompleteDate,
+                IdStatus = transaction.IdStatus,
+                Status = transaction.Status,
+                Comment = transaction.Comment,
+                IdNumber = transaction.IdNumber,
+                Premium = transaction.Premium,
+                CurrencyCode = transaction.CurrencyCode,                
+                Priority = transaction.Priority,
+                InceptionDate = transaction.InceptionDate,
+                DateReceivedInAig = transaction.DateReceivedInAig
+            });
         }
 
         public IActionResult StayAlive() => null;

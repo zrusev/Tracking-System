@@ -10,5 +10,9 @@
         Task<List<DailyTransactionsListModel>> DailyTransactions(int idLogin);
 
         IEnumerable<PreviousTransactionModel> PreviousTransaction(int transactionId);
+
+        ReturnedTransactionModel ReturnedTransaction(int transactionId);
+
+        void UpdateStatusCode(int transactionId, short statusCode);
     }
 }

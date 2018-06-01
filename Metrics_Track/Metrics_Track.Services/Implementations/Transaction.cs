@@ -74,21 +74,64 @@
         =>  this.db
                 .TblVolumeMain
                 .Where(ti => ti.TransactionId == transactionId)
-                .Select(s => new
+                .Select(p => new PreviousTransactionModel
                 {
-                    Premium = s.Premium,
-                    ReceivedDate = s.ReceivedDate,
-                    ProcessTrel = s.IdProcessNavigation,
-                    LobTrel = s.IdLobNavigation,
-                    StatusTrel = s.IdStatusNavigation
-                }).Select(p => new PreviousTransactionModel
-                {
-                    Process = p.ProcessTrel.ProcessMap,
-                    Lob = p.LobTrel.Lob,
+                    Process = p.IdProcessNavigation.Process,
+                    Lob = p.IdLobNavigation.Lob,
                     Premium = p.Premium,
                     ReceivedDate = p.ReceivedDate,
                     DocId = transactionId,
-                    Status = p.StatusTrel.Status
+                    Status = p.IdStatusNavigation.Status
                 });
+
+        public ReturnedTransactionModel ReturnedTransaction(int transactionId)
+            => this.db
+                .TblVolumeMain
+                .Where(ti => ti.TransactionId == transactionId)
+                .Select(t => new ReturnedTransactionModel
+                {
+                    TransactionId = t.TransactionId,
+                    IdLogin = t.IdLogin,
+                    IdCountry = t.IdCountry,
+                    IdProcess = t.IdProcess,
+                    Process = t.IdProcessNavigation.ProcessMap,
+                    IdActivity = t.IdActivity,
+                    Activity = t.IdActivityNavigation.Activity,
+                    IdLob = t.IdLob,
+                    Lob = t.IdLobNavigation.Lob,
+                    IdDivision = t.IdDivision,
+                    IdTowerCategory = t.IdTowerCategory,
+                    IdTower = t.IdTower,
+                    ReceivedDate = t.ReceivedDate,
+                    IdStatus = t.IdStatus,
+                    Status = t.IdStatusNavigation.Status,
+                    Comment = t.Comment,
+                    IdNumber = t.IdNumber,
+                    IdPartner = t.IdPartner,
+                    IdContract = t.IdContract,
+                    Premium = t.Premium,
+                    CurrencyCode = t.CurrencyCode,
+                    InsuredName = t.InsuredName,
+                    OriginalId = t.OriginalId,
+                    StatusCode = t.StatusCode,
+                    Priority = t.Priority,
+                    Sandbox = t.Sandbox,
+                    InceptionDate = t.InceptionDate,
+                    DateReceivedInAig = t.DateReceivedInAig
+                })
+                .FirstOrDefault();
+
+        public void UpdateStatusCode(int transactionId, short statusCode)
+        {
+            var transaction = this.db
+                      .TblVolumeMain
+                      .Where(ti => ti.TransactionId == transactionId)              
+                      .FirstOrDefault();
+
+            transaction.StatusCode = statusCode;
+
+            this.db.TblVolumeMain.Update(transaction);
+            this.db.SaveChanges();
+        }
     }
 }
