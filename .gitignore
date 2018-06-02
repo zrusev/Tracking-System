@@ -289,15 +289,15 @@ __pycache__/
 
 # Ignore appsettings
 **/appsettings.development.json
-**/appsettings.staging.json
+**/appsettings.uat.json
 **/appsettings.production.json
 
 # ignore connectionstrings
 **/connectionstrings.development.json
-**/connectionstrings.staging.json
+**/connectionstrings.uat.json
 **/connectionstrings.production.json
 
 # ignore mailsettings
 **/mailsettings.development.json
-**/mailsettings.staging.json
+**/mailsettings.uat.json
 **/mailsettings.production.json
