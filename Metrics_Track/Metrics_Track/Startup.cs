@@ -3,6 +3,7 @@
     using AutoMapper;
     using Metrics_Track.Data.Models;
     using Metrics_Track.Infrastructure.Extensions;
+    using Metrics_Track.Services.Admin.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -53,6 +54,8 @@
                 options.Cookie.Name = ".MetricsTrack.Session";
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
+
+            services.Configure<EmailConfig>(Configuration.GetSection("Email"));
 
             services.AddMvc();
         }

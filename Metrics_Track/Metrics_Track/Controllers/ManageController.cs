@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Controllers
 {
     using Infrastructure.Extensions;
+    using Metrics_Track.Services.Admin.Contracts;
     using Metrics_Track.Data.Models;
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authentication;
@@ -21,7 +22,7 @@
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
 
@@ -31,7 +32,7 @@
         public ManageController(
           UserManager<User> userManager,
           SignInManager<User> signInManager,
-          IEmailSender emailSender,
+          IEmailService emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder)
         {

@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Controllers
 {
     using Metrics_Track.Data.Models;
+    using Metrics_Track.Services.Admin.Contracts;
     using Metrics_Track.Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authentication;
@@ -22,14 +23,14 @@
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailSender;        
         private readonly ILogger _logger;
         private readonly ICountry _country;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IEmailSender emailSender,
+            IEmailService emailSender,
             ILogger<AccountController> logger,
             ICountry country)
         {
@@ -238,6 +239,7 @@
             if (ModelState.IsValid)
             {
                 var listOfCountries = new List<trel_AgentCountry>();
+
                 foreach (var item in model.IdCountries)
                 {
                     var country = new trel_AgentCountry { IdCountry = item };
@@ -245,14 +247,16 @@
                 }
                 
                 var user = new User { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Countries = listOfCountries };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");

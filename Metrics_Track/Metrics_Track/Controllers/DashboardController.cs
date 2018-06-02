@@ -22,7 +22,7 @@
         private readonly IMining mining;
         private readonly ITransaction transaction;
         private readonly IPendingList pendingList;
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<User> userManager;        
 
         private const int CompleteTransactionIdStatusCode = 1;
         private const int PendingIdStatusCode = 5;

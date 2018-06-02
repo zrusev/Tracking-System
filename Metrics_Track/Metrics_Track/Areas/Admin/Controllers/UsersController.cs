@@ -7,9 +7,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using Models;
-    using System.Linq;
     using System.Threading.Tasks;
 
     [Area(WebConstants.AdminArea)]
@@ -21,19 +19,22 @@
         private readonly ICountry country;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<User> userManager;
+        public readonly IEmailService emailService;
 
         public UsersController(
             IAdminUser users,
             ITeamLead teamLeads,
             ICountry country,
             RoleManager<IdentityRole> roleManager,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IEmailService emailService)
         {
             this.users = users;
             this.teamLeads = teamLeads;
             this.country = country;
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.emailService = emailService;
         }
 
         public async Task<IActionResult> Index()
@@ -79,7 +80,17 @@
             
             await this.userManager.AddToRoleAsync(user, WebConstants.AgentRole);
 
-            TempData["SuccessMessage"] = $"User {user.Email} successfully assigned to {teamLead.TeamLead}.";
+            var emailTo = user.Email;
+            var emailSubject = "Metrics Track account confirmation";
+            var emailBody = @"<p>Thank you for registering at Metrics Track.&nbsp;</p>
+                              <p>Your account has been revised and approved.</p>
+                              <p><span class=""il"">You</span>&nbsp;may now log in to <a href=""a.com"">https://metrics-track.com</a> using your e-mail and password.</p>
+                              <p><strong><sup>Metrics Track team</sup></strong></p>";
+
+            var emailConfirmation =  await emailService.SendEmailAsync(emailTo, emailSubject, emailBody);
+
+            TempData["SuccessMessage"] = $"{user.FirstName} {user.LastName} has been assigned to {teamLead.TeamLead} successfully. " + emailConfirmation;
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -96,8 +107,6 @@
 
         public async Task<IActionResult> UpdateUserAsync(UserViewModel model)
         {
-
-
             return RedirectToAction(nameof(Index));
         }
     }
