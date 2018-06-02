@@ -76,17 +76,21 @@
                 ModelState.AddModelError(string.Empty, "Invalid identity details.");
             }
             
-            user.IdTeamLead = int.Parse(model.IdTeamLead);            
+            user.IdTeamLead = int.Parse(model.IdTeamLead);
+            user.EmailConfirmed = true;
+
             await this.userManager.UpdateAsync(user);
             
             await this.userManager.AddToRoleAsync(user, WebConstants.AgentRole);
 
             var emailTo = string.Empty; //user.Email;
             var emailSubject = "Metrics Track account confirmation";
-            var emailBody = @"<p>Thank you for registering at Metrics Track.&nbsp;</p>
-                              <p>Your account has been revised and approved.</p>
-                              <p><span class=""il"">You</span>&nbsp;may now log in to <a href=""a.com"">https://metrics-track.com</a> using your e-mail and password.</p>
-                              <p><strong><sup>Metrics Track team</sup></strong></p>";
+            var emailBody = string.Format(@"<p>Thank you for registering at Metrics Track.&nbsp;</p>
+                                            <p>Your account has been revised and approved.</p>
+                                            <p>Your current team leader is {0}.</p>
+                                            <p><span class=""il"">You</span>&nbsp;may now log in to 
+                                            <a href=""a.com"">https://metrics-track.com</a> using your e-mail and password.</p>
+                                            <p><strong><sup>Metrics Track team</sup></strong></p>", teamLead.TeamLead);
 
             var emailConfirmation =  await emailService.SendEmailAsync(emailTo, emailSubject, emailBody);
 

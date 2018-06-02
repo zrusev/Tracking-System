@@ -253,16 +253,18 @@
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                    
+                    //The EmailConfirmation requires an admin approval
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     var emailTo = string.Empty;
                     var emailSubject = "Metrics Track account request";
-                    var emailBody = $"<p>Pending account approval for user: {user.FirstName} {user.LastName} is present.&nbsp;</p>" +
-                                    @"<p>Please assign a respective team leader using the admin panel.</p>
-                                      <p><strong><sup>Metrics Track System</sup></strong></p>";
+                    var emailBody = string.Format(@"<p>Pending account approval for user: {0} {1} is present.&nbsp;</p>
+                                                    <p>Please assign a respective team leader using the admin panel.</p>
+                                                    <p><strong><sup>Metrics Track System</sup></strong></p>", user.FirstName, user.LastName);
+
                     await _emailSender.SendEmailAsync(emailTo, emailSubject, emailBody);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
