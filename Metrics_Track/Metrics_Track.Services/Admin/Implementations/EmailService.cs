@@ -12,9 +12,9 @@
 
     public class EmailService : IEmailService
     {
-        private readonly EmailConfig ec;
+        private readonly EmailConfigModel ec;
 
-        public EmailService(IOptions<EmailConfig> emailConfig)
+        public EmailService(IOptions<EmailConfigModel> emailConfig)
         {
             this.ec = emailConfig.Value;
         }
@@ -24,6 +24,12 @@
             try
             {
                 var emailMessage = new MimeMessage();
+
+                //send directly to admin
+                if (email.Equals(string.Empty))
+                {
+                    email = ec.AdminEmailAddress;
+                }
 
                 emailMessage.From.Add(new MailboxAddress(ec.FromName, ec.FromAddress));
                 emailMessage.To.Add(new MailboxAddress("", email));

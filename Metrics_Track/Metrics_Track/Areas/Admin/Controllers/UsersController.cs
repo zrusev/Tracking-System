@@ -2,6 +2,7 @@
 {
     using Metrics_Track;
     using Metrics_Track.Data.Models;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Admin.Contracts;
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authorization;
@@ -80,7 +81,7 @@
             
             await this.userManager.AddToRoleAsync(user, WebConstants.AgentRole);
 
-            var emailTo = user.Email;
+            var emailTo = string.Empty; //user.Email;
             var emailSubject = "Metrics Track account confirmation";
             var emailBody = @"<p>Thank you for registering at Metrics Track.&nbsp;</p>
                               <p>Your account has been revised and approved.</p>
@@ -89,7 +90,7 @@
 
             var emailConfirmation =  await emailService.SendEmailAsync(emailTo, emailSubject, emailBody);
 
-            TempData["SuccessMessage"] = $"{user.FirstName} {user.LastName} has been assigned to {teamLead.TeamLead} successfully. " + emailConfirmation;
+            TempData.AddSuccessMessage($"{user.FirstName} {user.LastName} has been assigned to {teamLead.TeamLead} successfully. " + emailConfirmation);
 
             return RedirectToAction(nameof(Index));
         }

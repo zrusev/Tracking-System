@@ -28,9 +28,8 @@
 
             services.AddIdentity<User, IdentityRole>(options =>  
                      {options.Password.RequireUppercase = false;
-                      options.Password.RequireDigit = false;
                       options.Password.RequireNonAlphanumeric = false;
-                      options.Password.RequireUppercase = false;
+                      options.User.RequireUniqueEmail = true;
                      })
                 .AddEntityFrameworkStores<TrackerDbContext>()
                 .AddDefaultTokenProviders();
@@ -55,7 +54,7 @@
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
 
-            services.Configure<EmailConfig>(Configuration.GetSection("Email"));
+            services.Configure<EmailConfigModel>(Configuration.GetSection("Email"));
 
             services.AddMvc();
         }

@@ -1,7 +1,7 @@
 ﻿namespace Metrics_Track.Services.Admin.Models
 {
     using System;
-    public class EmailConfig
+    public class EmailConfigModel
     {
         public String FromName { get; set; }
 
@@ -16,5 +16,7 @@
         public String UserId { get; set; }
 
         public String UserPassword { get; set; }
+
+        public string AdminEmailAddress { get; set; }
     }
 }

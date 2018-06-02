@@ -1,8 +1,8 @@
 ﻿namespace Metrics_Track.Controllers
 {
+    using Infrastructure.Extensions;
     using Metrics_Track.Data.Models;
     using Metrics_Track.Services.Admin.Contracts;
-    using Metrics_Track.Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
@@ -258,8 +258,17 @@
                     //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
+                    var emailTo = string.Empty;
+                    var emailSubject = "Metrics Track account request";
+                    var emailBody = $"<p>Pending account approval for user: {user.FirstName} {user.LastName} is present.&nbsp;</p>" +
+                                    @"<p>Please assign a respective team leader using the admin panel.</p>
+                                      <p><strong><sup>Metrics Track System</sup></strong></p>";
+                    await _emailSender.SendEmailAsync(emailTo, emailSubject, emailBody);
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
+
+                    TempData.AddSuccessMessage("You have been successfully registered. Please wait while an administrator approves your account.");
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
