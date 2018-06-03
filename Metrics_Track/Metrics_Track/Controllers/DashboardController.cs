@@ -181,15 +181,14 @@
             if (transaction.IdLogin != currentUser.IdLogin || transaction.Sandbox != currentUser.Sandbox)
                 return Json(new { success = false, errors = "The transaction has been assigned to somebody else." });
             
-            if (transaction.StatusCode != PendingTransactionCode)
-                return Json(new { success = false, errors = "The transaction is no longer pending." });            
+            //if (transaction.StatusCode != PendingTransactionCode)
+            //    return Json(new { success = false, errors = "The transaction is no longer pending." });            
 
             this.transaction.UpdateStatusCode(transactionId, VoidStatusCode);
 
             return Json(new {
                 success = true,
-                IdCountry = transaction.IdCountry,
-                
+                IdCountry = transaction.IdCountry,                
                 IdProcess = transaction.IdProcess,
                 Process = transaction.Process,
                 IdActivity = transaction.IdActivity,
@@ -216,6 +215,7 @@
 
         public IActionResult StayAlive() => null;
 
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> MyDailyTransactions()
         {

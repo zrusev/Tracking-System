@@ -110,3 +110,9 @@
     line-height: 1.1;
     background-color: #00A4E4;
 }
+
+.headerLogo {
+    position: absolute;
+    margin: 0px;
+    text-align: center;
+}

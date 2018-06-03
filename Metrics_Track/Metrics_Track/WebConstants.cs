@@ -9,5 +9,8 @@
         public const string TempDataErrorMessageKey = "ErrorMessage";
 
         public const string AdminArea = "Admin";
+
+        public const int UserNameMinLength = 2;
+        public const int UserNameMaxLength = 100;
     }
 }

@@ -129,7 +129,7 @@
                             <div class="form-group col-lg-6" style="padding-left:0px;">
                                 <label asp-for="Transaction.StartDate">Start Date</label>
                                 <div class="input-group date">
-                                    @{ 
+                                    @{
                                         DateTime sd = (DateTime)JsonConvert.DeserializeObject(Context.Session.GetString("StartDate"));
                                         var sDate = sd.ToString("yyyy-MM-dd HH:mm:ss");
                                     }
@@ -199,39 +199,39 @@
                             <div class="form-group col-lg-5">
                                 <div class="form-group-sm">
                                     <span asp-validation-for="Transaction.IdCountry" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdCountry" type="hidden" name="CountrySelection" />
+                                    <input asp-for="Transaction.IdCountry" class="hidden" name="CountrySelection" />
                                 </div>
                                 <div class="form-group-sm">
                                     <span asp-validation-for="Transaction.IdProcess" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdProcess" type="hidden" name="ProcessSelection" />
+                                    <input asp-for="Transaction.IdProcess" class="hidden" name="ProcessSelection" />
                                 </div>
                                 <div class="form-group-sm">
                                     <span asp-validation-for="Transaction.Process" class="text-danger"></span>
-                                    <input asp-for="Transaction.Process" type="hidden" name="ProcessName" />
+                                    <input asp-for="Transaction.Process" class="hidden" name="ProcessName" />
                                 </div>
                                 <div class="form-group-sm">
                                     <span asp-validation-for="Transaction.IdActivity" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdActivity" type="hidden" name="ActivitySelection" />
+                                    <input asp-for="Transaction.IdActivity" class="hidden" name="ActivitySelection" />
                                 </div>
                                 <div class="form-group-sm">
                                     <span asp-validation-for="Transaction.Activity" class="text-danger"></span>
-                                    <input asp-for="Transaction.Activity" type="hidden" name="ActivityName" />
+                                    <input asp-for="Transaction.Activity" class="hidden" name="ActivityName" />
                                 </div>
                                 <div class="form-group-sm">
                                     <span asp-validation-for="Transaction.IdLob" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdLob" type="hidden" name="LobSelection" />
+                                    <input asp-for="Transaction.IdLob" class="hidden" name="LobSelection" />
                                 </div>
                                 <div class="form-group-sm">
                                     <span asp-validation-for="Transaction.Lob" class="text-danger"></span>
-                                    <input asp-for="Transaction.Lob" type="hidden" name="LobName" />
+                                    <input asp-for="Transaction.Lob" class="hidden" name="LobName" />
                                 </div>
                                 <div class="form-group-sm">
                                     <span asp-validation-for="Transaction.IdStatus" class="text-danger"></span>
-                                    <input asp-for="Transaction.IdStatus" type="hidden" name="StatusSelection" />
+                                    <input asp-for="Transaction.IdStatus" class="hidden" name="StatusSelection" />
                                 </div>
                                 <div class="form-group-sm">
                                     <span asp-validation-for="Transaction.Status" class="text-danger"></span>
-                                    <input asp-for="Transaction.Status" type="hidden" name="StatusName" />
+                                    <input asp-for="Transaction.Status" class="hidden" name="StatusName" />
                                 </div>
                             </div>
                             <div class="form-group col-lg-3" style="padding-right:0px;">
@@ -257,19 +257,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        @foreach (var element in Model.PreviousTransaction)
-                        {
+                    @foreach (var element in Model.PreviousTransaction)
+                    {
+                        <tr id="previous-@element.DocId">
                             <td>@element.Process</td>
                             <td>@element.Lob</td>
                             <td>@element.Premium</td>
                             <td>@element.ReceivedDate.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
                             <td>
-                                <button type="button" class="btn btn-info btn-xs">@element.DocId</button>
+                                <button type="button" class="btn btn-info btn-xs" onclick="returnTransaction(@element.DocId)">@element.DocId</button>
                             </td>
                             <td>@element.Status</td>
-                        }
-                    </tr>
+                        </tr>
+                    }
                 </tbody>
             </table>
 
@@ -288,7 +288,7 @@
                 <tbody>
                     @for (int i = 0; i < Model.PendingList.Count; i++)
                     {
-                        <tr id="@Model.PendingList[i].TransactionId">
+                        <tr id="pending-@Model.PendingList[i].TransactionId">
                             @* class="@(i % 2 == 1 ? "active" : "")" *@
                             <td>@Model.PendingList[i].Process</td>
                             <td>@Model.PendingList[i].Lob</td>
@@ -313,9 +313,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
-
-    <script src="~/js/booster.js"></script>
-
+    
     <script language="javascript" type="text/javascript">
         $(function () {
             $(function () {
@@ -333,4 +331,5 @@
     </script>
 
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{ await Html.RenderPartialAsync("_DashboardScriptsPartial"); }
 }

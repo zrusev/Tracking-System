@@ -219,8 +219,6 @@
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
-            var countries = _country.All();
-
             var viewModel = new RegisterViewModel
             {
                 Countries = GetCountriesListItems()

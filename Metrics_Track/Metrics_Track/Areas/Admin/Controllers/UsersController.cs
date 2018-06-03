@@ -1,14 +1,17 @@
 ﻿namespace Metrics_Track.Areas.Admin.Controllers
 {
+    using Infrastructure.Extensions;
     using Metrics_Track;
     using Metrics_Track.Data.Models;
-    using Infrastructure.Extensions;
     using Metrics_Track.Services.Admin.Contracts;
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Models;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     [Area(WebConstants.AdminArea)]
@@ -56,6 +59,7 @@
             });
         }
 
+        [HttpPost]
         public async Task<IActionResult> AssignToTeamLead(AddUserToTeamLeadFormModel model)
         {
             if (!ModelState.IsValid)
@@ -99,19 +103,90 @@
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
         public async Task<IActionResult> ById(string userId)
         {
             var user = await this.users.UserByIdAsync(userId);
 
-            var countries = this.country.All();
+            var countries = this.country.All().Select(c => new SelectListItem
+            {
+                Value = c.ID_Country.ToString(),
+                Text = c.Country
+            });
 
-            var currentUser = new UserViewModel { User = user };
+            var currentUser = new UserViewModel
+            {
+                User = user,
+                IdCountries = user.Countries.Select(i => i.IdCountry).ToArray(),
+                Countries = countries
+            };
 
             return View(currentUser);
         }
 
+        [HttpPost]
         public async Task<IActionResult> UpdateUserAsync(UserViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var user = await this.userManager.FindByIdAsync(model.User.Id);
+            var userExists = user != null;
+
+            if (!userExists)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid identity details.");
+            }
+
+            user.FirstName = model.User.FirstName;
+            user.LastName = model.User.LastName;
+            user.Email = model.User.Email;
+            user.UserName = model.User.Username;
+            user.Sandbox = model.User.Sandbox;
+
+            this.users.RemoveAgentToCountryTrel(user.Id);
+
+            var countryList = new List<trel_AgentCountry>();
+
+            foreach (var id in model.IdCountries)
+            {
+                var trel = new trel_AgentCountry
+                {
+                    IdAgent = user.Id,
+                    IdCountry = id
+                };
+                countryList.Add(trel);
+            }
+
+            user.Countries = countryList;
+
+            await this.userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult RemoveUser(UserViewModel model)
+        {
+            ViewData["id"] = model.User.Id;
+            ViewData["user"] = model.User.FirstName + " " + model.User.LastName;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveUserById(string id)
+        {
+            var user = await this.userManager.FindByIdAsync(id);
+
+            //Remove team leader if necessary
+            //this.users.RemoveTeamLeaderById(id);
+
+            var roles = await this.userManager.GetRolesAsync(user);
+
+            TempData.AddSuccessMessage("User removed successfully.");
             return RedirectToAction(nameof(Index));
         }
     }

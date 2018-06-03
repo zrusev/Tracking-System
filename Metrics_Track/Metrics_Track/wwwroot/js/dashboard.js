@@ -111,12 +111,12 @@
 
                         var previousTable = $("#previousTransactionTable");
                         $("#previousTransactionTable > tbody").html("");
-                        var newRow = "<tr><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td><button type=\"button\" class=\"btn btn-info btn-xs\" onclick=\"returnTransaction(" + id + ")\">" + id + "</button></td><td>" + status + "</td></tr>";
+                        var newRow = "<tr id=previous-" + id + "><td>" + process + "</td><td>" + lob + "</td><td>" + premiumAmount + "</td><td>" + receivedDate + "</td><td><button type=\"button\" class=\"btn btn-info btn-xs\" onclick=\"returnTransaction(" + id + ")\">" + id + "</button></td><td>" + status + "</td></tr>";
                         previousTable.append(newRow);
 
                         if (data.pending) {
                             var pendingTable = $("#pendingTransactionTable");
-                            var addIdToRow = newRow.replace("<tr>", "<tr id=\"" + id + "\">")
+                            var addIdToRow = newRow.replace("<tr id=previous-" + id + ">", "<tr id=pending-" + id + ">")
                             pendingTable.append(addIdToRow);
                         }
 
@@ -188,13 +188,20 @@ function expandCollapseAria(currentElement, isAriaExpanded, division) {
             item.classList.remove('active');
         });
 
+        $('input[name=ActivitySelection]').val("");
+        $('input[name=ActivityName]').val("");
+        $('input[name=LobSelection]').val("");
+        $('input[name=LobName]').val("");
+        $('input[name=StatusSelection]').val("");
+        $('input[name=StatusName]').val("");
+
         var selection = currentElement.data("id");
         var selectionName = currentElement.text().trim();
 
         if (division === "#country") {
-            $('input[name=CountrySelection]').val(selection);
+            $("#Transaction_IdCountry").val(selection);
         } else {
-            $('input[name=ProcessSelection]').val(selection);
+            $("#Transaction_IdProcess").val(selection);
             $('input[name=ProcessName]').val(selectionName);
         }
         //console.log("show");
@@ -209,44 +216,18 @@ function returnTransaction(transactionId) {
         contentType: "application/json; charset=utf-8",
         data: { transactionId: transactionId },
         success: function (response) {
-            closeOpenedProcess();
-            openClosed(response.idCountry, response.idProcess);
+            if (response.success) {
+                closeOpened(response.idCountry);
+                openClosed(response.idCountry, response.idProcess);
 
-            $("#Transaction_IdCountry").val(response.idCountry);
-            $("#Transaction_IdProcess").val(response.idProcess);
-            $('input[name=ProcessName]').val(response.process);
-            $("#Transaction_IdActivity").val(response.idActivity);
-            $('input[name=ActivityName]').val(response.activity);
-            $("#Transaction_IdLob").val(response.idLob);
-            $('input[name=LobName]').val(response.lob);
-            $("#Transaction_IdStatus").val(response.idStatus);
-            $('input[name=StatusName]').val(response.status);
-            //IdDivision, IdTowerCategory, IdTower
-            $("#Transaction_ReceivedDate").val(moment(new Date(response.receivedDate)).format("YYYY-MM-DD HH:mm:ss"));
-            //StartDate, CompleteDate
-            $("#comment1").val(response.comment);
-            $("#policynumber1").val(response.idNumber);
-            $("#amount1").val(response.premium);
-            $("#currCode1").val(response.currencyCode);
-            if (response.priority == 1) {
-                $("#priorityCheck").prop('checked', true);
-            } else {
-                $("#priorityCheck").prop('checked', false);
-            }
-            if (response.inceptionDate !== null) {
-                $("#Transaction_InceptionDate").val(moment(new Date(response.inceptionDate)).format("YYYY-MM-DD HH:mm:ss"));
-            } else {
-                $("#Transaction_InceptionDate").val('');
-            }
-            if (response.dateReceivedInAig !== null) {
-                $("#Transaction_DateReceivedInAig").val(moment(new Date(response.dateReceivedInAig)).format("YYYY-MM-DD HH:mm:ss"));
-            } else {
-                $("#Transaction_DateReceivedInAig").val('');
-            }
-            //Remove table row
-            $("#" + transactionId).remove()
+                populateData(response);
 
-            var processIdentifier = "#process-" + response.idProcess;
+                $("#previous-" + transactionId).remove();
+
+                $("#pending-" + transactionId).remove();
+            } else {
+                alert(response.errors);
+            }
         },
         error: function (ex) {
             alert('Internal error. Please contact support.');
@@ -255,29 +236,82 @@ function returnTransaction(transactionId) {
     return false;
 }
 
-function closeOpenedProcess() {
+//Set values from response
+function populateData(response) {
+    $("#Transaction_IdCountry").val(response.idCountry);
+    $("#Transaction_IdProcess").val(response.idProcess);
+    $('input[name=ProcessName]').val(response.process);
+    $("#Transaction_IdActivity").val(response.idActivity);
+    $('input[name=ActivityName]').val(response.activity);
+    $("#Transaction_IdLob").val(response.idLob);
+    $('input[name=LobName]').val(response.lob);
+    $("#Transaction_IdStatus").val(response.idStatus);
+    $('input[name=StatusName]').val(response.status);
+    //IdDivision, IdTowerCategory, IdTower
+    $("#Transaction_ReceivedDate").val(moment(new Date(response.receivedDate)).format("YYYY-MM-DD HH:mm:ss"));
+    //StartDate, CompleteDate
+    $("#comment1").val(response.comment);
+    $("#policynumber1").val(response.idNumber);
+    $("#amount1").val(response.premium);
+    $("#currCode1").val(response.currencyCode);
+    if (response.priority == 1) {
+        $("#priorityCheck").prop('checked', true);
+    } else {
+        $("#priorityCheck").prop('checked', false);
+    }
+    if (response.inceptionDate !== null) {
+        $("#Transaction_InceptionDate").val(moment(new Date(response.inceptionDate)).format("YYYY-MM-DD HH:mm:ss"));
+    } else {
+        $("#Transaction_InceptionDate").val('');
+    }
+    if (response.dateReceivedInAig !== null) {
+        $("#Transaction_DateReceivedInAig").val(moment(new Date(response.dateReceivedInAig)).format("YYYY-MM-DD HH:mm:ss"));
+    } else {
+        $("#Transaction_DateReceivedInAig").val('');
+    }
+
+    //Mark Lob, Activity, Status
+    var processIdentifier = "#process-" + response.idProcess;
+    $(processIdentifier).find("#Lob").children().find("input").filter("#" + response.idLob).parent().addClass('active');
+    $(processIdentifier).find("#Activity").children().find("input").filter("#" + response.idActivity).parent().addClass('active');
+    $(processIdentifier).find("#Status").children().find("input").filter("#" + response.idStatus).parent().addClass('active');
+}
+
+//Close open process and country section
+function closeOpened(idCountry) {
     var processIdentifier = "#process-" + $('input[name=ProcessSelection]').val();
     expandCollapseAria($(processIdentifier), true, '');
     $(processIdentifier).attr('aria-expanded', false);
     $(processIdentifier).prev().children().attr('aria-expanded', false);
     $(processIdentifier).removeClass('in');
+
+    var isCountryOpened = $('input[name=CountrySelection]').val();
+    if (parseInt(isCountryOpened) !== idCountry && isCountryOpened !== "") {
+        var countryIdentifier = "#country-" + isCountryOpened;
+        $(countryIdentifier).attr('aria-expanded', false);
+        $(countryIdentifier).prev().children().attr('aria-expanded', false);
+        $(countryIdentifier).removeClass('in');
+        $("#Transaction_IdCountry").val('');
+    }
 }
 
+//Open closed sections
 function openClosed(idCountry, idProcess) {
     var isCountryOpened = $('input[name=CountrySelection]').val();
-    if (isCountryOpened === "" || parseInt(isCountryOpened) !== idCountry) {
+    if (isCountryOpened === "") {
         var countryIdentifier = "#country-" + idCountry;
         $(countryIdentifier).attr('aria-expanded', true);
         $(countryIdentifier).prev().children().attr('aria-expanded', true);
         $(countryIdentifier).addClass('in');
     }
+
     var processIdentifier = "#process-" + idProcess;
     $(processIdentifier).attr('aria-expanded', true);
     $(processIdentifier).prev().children().attr('aria-expanded', true);
     $(processIdentifier).addClass('in');
 }
 
-//Reset form
+//Clear values
 function resetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, priorityBoxCheck) {
     var sBox = sectionBoxCheck === true ? "#sectionCheck" : '';
     var rBox = receivedBoxCheck === true ? "#receivedCheck" : '';
@@ -295,36 +329,4 @@ function resetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, 
     }
 
     $form.find('input:radio, input:checkbox').filter(sBox | rBox | pBox).prop('checked', true);
-}
-
-//Get tokens
-function getTokens() {
-    var countryId = parseInt($('#country .in').attr("id").split("-")[1]);
-    var processId = parseInt($('#process' + '-' + countryId + ' .in').attr("id").split("-")[1]);
-}
-
-//Get activities
-function loadData() {
-    $("#tblMining tbody tr").remove();
-    $.ajax({
-        type: "Get",
-        url: '@Url.Action("GetMining")',
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: { id: 145 },
-        success: function (ajaxResponse) {
-            var rows = '';
-            $.each(ajaxResponse, function (index, ajaxResponse) {
-                rows = "<tr>"
-                    + "<td>" + ajaxResponse.idMining + "</td>"
-                    + "<td>" + ajaxResponse.state + "</td>"
-                    + "</tr>";
-                $('#tblMining tbody').append(rows);
-            });
-        },
-        error: function (ex) {
-            alert('Internal error. Please contact support.');
-        }
-    });
-    return false;
 }

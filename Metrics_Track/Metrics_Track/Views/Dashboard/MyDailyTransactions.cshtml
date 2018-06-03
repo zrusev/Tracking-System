@@ -74,5 +74,6 @@
 
 @section Scripts
 {
-    <script src="~/js/booster.js"></script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{ await Html.RenderPartialAsync("_DashboardScriptsPartial"); }
 }

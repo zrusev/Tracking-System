@@ -58,5 +58,34 @@
                     Countries = u.Countries.Select(c => c.Country).ToList()
                 })
                 .FirstOrDefaultAsync();
+
+        public void RemoveAgentToCountryTrel(string agentId)
+        {
+          var trelList =  this.db
+                 .TrelAgentCountry
+                 .Where(i => i.IdAgent == agentId)
+                 .ToList();
+
+            foreach (var trel in trelList)
+            {
+
+                this.db.TrelAgentCountry.Remove(trel);
+            }
+
+            this.db.SaveChanges();
+        }
+
+        public void RemoveTeamLeaderById(string agengId)
+        {
+            var user = this.db
+                .Users
+                .Where(i => i.Id == agengId)
+                .FirstOrDefault();
+
+            user.IdTeamLead = null;
+
+            this.db.Users.Update(user);
+            this.db.SaveChanges();
+        }
     }
 }
