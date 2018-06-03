@@ -87,7 +87,7 @@
             
             await this.userManager.AddToRoleAsync(user, WebConstants.AgentRole);
 
-            var emailTo = string.Empty; //user.Email;
+            var emailTo = user.Email;
             var emailSubject = "Metrics Track account confirmation";
             var emailBody = string.Format(@"<p>Thank you for registering at Metrics Track.&nbsp;</p>
                                             <p>Your account has been revised and approved.</p>

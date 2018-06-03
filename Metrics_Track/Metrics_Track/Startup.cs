@@ -16,7 +16,7 @@
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;            
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -24,7 +24,9 @@
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TrackerDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    x => x.MigrationsHistoryTable("__EFMigrationsHistory", "CPS")));
 
             services.AddIdentity<User, IdentityRole>(options =>  
                      {options.Password.RequireUppercase = false;

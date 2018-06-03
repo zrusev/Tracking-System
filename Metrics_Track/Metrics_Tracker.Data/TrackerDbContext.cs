@@ -44,19 +44,6 @@
         public DbSet<SSC_View_MyTransactions> SSCViewMyTransactions { get; set; }
         public DbSet<tbl_TeamLead> TblTeamLead { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var connectionString =
-                @"Server=(LocalDB)\LocalDB;Database=EMEAMRDB;Trusted_Connection=True;MultipleActiveResultSets=true;";
-
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(connectionString);
-            }
-
-            optionsBuilder.UseSqlServer(connectionString, x => x.MigrationsHistoryTable("__EFMigrationsHistory", "CPS"));
-        }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.HasDefaultSchema("CPS");
