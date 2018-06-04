@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Admin.Models
+﻿namespace Metrics_Track.Areas.Admin.Models.Users
 {
     using Metrics_Track.Services.Admin.Models;
     using Microsoft.AspNetCore.Mvc.Rendering;

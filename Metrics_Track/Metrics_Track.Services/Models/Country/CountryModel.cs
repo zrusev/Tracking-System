@@ -8,6 +8,10 @@
 
         public string Country { get; set; }
 
+        public string RefSite { get; set; }
+
+        public int? SpphIdCountry { get; set; }
+
         public List<ProcessModel> ProcessList { get; set; }
 
         public CountryModel()

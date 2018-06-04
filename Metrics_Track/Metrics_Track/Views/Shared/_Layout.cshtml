@@ -33,6 +33,13 @@
                     @if (User.IsInRole(WebConstants.AdministratorRole))
                     {
                         <li><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
+                        <li><a asp-area="Admin" asp-controller="Countries" asp-action="Index">Countries</a></li>
+                        <li><a asp-area="Admin" asp-controller="Countries" asp-action="Index">Processes</a></li>
+                        <li><a asp-area="Admin" asp-controller="Countries" asp-action="Index">LOBs</a></li>
+                        <li><a asp-area="Admin" asp-controller="Countries" asp-action="Index">Activities</a></li>
+                        <li><a asp-area="Admin" asp-controller="Countries" asp-action="Index">Divisions</a></li>
+                        <li><a asp-area="Admin" asp-controller="Countries" asp-action="Index">Statuses</a></li>
+                        <li><a asp-area="Admin" asp-controller="Countries" asp-action="Index">Mapping</a></li>
                     }
 
                     @if (User.IsInRole(WebConstants.AgentRole) && User.Identity.IsAuthenticated)

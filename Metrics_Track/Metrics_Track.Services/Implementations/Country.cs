@@ -201,5 +201,20 @@
             }
             return countries;
         }
+
+        public int AddNewCountry(CountryModel model)
+        {
+            var currentCountry = new tbl_Country
+            {
+                Country = model.Country,
+                RefSite = model.RefSite,
+                SpphIdCountry = model.SpphIdCountry
+            };
+
+            this.db.TblCountry.Add(currentCountry);
+            this.db.SaveChanges();
+
+            return currentCountry.IdCountry;
+        }
     }
 }

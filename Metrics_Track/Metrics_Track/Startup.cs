@@ -25,7 +25,7 @@
         {
             services.AddDbContext<TrackerDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("AzureConnection"),
+                    Configuration.GetConnectionString("DefaultConnection"),
                     x => x.MigrationsHistoryTable("__EFMigrationsHistory", "CPS")));
 
             services.AddIdentity<User, IdentityRole>(options =>  

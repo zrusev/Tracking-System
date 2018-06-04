@@ -11,5 +11,7 @@
         List<CountryModel> CountryList(List<ProcessMapModel> processModel);
 
         IEnumerable<CountryModel> All();
+
+        int AddNewCountry(CountryModel model);
     }
 }
