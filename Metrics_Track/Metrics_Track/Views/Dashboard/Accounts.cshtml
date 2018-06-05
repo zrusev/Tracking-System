@@ -141,13 +141,13 @@
                             </div>
                             <div class="form-group col-lg-6" style="padding-right:0px;">
                                 <label asp-for="Transaction.ReceivedDate">Received Date</label>
-                                <span asp-validation-for="Transaction.ReceivedDate" class="text-danger"></span>
                                 <div class='input-group date' id='datetimepicker1'>
                                     <input asp-for="Transaction.ReceivedDate" class="form-control form-date" placeholder="Enter received date" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
+                                <span asp-validation-for="Transaction.ReceivedDate" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -178,7 +178,7 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-check-input col-lg-4">
+                            <div class="form-check-input col-lg-5">
                                 <div class="form-group-sm">
                                     <input class="form-check-input" type="checkbox" id="sectionCheck">
                                     <label class="form-check-label" for="sectionCheck">
@@ -234,7 +234,7 @@
                                     <input asp-for="Transaction.Status" class="hidden" name="StatusName" />
                                 </div>
                             </div>
-                            <div class="form-group col-lg-3" style="padding-right:0px;">
+                            <div class="form-group col-lg-2" style="padding-right:0px;">
                                 <button type="submit" class="btn btn-lg pull-right" style="color:white; background-color:#00A4E4;">Submit</button>
                             </div>
                         </div>

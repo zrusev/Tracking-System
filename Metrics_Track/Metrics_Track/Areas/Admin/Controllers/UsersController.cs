@@ -93,7 +93,7 @@
                                             <p>Your account has been revised and approved.</p>
                                             <p>Your current team leader is {0}.</p>
                                             <p><span class=""il"">You</span>&nbsp;may now log in to 
-                                            <a href=""a.com"">https://metrics-track.com</a> using your e-mail and password.</p>
+                                            <a href=""https://metrics-track.azurewebsites.net/account/login"">Metrics Track</a> using your e-mail and password.</p>
                                             <p><strong><sup>Metrics Track team</sup></strong></p>", teamLead.TeamLead);
 
             var emailConfirmation =  await emailService.SendEmailAsync(emailTo, emailSubject, emailBody);
@@ -163,6 +163,8 @@
             user.Countries = countryList;
 
             await this.userManager.UpdateAsync(user);
+
+            TempData.AddSuccessMessage($"{user.FirstName} {user.LastName} has been updated successfully.");
 
             return RedirectToAction(nameof(Index));
         }
