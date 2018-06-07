@@ -1,0 +1,52 @@
+﻿@model ProcessListViewModel
+@{
+    ViewData["Title"] = "Processes Administration";
+}
+<h2>@ViewData["Title"]</h2>
+
+<div class="container-fluid">
+    <h5><b>All Processes</b></h5>
+    <table class="table table-bordered table-condensed table-hover transaction">
+        <thead>
+            <tr style="color: white; background-color: #00A4E4;">
+                <th>Action</th>
+                <th>ID Process</th>
+                <th>Process</th>
+                <th>Function Name</th>
+                <th>Process Map</th>
+                <th>MNC</th>
+                <th>SLA Type</th>
+                <th>SLA Target</th>
+                <th>Level2 Taxonomy</th>
+                <th>Level3 Taxonomy</th>
+                <th>PID</th>
+                <th>Nice Queue</th>
+                <th>Group</th>
+                <th>Sapphire ID Process</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var process in Model.ProcessList)
+            {
+                <tr>
+                    <td>
+                        <button class="btn btn-xs" onclick="location.href='@Url.Action("ById", "Processes", new { processId = process.IdProcess })'" style="color: white; background-color: #00A4E4;">Modify</button>
+                    </td>
+                    <td>@process.IdProcess</td>
+                    <td>@process.Process</td>
+                    <td>@process.FunctionName</td>
+                    <td>@process.ProcessMap</td>
+                    <td>@process.Mnc</td>
+                    <td>@process.SlaType</td>
+                    <td>@process.SlaTarget</td>
+                    <td>@process.Level2Taxonomy</td>
+                    <td>@process.Level3Taxonomy</td>
+                    <td>@process.Pid</td>
+                    <td>@process.NiceQueue</td>
+                    <td>@process.Group</td>
+                    <td>@process.SpphIdProcess</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
