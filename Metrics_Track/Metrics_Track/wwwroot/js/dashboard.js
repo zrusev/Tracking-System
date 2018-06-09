@@ -104,7 +104,7 @@
                         var process = $('input[name=ProcessName]').val();
                         var processIdentifier = "#process-" + $('input[name=ProcessSelection]').val();
                         var lob = $('input[name=LobName]').val();
-                        var premiumAmount = data.prem == null ? "" : data.prem;
+                        var premiumAmount = data.prem === null ? "" : data.prem;
                         var receivedDate = moment($("#Transaction_ReceivedDate").val()).format("YYYY-MM-DD HH:mm:ss");
                         var id = data.newId;
                         var status = $('input[name=StatusName]').val();
@@ -116,7 +116,7 @@
 
                         if (data.pending) {
                             var pendingTable = $("#pendingTransactionTable");
-                            var addIdToRow = newRow.replace("<tr id=previous-" + id + ">", "<tr id=pending-" + id + ">")
+                            var addIdToRow = newRow.replace("<tr id=previous-" + id + ">", "<tr id=pending-" + id + ">");
                             pendingTable.append(addIdToRow);
                         }
 
@@ -183,8 +183,8 @@ function expandCollapseAria(currentElement, isAriaExpanded, division) {
         $('input[name=StatusName]').val("");
         //console.log("hide");
     } else {
-        var btns = currentElement.parent().next().find(".btn-group-vertical label");
-        btns.each(function (index, item) {
+        var activeBtns = currentElement.parent().next().find(".btn-group-vertical label");
+        activeBtns.each(function (index, item) {
             item.classList.remove('active');
         });
 
@@ -254,7 +254,7 @@ function populateData(response) {
     $("#policynumber1").val(response.idNumber);
     $("#amount1").val(response.premium);
     $("#currCode1").val(response.currencyCode);
-    if (response.priority == 1) {
+    if (response.priority === 1) {
         $("#priorityCheck").prop('checked', true);
     } else {
         $("#priorityCheck").prop('checked', false);
@@ -318,7 +318,7 @@ function resetForm($form, processIdentifier, sectionBoxCheck, receivedBoxCheck, 
     var pBox = priorityBoxCheck === true ? "#priorityCheck" : '';
     var rValue = receivedBoxCheck === true ? "#Transaction_ReceivedDate" : '';
 
-    if (sectionBoxCheck == true) {
+    if (sectionBoxCheck === true) {
         //do nothing
     } else {
         $form.find('input:text, input:password, input:file, select, textarea').not(rValue).not("#Transaction_StartDate").not("#Transaction_IdCountry").val('');

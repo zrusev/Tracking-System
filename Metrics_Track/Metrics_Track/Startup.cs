@@ -31,6 +31,8 @@
             services.AddIdentity<User, IdentityRole>(options =>  
                      {options.Password.RequireUppercase = false;
                       options.Password.RequireNonAlphanumeric = false;
+                      options.Password.RequireDigit = false;
+
                       options.User.RequireUniqueEmail = true;
                      })
                 .AddEntityFrameworkStores<TrackerDbContext>()
@@ -39,8 +41,8 @@
             services.ConfigureApplicationCookie(options =>
             { 
                 options.Cookie.Name = ".MetricsTrack.Identity.Application";
-                //options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
-                //options.SlidingExpiration = false;
+                options.ExpireTimeSpan = TimeSpan.FromHours(9);
+                options.SlidingExpiration = false;
             });
 
             services.AddAutoMapper();
