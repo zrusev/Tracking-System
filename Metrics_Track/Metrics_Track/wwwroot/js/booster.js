@@ -1,14 +1,5 @@
-﻿//Keep session alive
-$(function () {
-    var refreshTime = 60 * 1000 * 29;
-    window.setInterval(function () {
-        var url = '/dashboard/StayAlive';
-        $.get(url);
-    }, refreshTime);
-});
-
-var sessServerAliveTime = 60 * 1000 * 29;
-var sessionTimeout = 60 * 420 * 1000; //7h 59min
+﻿var sessServerAliveTime = 1000 * 60 * 29; //29min
+var sessionTimeout = 1000 * 60 * 60 * 8 + 1000 * 60 * 57; //8h 57min
 var sessLastActivity;
 var idleTimer, remainingTimer;
 var isTimout = false;
@@ -19,14 +10,23 @@ var timer;
 var isIdleTimerOn = false;
 localStorage.setItem('sessionSlide', 'isStarted');
 
+//Keep session alive
+$(function () {
+    var refreshTime = 1000 * 60 * 29; //29min
+    window.setInterval(function () {
+        var url = '/dashboard/StayAlive';
+        $.get(url);
+    }, refreshTime);
+});
+
 function sessPingServer() {
     if (!isTimout) {
-        //$.ajax({
-        //    url: '/Admin/SessionTimeout',
-        //    dataType: "json",
-        //    async: false,
-        //    type: "POST"
-        //});
+        $.ajax({
+            url: '/dashboard/StayAlive',
+            dataType: "json",
+            async: false,
+            type: "POST"
+        });
 
         return true;
     }
@@ -52,11 +52,6 @@ $(document).ready(function (e) {
     localStorage.setItem('sessionSlide', 'isStarted');
     startIdleTime();
 });
-
-//$(window).scroll(function (e) {
-//    localStorage.setItem('sessionSlide', 'isStarted');
-//    startIdleTime();
-//});
 
 function sessKeyPressed(ed, e) {
     var target = ed ? ed.target : window.event.srcElement;
@@ -132,11 +127,11 @@ function checkIdleTimeout() {
     }
 }
 
-function btnSessionExpiredCancelled () {
+function btnSessionExpiredCancelled() {
     $('.modal-backdrop').css("z-index", parseInt($('.modal-backdrop').css('z-index')) - 500);
 }
 
-function btnOk () {
+function btnOk() {
     $("#session-expire-warning-modal").modal('hide');
     $('.modal-backdrop').css("z-index", parseInt($('.modal-backdrop').css('z-index')) - 500);
     startIdleTime();
@@ -144,11 +139,9 @@ function btnOk () {
     localStorage.setItem('sessionSlide', 'isStarted');
 }
 
-function btnLogoutNow () {
+function btnLogoutNow() {
     localStorage.setItem('sessionSlide', 'loggedOut');
     sessLogOut();
-    $("#session-expired-modal").modal('hide');
-    window.location = '/account/login';
 }
 
 $('#session-expired-modal').on('shown.bs.modal', function () {
@@ -169,7 +162,7 @@ $('#session-expire-warning-modal').on('shown.bs.modal', function () {
 
 function countdownDisplay() {
 
-    var dialogDisplaySeconds = 60;
+    var dialogDisplaySeconds = 60 * 3; //3min
 
     remainingTimer = setInterval(function () {
         if (localStorage.getItem('sessionSlide') === "isStarted") {
@@ -197,9 +190,10 @@ function sessLogOut() {
         url: '/account/logout',
         data: { "__RequestVerificationToken" : token },
         success: function (response) {
+            window.location.href = response.Url;
         },
-        error: function (ex) {
-            alert(ex);
+        error: function() {
+            alert("Internal error. Please contact support.");
         }
     });
 }
