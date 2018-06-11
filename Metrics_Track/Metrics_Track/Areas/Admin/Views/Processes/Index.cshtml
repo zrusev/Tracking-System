@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Processes Administration";
 }
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
 <h2>@ViewData["Title"]</h2>
 
 <div class="container-fluid">
@@ -49,4 +52,5 @@
             }
         </tbody>
     </table>
+    @Html.PagedListPager((IPagedList)Model.ProcessList, page => Url.Action("Index", new { page }))
 </div>

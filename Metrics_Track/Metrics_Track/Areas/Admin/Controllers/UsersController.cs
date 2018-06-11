@@ -13,6 +13,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using X.PagedList;
 
     [Area(WebConstants.AdminArea)]
     [Authorize(Roles = WebConstants.AdministratorRole)]
@@ -41,20 +42,24 @@
             this.emailService = emailService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
+            var pageNumber = page ?? 1;
+
             var users = await this.users.AllAsync();
+
+            var onePageList = users.ToPagedList(pageNumber, 25);
 
             var teamLeads = await this.teamLeads.AllAsync();
 
-            foreach (var user in users)
+            foreach (var user in onePageList)
             {
                 user.TeamLeads = teamLeads;
             }
 
             return View(new UserListingsViewModel
             {
-                Users = users,
+                Users = onePageList,
                 TeamLeads = teamLeads         
             });
         }

@@ -35,7 +35,7 @@
         [HttpGet]
         public IActionResult RemoveCountries()
         {
-            TempData.AddErrorMessage("Deleting countries is not allowed.");
+            TempData.AddErrorMessage("Removing countries is not allowed.");
             return RedirectToAction(nameof(Index));
         }
 

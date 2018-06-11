@@ -6,5 +6,9 @@
     public interface IProcessList
     {
         IEnumerable<ProcessListModel> All();
+
+        ProcessListModel ById(int id);
+
+        int UpdateProcess(ProcessListModel model);
     }
 }

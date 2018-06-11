@@ -1,0 +1,77 @@
+﻿@model ProcessViewModel
+@{
+    ViewData["Title"] = "ById";
+}
+
+<h2>Update user</h2>
+
+<div class="row">
+    <form class="col-lg-4" asp-area="Admin" asp-action="UpdateProcess" method="post">
+        <div class="form-group">
+            <label asp-for="Process.IdProcess">Id</label>
+            <input asp-for="Process.IdProcess" readonly="readonly" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Process.Process">Process</label>
+            <input asp-for="Process.Process" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Process.FunctionName">Function Name</label>
+            <input asp-for="Process.FunctionName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Process.ProcessMap">Process Map</label>
+            <input asp-for="Process.ProcessMap" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-6">
+                    <label asp-for="Process.SlaType">SLA Type</label>
+                    <input asp-for="Process.SlaType" class="form-control" />
+                </div>
+                <div class="col-lg-6">
+                    <label asp-for="Process.SlaTarget">SLA Target (insert number)</label>
+                    <input asp-for="Process.SlaTarget" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-6">
+                    <label asp-for="Process.Level2Taxonomy">Level2Taxonomy</label>
+                    <input asp-for="Process.Level2Taxonomy" class="form-control" />
+                </div>
+                <div class="col-lg-6">
+                    <label asp-for="Process.Level3Taxonomy">Level3Taxonomy</label>
+                    <input asp-for="Process.Level3Taxonomy" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Process.Mnc">MNC</label>
+            <input asp-for="Process.Mnc" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Process.Pid">PID</label>
+            <input asp-for="Process.Pid" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Process.NiceQueue">Nice Queue</label>
+            <input asp-for="Process.NiceQueue" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Process.Group">Group</label>
+            <input asp-for="Process.Group" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Process.SpphIdProcess">Spph Id Process</label>
+            <input asp-for="Process.SpphIdProcess" class="form-control" />
+        </div>
+        <div class="form-group">
+            <div class="col-lg-6">
+                <button type="submit" class="btn btn-sm pull-left" style="color:white; background-color:#00A4E4;">Update</button>
+            </div>
+        </div>
+    </form>
+</div>
+
