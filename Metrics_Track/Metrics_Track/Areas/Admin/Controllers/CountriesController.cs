@@ -60,7 +60,7 @@
         [HttpGet]
         public IActionResult ModifyCountry(int[] IdCountries)
         {
-            if (IdCountries.Length >= 2)
+            if (IdCountries.Length == 0 || IdCountries.Length >= 2)
             {
                 TempData.AddErrorMessage($"Please select a single country only.");
                 return RedirectToAction(nameof(Index));

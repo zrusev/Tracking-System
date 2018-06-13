@@ -15,18 +15,18 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" style="background-color:#D1D0DE">
                         <h4 class="panel-title">
-                            <a class="list-group-item panel-height" data-toggle="collapse" data-target="#country-@country.ID_Country" data-parent="#country" data-id="@country.ID_Country" style="color:white; background-color:#00A4E4; font-weight:bold; cursor:default">@country.Country</a>
+                            <a class="list-group-item panel-height" data-toggle="collapse" data-target="#country-@country.IdCountry" data-parent="#country" data-id="@country.IdCountry" style="color:white; background-color:#00A4E4; font-weight:bold; cursor:default">@country.Country</a>
                         </h4>
                     </div>
-                    <div id="country-@country.ID_Country" class="panel-collapse collapse">
+                    <div id="country-@country.IdCountry" class="panel-collapse collapse">
                         <div class="panel-body" style="background-color:#D1D0DE">
                             <div class="
-                                 " id="process-@country.ID_Country">
+                                 " id="process-@country.IdCountry">
                                 <div class="panel panel-default">
                                     @foreach (var process in country.ProcessList)
                                     {
                                         <div class="panel">
-                                            <a class="list-group-item small" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.ID_Country" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4; padding-bottom: 5px; padding-top: 5px; cursor:default">@process.Process</a>
+                                            <a class="list-group-item small" data-toggle="collapse" data-target="#process-@process.ID_Process" data-parent="#process-@country.IdCountry" data-id="@process.ID_Process" style="color:white; background-color:#00A4E4; padding-bottom: 5px; padding-top: 5px; cursor:default">@process.Process</a>
                                         </div>
 
                                         <div class="panel-collapse collapse" id="process-@process.ID_Process">
