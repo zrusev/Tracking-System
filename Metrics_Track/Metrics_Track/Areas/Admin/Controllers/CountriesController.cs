@@ -25,7 +25,7 @@
         {
             var countries = this.country.All().Select(c => new SelectListItem
             {
-                Value = c.ID_Country.ToString(),
+                Value = c.IdCountry.ToString(),
                 Text = c.Country
             });
 
@@ -41,10 +41,10 @@
 
         [HttpGet]
         public IActionResult AddCountry()
-            => View(new AddCountryVewModel());
+            => View(new AddCountryViewModel());
 
         [HttpPost]
-        public IActionResult AddNewCountryToList(AddCountryVewModel model)
+        public IActionResult AddNewCountryToList(AddCountryViewModel model)
         {
             var successId = this.country.AddNewCountry(new CountryModel
             {
@@ -54,6 +54,35 @@
             });
 
             TempData.AddSuccessMessage($"Successfully added new country with id: {successId}.");
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult ModifyCountry(int[] IdCountries)
+        {
+            if (IdCountries.Length >= 2)
+            {
+                TempData.AddErrorMessage($"Please select a single country only.");
+                return RedirectToAction(nameof(Index));
+            }
+
+            var country = this.country.ById(IdCountries[0]);
+
+            return View(new AddCountryViewModel
+            {
+                IdCountry =  IdCountries[0],
+                Country = country.Country,
+                RefSite = country.RefSite,
+                SpphIdCountry = country.SpphIdCountry
+            });
+        }
+
+        [HttpPost]
+        public IActionResult ModifyCountry(AddCountryViewModel model)
+        {
+            //modify todo
+
+            TempData.AddSuccessMessage($"Successfully modified a country with id: {model.IdCountry}.");
             return RedirectToAction(nameof(Index));
         }
     }

@@ -8,6 +8,12 @@
 <h2>@ViewData["Title"]</h2>
 
 <div class="container-fluid">
+    <div class="col-lg-2">
+        <button type="button" class="btn btn-sm pull-left" onclick="location.href='@Url.Action("AddProcess", "Processes")'" style="color:white; background-color:#00A4E4;">Add New</button>
+    </div>
+</div>
+<hr />
+<div class="container-fluid">
     <h5><b>All Processes</b></h5>
     <table class="table table-bordered table-condensed table-hover transaction">
         <thead>

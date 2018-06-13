@@ -281,7 +281,7 @@
         private IEnumerable<SelectListItem> GetCountriesListItems()
             => _country.All().Select(c => new SelectListItem
             {
-                Value = c.ID_Country.ToString(),
+                Value = c.IdCountry.ToString(),
                 Text = c.Country
             });
 

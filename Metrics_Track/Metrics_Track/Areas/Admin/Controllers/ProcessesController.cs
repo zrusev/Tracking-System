@@ -44,7 +44,7 @@
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
 
             var process = this.processList.ById(model.Process.IdProcess);
@@ -74,6 +74,52 @@
 
             TempData.AddSuccessMessage($"Process: {model.Process.Process} with ID: {successId} has been updated successfully.");
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult AddProcess()
+            => View(new AddProcessViewModel());
+
+        [HttpPost]
+        public IActionResult AddProcess(AddProcessViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var newId = this.processList.AddProcess(new ProcessListModel
+            {
+                Process = model.Process,
+                FunctionName = model.FunctionName,
+                ProcessMap = model.ProcessMap,
+                Mnc = model.Mnc,
+                SlaType = model.SlaType,
+                SlaTarget = model.SlaTarget,
+                Level2Taxonomy = model.Level2Taxonomy,
+                Level3Taxonomy = model.Level3Taxonomy,
+                Pid = model.Pid,
+                NiceQueue = model.NiceQueue,
+                Group = model.Group,
+                SpphIdProcess = model.SpphIdProcess
+            });
+
+            TempData.AddSuccessMessage($"Process: {model.Process} with ID: {newId} has been added successfully.");
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RemoveProcess(int id)
+        {
+            if (id == 0)
+            {
+                TempData.AddErrorMessage($"Invalid process id.");
+                return RedirectToAction(nameof(Index));
+            }
+
+            this.processList.RemoveProcess(id);
+
+            TempData.AddSuccessMessage($"Process with ID: {id} has been removed successfully.");
             return RedirectToAction(nameof(Index));
         }
     }

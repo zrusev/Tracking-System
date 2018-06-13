@@ -18,12 +18,19 @@
             .UseStartup<Startup>()
             .Build();
 
-        static void ConfigConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder config)
+        static void ConfigConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder configurationBuilder)
         {
-            config.SetBasePath(Directory.GetCurrentDirectory())
+            configurationBuilder.SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{ctx.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
+            //var config = configurationBuilder.Build();
+
+            //configurationBuilder.AddAzureKeyVault(
+            //    $"https://{config["KeyVault:vault"]}.vault.azure.net/",
+            //    config["KeyVault:clientId"],
+            //    config["KeyVault:clientSecret"]
+            //);
         }
     }
 }

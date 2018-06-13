@@ -12,6 +12,7 @@
     using System.Threading.Tasks;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
+    using AutoMapper.QueryableExtensions;
 
     public class Country : ICountry
     {
@@ -30,7 +31,7 @@
                   .Where(s => s.RefSite == CountrySite)
                   .Select(l => new CountryModel
                   {
-                     ID_Country = l.IdCountry,
+                     IdCountry = l.IdCountry,
                      Country = l.Country
                   })
                   .OrderBy(n => n.Country)
@@ -102,9 +103,9 @@
             foreach (var item in processModel)
             {
                 //If a country is present check for missing children
-                if (countries.Any(c => c.ID_Country.Equals(item.IdCountry)))
+                if (countries.Any(c => c.IdCountry.Equals(item.IdCountry)))
                 {
-                    int countryIndex = countries.FindIndex(c => c.ID_Country.Equals(item.IdCountry));
+                    int countryIndex = countries.FindIndex(c => c.IdCountry.Equals(item.IdCountry));
 
                     //If a process is present check for missing children
                     if (countries[countryIndex].ProcessList.Any(p => p.ID_Process.Equals(item.IdProcess)))
@@ -156,7 +157,7 @@
                     //Add new country
                     countries.Add(new CountryModel
                     {
-                        ID_Country = item.IdCountry,
+                        IdCountry = item.IdCountry,
                         Country = item.Country,
                         ProcessList = new List<ProcessModel>()
                         {
@@ -216,5 +217,12 @@
 
             return currentCountry.IdCountry;
         }
+
+        public CountryModel ById(int id)
+            => this.db
+                .TblCountry
+                .Where(i => i.IdCountry == id)
+                .ProjectTo<CountryModel>()
+                .FirstOrDefault();
     }
 }

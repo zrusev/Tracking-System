@@ -13,5 +13,7 @@
         IEnumerable<CountryModel> All();
 
         int AddNewCountry(CountryModel model);
+
+        CountryModel ById(int id);
     }
 }

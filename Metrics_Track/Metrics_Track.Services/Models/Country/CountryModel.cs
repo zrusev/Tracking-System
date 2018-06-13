@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     public class CountryModel
     {
-        public int ID_Country { get; set; }
+        public int IdCountry { get; set; }
 
         public string Country { get; set; }
 

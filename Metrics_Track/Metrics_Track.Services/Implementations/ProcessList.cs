@@ -55,5 +55,40 @@
 
             return process.IdProcess;
         }
+
+        public int AddProcess(ProcessListModel model)
+        {
+            var process = new tbl_Process()
+            {
+            Process = model.Process,
+            FunctionName = model.FunctionName,
+            ProcessMap = model.ProcessMap,
+            Mnc = model.Mnc,
+            SlaType = model.SlaType,
+            SlaTarget = model.SlaTarget,
+            Level2Taxonomy = model.Level2Taxonomy,
+            Level3Taxonomy = model.Level3Taxonomy,
+            Pid = model.Pid,
+            NiceQueue = model.NiceQueue,
+            Group = model.Group,
+            SpphIdProcess = model.SpphIdProcess
+            };
+
+            this.db.TblProcess.Add(process);
+            this.db.SaveChanges();
+
+            return process.IdProcess;
+        }
+
+        public void RemoveProcess(int id)
+        {
+            var process = this.db
+                .TblProcess
+                .Where(i => i.IdProcess == id)
+                .FirstOrDefault();
+
+            this.db.TblProcess.Remove(process);
+            this.db.SaveChanges();
+        }
     }
 }

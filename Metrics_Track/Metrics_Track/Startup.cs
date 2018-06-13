@@ -23,6 +23,8 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //var connectionString = Configuration["appSettings:connectionStrings:DefaultConnection"];
+
             services.AddDbContext<TrackerDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("AzureConnection"),

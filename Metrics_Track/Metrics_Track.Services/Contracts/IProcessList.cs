@@ -10,5 +10,9 @@
         ProcessListModel ById(int id);
 
         int UpdateProcess(ProcessListModel model);
+
+        int AddProcess(ProcessListModel model);
+
+        void RemoveProcess(int id);
     }
 }

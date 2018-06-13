@@ -1,11 +1,16 @@
 ﻿@model AddCountryViewModel
 @{
-    ViewData["Title"] = "Countries Administration";
+    ViewData["Title"] = "ModifyCountry";
 }
-<h2>@ViewData["Title"]</h2>
+
+<h2>Modify Country</h2>
 
 <div class="row">
-    <form class="col-lg-4" asp-area="Admin" asp-action="AddNewCountryToList">
+    <form class="col-lg-4" asp-area="Admin" asp-action="ModifyCountry">
+        <div class="form-group">
+            <label asp-for="IdCountry">ID Country</label>
+            <input asp-for="IdCountry" readonly class="form-control" />
+        </div>
         <div class="form-group">
             <label asp-for="Country">Country Name</label>
             <input asp-for="Country" class="form-control" />

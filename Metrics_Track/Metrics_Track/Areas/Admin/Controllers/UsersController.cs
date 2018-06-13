@@ -115,7 +115,7 @@
 
             var countries = this.country.All().Select(c => new SelectListItem
             {
-                Value = c.ID_Country.ToString(),
+                Value = c.IdCountry.ToString(),
                 Text = c.Country
             });
 
