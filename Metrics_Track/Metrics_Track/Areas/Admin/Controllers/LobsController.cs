@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Areas.Admin.Controllers
 {
-    using Metrics_Track.Areas.Admin.Models.Lobs;
+    using Admin.Models.Lobs;
     using Metrics_Track.Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Lob;
@@ -40,10 +40,11 @@
         }
 
         [HttpPost]
-        public IActionResult UpdateLob(LobViewModel model)
+        public IActionResult ById(LobViewModel model)
         {
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError(string.Empty, "Invalid lob details.");
                 return View(model);
             }
 
@@ -68,7 +69,7 @@
                 SpphIdProduct = model.Lob.SpphIdProduct
             });
 
-            TempData.AddSuccessMessage($"Process: {model.Lob.Lob} with ID: {successId} has been updated successfully.");
+            TempData.AddSuccessMessage($"Lob: {model.Lob.Lob} with ID: {successId} has been updated successfully.");
 
             return RedirectToAction(nameof(Index));
         }

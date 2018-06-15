@@ -19,6 +19,8 @@
 
         public string SlaType { get; set; }
 
+        [Required]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Sla Target must be numeric")]
         public string SlaTarget { get; set; }
 
         public string Level2Taxonomy { get; set; }

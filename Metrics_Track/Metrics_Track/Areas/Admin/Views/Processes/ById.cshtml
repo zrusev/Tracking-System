@@ -3,11 +3,11 @@
     ViewData["Title"] = "ById";
 }
 
-<h2>Update user</h2>
+<h2>Update Process</h2>
 
 <div class="row">
     <form class="col-lg-4" method="post">
-        <span asp-validation-summary="All"></span>
+        <div asp-validation-summary="All" style="color:red;"></div>
         <div class="form-group">
             <label asp-for="Process.IdProcess" name="id">ID</label>
             <input asp-for="Process.IdProcess" readonly="readonly" class="form-control" />
@@ -31,7 +31,7 @@
                     <input asp-for="Process.SlaType" class="form-control" />
                 </div>
                 <div class="col-lg-6">
-                    <label asp-for="Process.SlaTarget">SLA Target (insert number)</label>
+                    <label asp-for="Process.SlaTarget">SLA Target</label>
                     <input asp-for="Process.SlaTarget" class="form-control" />
                 </div>
             </div>
@@ -70,7 +70,7 @@
         </div>
         <div class="form-group">
             <div class="col-lg-12">
-                <button type="submit" class="btn btn-sm pull-left" asp-area="Admin" asp-controller="Processes" asp-action="UpdateProcess" style="color:white; background-color:#00A4E4;">Update</button>
+                <button type="submit" class="btn btn-sm pull-left" asp-area="Admin" asp-controller="Processes" asp-action="ById" style="color:white; background-color:#00A4E4;">Update</button>
                 <button type="submit" class="btn btn-sm btn-danger pull-right" asp-area="Admin" asp-controller="Processes" asp-action="RemoveProcess" asp-route-id="@Model.Process.IdProcess">Remove</button>
             </div>
         </div>

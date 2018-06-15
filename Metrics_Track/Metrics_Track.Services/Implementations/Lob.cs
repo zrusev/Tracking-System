@@ -19,6 +19,7 @@
         public IEnumerable<LobListModel> All()
             => this.db
                 .TblLob
+                .OrderBy(l => l.Lob)
                 .ProjectTo<LobListModel>()
                 .ToList();
 

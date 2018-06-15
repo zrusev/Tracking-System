@@ -1,8 +1,10 @@
 ﻿namespace Metrics_Track.Services.Models.Status
 {
-    public class StatusModel
+    using Metrics_Track.Common.Mapping;
+    using Metrics_Track.Data.Models;
+    public class StatusModel : IMapFrom<tbl_Status>
     {
-        public int ID_Status { get; set; }
+        public int IdStatus { get; set; }
 
         public string Status { get; set; }
     }

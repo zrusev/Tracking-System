@@ -1,9 +1,9 @@
 ﻿@model AddProcessViewModel
 @{
-    ViewData["Title"] = "AddProcess";
+    ViewData["Title"] = "Add Process";
 }
 
-<h2>AddProcess</h2>
+<h2>@ViewData["Title"]</h2>
 
 <div class="row">
     <form class="col-lg-4" asp-area="Admin" asp-action="AddProcess" method="post">
@@ -27,7 +27,7 @@
                     <input asp-for="SlaType" class="form-control" />
                 </div>
                 <div class="col-lg-6">
-                    <label asp-for="SlaTarget">SLA Target (insert number)</label>
+                    <label asp-for="SlaTarget">SLA Target</label>
                     <input asp-for="SlaTarget" class="form-control" />
                 </div>
             </div>

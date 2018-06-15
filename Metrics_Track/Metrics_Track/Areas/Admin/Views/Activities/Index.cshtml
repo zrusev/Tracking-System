@@ -1,0 +1,42 @@
+﻿@model ActivityListViewModel
+@{
+    ViewData["Title"] = "Activities Administration";
+}
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+<div class="container-fluid">
+    <h2>@ViewData["Title"]</h2>
+    <div class="col-lg-2">
+        <button type="button" class="btn btn-sm pull-left" onclick="location.href='@Url.Action("AddActivity", "Activities")'" style="color:white; background-color:#00A4E4;">Add New</button>
+    </div>
+</div>
+<hr />
+<div class="container-fluid">
+    <div class="col-lg-3">
+        <h5><b>All Activities</b></h5>
+        <table class="table table-bordered table-condensed table-hover transaction">
+            <thead>
+                <tr style="color: white; background-color: #00A4E4;">
+                    <th>Action</th>
+                    <th>ID Activity</th>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var activity in Model.ActivityList)
+                {
+                    <tr>
+                        <td>
+                            <button class="btn btn-xs" onclick="location.href='@Url.Action("ById", "Activities", new { activityId = activity.IdActivity })'" style="color: white; background-color: #00A4E4;">Modify</button>
+                        </td>
+                        <td>@activity.IdActivity</td>
+                        <td>@activity.Activity</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.PagedListPager((IPagedList)Model.ActivityList, page => Url.Action("Index", new { page }))
+    </div>
+</div>
+

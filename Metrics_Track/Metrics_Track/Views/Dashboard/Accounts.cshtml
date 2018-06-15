@@ -49,7 +49,7 @@
                                                             @foreach (var activity in process.ActivityList.OrderBy(a => a.Activity))
                                                             {
                                                                 <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
-                                                                    <input class="form-check-label" type="radio" autocomplete="off" id="@activity.ID_Activity">@activity.Activity
+                                                                    <input class="form-check-label" type="radio" autocomplete="off" id="@activity.IdActivity">@activity.Activity
                                                                 </label>
                                                             }
                                                         </div>
@@ -60,7 +60,7 @@
                                                             @foreach (var status in process.StatusList.OrderBy(s => s.Status))
                                                             {
                                                                 <label class="btn btn-default form-check-label" style="font-size:10px; cursor:default">
-                                                                    <input class="form-check-label" type="radio" autocomplete="off" id="@status.ID_Status">@status.Status
+                                                                    <input class="form-check-label" type="radio" autocomplete="off" id="@status.IdStatus">@status.Status
                                                                 </label>
                                                             }
                                                         </div>
@@ -96,10 +96,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <label>Update status</label>
-                    <select id="useractivity" style="width:100%; height:30px">
+                    <select id="useractivity" style="width:100%; height:30px;">
                         @foreach (var status in Model.MiningList)
                         {
-                            <option id=@status.IdMining value=@status.State>@status.State</option>
+                            <option id=@status.IdMining value=@status.State style="padding-left: 20px;">@status.State</option>
                         }
                     </select>
                     <hr />
@@ -245,7 +245,7 @@
             </div>
         </div>
 
-        <div class="col-lg-6" style="padding-right: 20px; padding-left: 0px;">
+        <div class="col-lg-6" >
             <h4>My previous transaction</h4>
             <table class="table table-bordered table-condensed transaction" id="previousTransactionTable">
                 <thead>

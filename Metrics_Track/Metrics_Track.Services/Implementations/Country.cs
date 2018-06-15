@@ -123,21 +123,21 @@
                         }
 
                         //Add new activity if missing
-                        if (!countries[countryIndex].ProcessList[processIndex].ActivityList.Any(a => a.ID_Activity.Equals(item.IdActivity)))
+                        if (!countries[countryIndex].ProcessList[processIndex].ActivityList.Any(a => a.IdActivity.Equals(item.IdActivity)))
                         {
                             countries[countryIndex].ProcessList[processIndex].ActivityList.Add(new ActivityModel
                             {
-                                ID_Activity = item.IdActivity,
+                                IdActivity = item.IdActivity,
                                 Activity = item.Activity
                             });
                         }
 
                         //Add new status if missing
-                        if (!countries[countryIndex].ProcessList[processIndex].StatusList.Any(s => s.ID_Status.Equals(item.IdStatus)))
+                        if (!countries[countryIndex].ProcessList[processIndex].StatusList.Any(s => s.IdStatus.Equals(item.IdStatus)))
                         {
                             countries[countryIndex].ProcessList[processIndex].StatusList.Add(new StatusModel
                             {
-                                ID_Status = item.IdStatus,
+                                IdStatus = item.IdStatus,
                                 Status = item.Status
                             });
                         }
@@ -172,7 +172,7 @@
                                         //Add new activity
                                         new ActivityModel
                                         {
-                                            ID_Activity = item.IdActivity,
+                                            IdActivity = item.IdActivity,
                                             Activity = item.Activity
                                         }
                                     },
@@ -191,7 +191,7 @@
                                     //Add new status
                                     new StatusModel
                                     {
-                                        ID_Status = item.IdStatus,
+                                        IdStatus = item.IdStatus,
                                         Status = item.Status
                                     }
                                 }

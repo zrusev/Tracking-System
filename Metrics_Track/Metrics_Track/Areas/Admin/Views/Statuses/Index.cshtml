@@ -1,0 +1,41 @@
+﻿@model StatusListViewModel
+@{
+    ViewData["Title"] = "Statuses Administration";
+}
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+<div class="container-fluid">
+    <h2>@ViewData["Title"]</h2>
+    <div class="col-lg-2">
+        <button type="button" class="btn btn-sm pull-left" onclick="location.href='@Url.Action("AddStatus", "Statuses")'" style="color:white; background-color:#00A4E4;">Add New</button>
+    </div>
+</div>
+<hr />
+<div class="container-fluid">
+    <div class="col-lg-3">
+        <h5><b>All Statuses</b></h5>
+        <table class="table table-bordered table-condensed table-hover transaction">
+            <thead>
+                <tr style="color: white; background-color: #00A4E4;">
+                    <th>Action</th>
+                    <th>ID Status</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var status in Model.StatusList)
+                {
+                    <tr>
+                        <td>
+                            <button class="btn btn-xs" onclick="location.href='@Url.Action("ById", "Statuses", new { statusId = status.IdStatus })'" style="color: white; background-color: #00A4E4;">Modify</button>
+                        </td>
+                        <td>@status.IdStatus</td>
+                        <td>@status.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.PagedListPager((IPagedList)Model.StatusList, page => Url.Action("Index", new { page }))
+    </div>
+</div>

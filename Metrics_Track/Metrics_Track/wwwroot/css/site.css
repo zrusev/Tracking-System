@@ -32,7 +32,17 @@
     .carousel-caption {
         display: none;
     }
+    /* Unset panels for smaller screens*/
+    .affix {
+        position:unset;
+    }
 }
+
+/*@media screen and (min-width: 767px) {
+    .affix {
+        position: fixed;
+    }
+}*/
 
 .sidenav {
     height: 100%; /* Full-height: remove this if you want "auto" height */
