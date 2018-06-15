@@ -80,7 +80,19 @@
         [HttpPost]
         public IActionResult ModifyCountry(AddCountryViewModel model)
         {
-            //modify todo
+            if (!ModelState.IsValid)
+            {
+                TempData.AddErrorMessage($"Invalid country model with ID: {model.IdCountry}.");
+                return View(model);
+            }
+
+            this.country.ModifyCountry(new CountryModel
+            {
+                IdCountry = model.IdCountry,
+                Country = model.Country,
+                RefSite = model.RefSite,
+                SpphIdCountry = model.SpphIdCountry
+            });
 
             TempData.AddSuccessMessage($"Successfully modified a country with id: {model.IdCountry}.");
             return RedirectToAction(nameof(Index));

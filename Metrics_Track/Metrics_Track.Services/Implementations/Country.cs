@@ -224,5 +224,20 @@
                 .Where(i => i.IdCountry == id)
                 .ProjectTo<CountryModel>()
                 .FirstOrDefault();
+
+        public void ModifyCountry(CountryModel model)
+        {
+            var country = this.db
+                .TblCountry
+                .Where(i => i.IdCountry == model.IdCountry)
+                .FirstOrDefault();
+
+            country.Country = model.Country;
+            country.RefSite = model.RefSite;
+            country.SpphIdCountry = model.SpphIdCountry;
+
+            this.db.TblCountry.Update(country);
+            this.db.SaveChanges();
+        }
     }
 }

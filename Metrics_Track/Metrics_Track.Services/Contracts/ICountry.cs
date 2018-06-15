@@ -15,5 +15,7 @@
         int AddNewCountry(CountryModel model);
 
         CountryModel ById(int id);
+
+        void ModifyCountry(CountryModel model);
     }
 }

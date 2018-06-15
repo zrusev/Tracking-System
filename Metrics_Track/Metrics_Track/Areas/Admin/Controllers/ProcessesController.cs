@@ -26,7 +26,7 @@
 
             var list = this.processList.All();
 
-            var onePageList = list.ToPagedList(pageNumber, 25);
+            var onePageList = list.ToPagedList(pageNumber, WebConstants.MaxItemsPerPage);
 
             return View(new ProcessListViewModel { ProcessList = onePageList });
         }
@@ -53,6 +53,7 @@
             if (!processExists)
             {
                 ModelState.AddModelError(string.Empty, "Invalid process details.");
+                return View(model);
             }
 
             var successId = this.processList.UpdateProcess(new ProcessListModel

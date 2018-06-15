@@ -1,0 +1,56 @@
+﻿@model LobViewModel
+@{
+    ViewData["Title"] = "ById";
+}
+
+<h2>Update Lob</h2>
+
+<div class="row">
+    <form class="col-lg-4" method="post">
+        <span asp-validation-summary="All"></span>
+        <div class="form-group">
+            <label asp-for="Lob.IdLob" name="id">ID</label>
+            <input asp-for="Lob.IdLob" readonly="readonly" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Lob.Lob">Lob</label>
+            <input asp-for="Lob.Lob" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Lob.MmcpLob">MMCP Lob</label>
+            <input asp-for="Lob.MmcpLob" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-6">
+                    <label asp-for="Lob.MmcpSegment">MMCP Segment</label>
+                    <input asp-for="Lob.MmcpSegment" class="form-control" />
+                </div>
+                <div class="col-lg-6">
+                    <label asp-for="Lob.ProductLine1">Product Line 1</label>
+                    <input asp-for="Lob.ProductLine1" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-6">
+                    <label asp-for="Lob.ProductLine2">Product Line 2</label>
+                    <input asp-for="Lob.ProductLine2" class="form-control" />
+                </div>
+                <div class="col-lg-6">
+                    <label asp-for="Lob.ProductLine3">Product Line 3</label>
+                    <input asp-for="Lob.ProductLine3" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Lob.SpphIdProduct">Spph ID Lob</label>
+            <input asp-for="Lob.SpphIdProduct" class="form-control" />
+        </div>
+        <div class="form-group col-lg-12">
+            <button type="submit" class="btn btn-sm pull-left" asp-area="Admin" asp-controller="Lobs" asp-action="UpdateLob" style="color:white; background-color:#00A4E4;">Update</button>
+            <button type="submit" class="btn btn-sm btn-danger pull-right" asp-area="Admin" asp-controller="Lobs" asp-action="RemoveLob" asp-route-id="@Model.Lob.IdLob">Remove</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,53 @@
+﻿@model AddLobViewModel
+@{
+    ViewData["Title"] = "AddLob";
+}
+
+<h2>AddLob</h2>
+
+<div class="row">
+    <form class="col-lg-4" asp-area="Admin" asp-action="AddLob" method="post">
+        <div asp-validation-summary="All" style="color:red;"></div>
+        <div class="form-group">
+            <label asp-for="Lob">Process</label>
+            <input asp-for="Lob" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="MmcpLob">MMCP Lob</label>
+            <input asp-for="MmcpLob" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="MmcpSegment">MMCP Segment</label>
+            <input asp-for="MmcpSegment" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-6">
+                    <label asp-for="ProductLine1">Product Line 1</label>
+                    <input asp-for="ProductLine1" class="form-control" />
+                </div>
+                <div class="col-lg-6">
+                    <label asp-for="ProductLine2">Product Line 2</label>
+                    <input asp-for="ProductLine2" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-6">
+                    <label asp-for="ProductLine3">Product Line 3</label>
+                    <input asp-for="ProductLine3" class="form-control" />
+                </div>
+                <div class="col-lg-6">
+                    <label asp-for="SpphIdProduct">SPPH ID Product</label>
+                    <input asp-for="SpphIdProduct" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-6">
+                <button type="submit" class="btn btn-sm pull-left" style="color:white; background-color:#00A4E4;">Save</button>
+            </div>
+        </div>
+    </form>
+</div>

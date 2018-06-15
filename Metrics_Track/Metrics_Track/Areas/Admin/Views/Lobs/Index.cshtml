@@ -1,0 +1,52 @@
+﻿@model LobListViewModel
+@{
+    ViewData["Title"] = "Lobs Administration";
+}
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="container-fluid">
+    <div class="col-lg-2">
+        <button type="button" class="btn btn-sm pull-left" onclick="location.href='@Url.Action("AddLob", "Lobs")'" style="color:white; background-color:#00A4E4;">Add New</button>
+    </div>
+</div>
+<hr />
+<div class="container-fluid">
+    <h5><b>All Lobs</b></h5>
+    <table class="table table-bordered table-condensed table-hover transaction">
+        <thead>
+            <tr style="color: white; background-color: #00A4E4;">
+                <th>Action</th>
+                <th>ID Lob</th>
+                <th>Lob</th>
+                <th>MMCP Lob</th>
+                <th>MMCP Segment</th>
+                <th>ProductLine1</th>
+                <th>ProductLine2</th>
+                <th>ProductLine3</th>
+                <th>SPPH ID Product</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lob in Model.LobsList)
+            {
+                <tr>
+                    <td>
+                        <button class="btn btn-xs" onclick="location.href='@Url.Action("ById", "Lobs", new { lobId = lob.IdLob })'" style="color: white; background-color: #00A4E4;">Modify</button>
+                    </td>
+                    <td>@lob.IdLob</td>
+                    <td>@lob.Lob</td>
+                    <td>@lob.MmcpLob</td>
+                    <td>@lob.MmcpSegment</td>
+                    <td>@lob.ProductLine1</td>
+                    <td>@lob.ProductLine2</td>
+                    <td>@lob.ProductLine3</td>
+                    <td>@lob.SpphIdProduct</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager((IPagedList)Model.LobsList, page => Url.Action("Index", new { page }))
+</div>

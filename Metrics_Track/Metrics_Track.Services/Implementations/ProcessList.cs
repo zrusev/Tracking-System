@@ -17,18 +17,18 @@
 
         public IEnumerable<ProcessListModel> All()
             => this.db
-            .TblProcess
-            .OrderBy(f => f.FunctionName)
-            .ThenBy(p => p.Process)
-            .ProjectTo<ProcessListModel>()
-            .ToList();
+                .TblProcess
+                .OrderBy(f => f.FunctionName)
+                .ThenBy(p => p.Process)
+                .ProjectTo<ProcessListModel>()
+                .ToList();
 
         public ProcessListModel ById(int id)
             => this.db
-            .TblProcess
-            .Where(i => i.IdProcess == id)
-            .ProjectTo<ProcessListModel>()
-            .FirstOrDefault();
+                .TblProcess
+                .Where(i => i.IdProcess == id)
+                .ProjectTo<ProcessListModel>()
+                .FirstOrDefault();
 
         public int UpdateProcess(ProcessListModel model)
         {
