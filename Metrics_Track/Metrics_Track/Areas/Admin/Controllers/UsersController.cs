@@ -92,14 +92,15 @@
             
             await this.userManager.AddToRoleAsync(user, WebConstants.AgentRole);
 
+            var emailUrl = string.Format("{0}://{1}{2}/account/login", Request.Scheme, Request.Host, Request.PathBase);
             var emailTo = user.Email;
             var emailSubject = "Metrics Track account confirmation";
             var emailBody = string.Format(@"<p>Thank you for registering at Metrics Track.&nbsp;</p>
                                             <p>Your account has been revised and approved.</p>
                                             <p>Your current team leader is {0}.</p>
                                             <p><span class=""il"">You</span>&nbsp;may now log in to 
-                                            <a href=""https://metrics-track.azurewebsites.net/account/login"">Metrics Track</a> using your e-mail and password.</p>
-                                            <p><strong><sup>Metrics Track team</sup></strong></p>", teamLead.TeamLead);
+                                            <a href=""{1}"">Metrics Track</a> using your e-mail and password.</p>
+                                            <p><strong><sup>Metrics Track team</sup></strong></p>", teamLead.TeamLead, emailUrl);
 
             var emailConfirmation =  await emailService.SendEmailAsync(emailTo, emailSubject, emailBody);
 

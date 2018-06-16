@@ -23,9 +23,10 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration[Configuration.GetConnectionString("Connection")];
+
             services.AddDbContext<TrackerDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("AzureConnection"),
+                options.UseSqlServer(connectionString,
                     x => x.MigrationsHistoryTable("__EFMigrationsHistory", "CPS")));
 
             services.AddIdentity<User, IdentityRole>(options =>  
@@ -58,7 +59,8 @@
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
 
-            services.Configure<EmailConfigModel>(Configuration.GetSection("Email"));
+            services.Configure<EmailConfigModel>(Configuration.GetSection("Email"));            
+            services.Configure<EmailConfigModel>(options => options.UserPassword = Configuration["EmailPassword"]);
 
             services.AddMvc();
         }

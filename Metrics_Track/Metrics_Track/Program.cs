@@ -23,6 +23,13 @@
             configurationBuilder.SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{ctx.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+            var config = configurationBuilder.Build();
+
+            configurationBuilder.AddAzureKeyVault(
+            config["AzureKeyVault:SecretUri"],
+            config["AzureKeyVault:clientId"],
+            config["AzureKeyVault:clientSecret"]);
         }
     }
 }
