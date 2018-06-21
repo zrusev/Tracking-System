@@ -14,5 +14,9 @@
         int AddProcess(ProcessListModel model);
 
         void RemoveProcess(int id);
+
+        int[] Ids(int id);
+
+        void UpdateIds(int idCountry, int[] ids);
     }
 }

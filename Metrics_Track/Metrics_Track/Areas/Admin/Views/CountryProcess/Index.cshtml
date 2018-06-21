@@ -1,0 +1,43 @@
+﻿@model CountryProcessViewModel
+@{
+    ViewData["Title"] = "Country to Processes Administration";
+}
+
+<div class="container-fluid">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-area="Admin" asp-controller="CountryProcess" asp-action="Index" method="post">
+        <select asp-for="IdCountry" asp-items="Model.CountryList" name="id" onchange="submit">
+            <option>Please select a country</option>
+        </select>
+        <button class="btn btn-sm" type="submit" style="color: white; background-color: #00A4E4;">Select</button>
+    </form>
+</div>
+<hr />
+
+@{
+    if (Model.IdCountry > 0)
+    {
+        <div class="container-fluid">
+            Mapped processes: <b>@Model.IdProcesses.Count()/@Model.Processes.Count()</b>
+        </div>
+        <div class="container-fluid">
+            <form class="col-lg-8" method="post">
+                <div class="form-group">
+                    <input asp-for="IdCountry" class="hidden" name="idCountry" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Processes">All Processes</label>
+                    @Html.ListBoxFor(x => x.IdProcesses, Model.Processes, new { @class = "form-control", @style = "height: 600px;" })
+                    <small>* Press and hold Ctrl to select multiple countries</small>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-6">
+                        <button type="submit" class="btn btn-sm btn-default" asp-area="Admin" asp-action="ModifyCountryProcess" style="color: white; background-color: #00A4E4;">Modify</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    }
+}
+

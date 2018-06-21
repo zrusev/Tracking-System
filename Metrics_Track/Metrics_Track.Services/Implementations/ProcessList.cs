@@ -1,5 +1,6 @@
 ﻿namespace Metrics_Track.Services.Implementations
 {
+    using Admin.Models;
     using AutoMapper.QueryableExtensions;
     using Contracts;
     using Metrics_Track.Data.Models;
@@ -29,6 +30,13 @@
                 .Where(i => i.IdProcess == id)
                 .ProjectTo<ProcessListModel>()
                 .FirstOrDefault();
+
+        public int[] Ids(int id)
+            => this.db
+                    .TrelCountryProcess
+                    .Where(i => i.IdCountry == id)
+                    .Select(s => (int)s.IdProcess)
+                    .ToArray();
 
         public int UpdateProcess(ProcessListModel model)
         {
@@ -88,6 +96,25 @@
                 .FirstOrDefault();
 
             this.db.TblProcess.Remove(process);
+            this.db.SaveChanges();
+        }
+
+        public void UpdateIds(int idCountry, int[] ids)
+        {
+            var currentIds = this.db
+                .TrelCountryProcess
+                .Where(i => i.IdCountry == idCountry)
+                .ToList();
+
+            if (currentIds.Count > 0)
+            {
+                this.db.TrelCountryProcess.RemoveRange(currentIds);
+            }
+            
+            var newMap = ids.SelectMany(p => new int[] { idCountry },
+                                       (p, c) => new trel_CountryProcess { IdCountry = c, IdProcess = p });
+ 
+            this.db.TrelCountryProcess.AddRange(newMap);
             this.db.SaveChanges();
         }
     }
