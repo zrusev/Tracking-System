@@ -5,13 +5,13 @@
 
 <div class="container-fluid">
     <h2>@ViewData["Title"]</h2>
-
-    <form asp-area="Admin" asp-controller="CountryProcess" asp-action="Index" method="post">
-        <select asp-for="IdCountry" asp-items="Model.CountryList" name="id" onchange="submit">
-            <option>Please select a country</option>
-        </select>
-        <button class="btn btn-sm" type="submit" style="color: white; background-color: #00A4E4;">Select</button>
-    </form>
+    <div class="col-lg-8">
+        <form asp-area="Admin" asp-controller="CountryProcess" asp-action="Index" method="post">
+            <select asp-for="IdCountry" asp-items="Model.CountryList" name="id" onchange="this.form.submit()" style="width:400px;">
+                <option>Please select a country</option>
+            </select>
+        </form>
+    </div>
 </div>
 <hr />
 
@@ -19,7 +19,14 @@
     if (Model.IdCountry > 0)
     {
         <div class="container-fluid">
-            Mapped processes: <b>@Model.IdProcesses.Count()/@Model.Processes.Count()</b>
+            <div class="col-lg-8">
+                <div class="col-lg-6">
+                    Mapped processes: <b>@Model.IdProcesses.Count()/@Model.Processes.Count()</b>
+                </div>
+                <div class="col-lg-6">
+                    <input type="text" class="pull-right" id="inputProcess" onkeyup="myFunction()" placeholder="Search for name..." title="Type in a name" style="width:400px;">
+                </div>
+            </div>
         </div>
         <div class="container-fluid">
             <form class="col-lg-8" method="post">
@@ -27,7 +34,7 @@
                     <input asp-for="IdCountry" class="hidden" name="idCountry" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="Processes">All Processes</label>
+                    <label asp-for="Processes">All Processes: Process/Process Map/(ID Process)</label>
                     @Html.ListBoxFor(x => x.IdProcesses, Model.Processes, new { @class = "form-control", @style = "height: 600px;" })
                     <small>* Press and hold Ctrl to select multiple countries</small>
                 </div>
@@ -41,3 +48,7 @@
     }
 }
 
+@section Scripts
+    {
+    @{ await Html.RenderPartialAsync("_FilterScriptsPartial"); }
+}

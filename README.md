@@ -1,14 +1,17 @@
 # Tracking System
-Sample tracking system which contains a user dashboard and an admin panel.
+Sample tracking system which features a user dashboard and an admin panel.
 
-Used technologies:
+Demo:
+[http://metrics-track.azurewebsites.net/](http://metrics-track.azurewebsites.net/)
+
+Used technologies and packages:
 -   ASP.NET Core
 -   SQL server
 -   Entity framework
 -   Razor
--   Boostrap
 -   jQuery
 -   AJAX
+-   Boostrap
 -   MailKit
 -   X.PagedList
 -   AutoМapper
@@ -30,6 +33,3 @@ Significant features:
 -   ValidateAntiForgeryTokenMiddleware
 -   SessionExtensions
 -   AutoMapperProfile
-
-Sample:
-[http://metrics-track.azurewebsites.net/](http://metrics-track.azurewebsites.net/)
