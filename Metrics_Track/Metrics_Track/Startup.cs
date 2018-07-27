@@ -7,6 +7,8 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +41,12 @@
                 .AddEntityFrameworkStores<TrackerDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.ConfigureApplicationCookie(options =>
             { 
                 options.Cookie.Name = ".MetricsTrack.Identity.Application";
@@ -62,7 +70,8 @@
             services.Configure<EmailConfigModel>(Configuration.GetSection("Email"));            
             services.Configure<EmailConfigModel>(options => options.UserPassword = Configuration["EmailPassword"]);
 
-            services.AddMvc();
+            services.AddMvc()
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -71,18 +80,22 @@
 
             if (env.IsDevelopment())
             {
-                //app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
+
+            app.UseHttpsRedirection();
 
             app.UseSession();
 
             app.UseStaticFiles();
+
+            app.UseCookiePolicy();
 
             app.UseAuthentication();
 
