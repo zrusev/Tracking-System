@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-
-namespace Metrics_Track.Views.Manage
+﻿namespace Metrics_Track.Views.Manage
 {
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using System;
     public static class ManageNavPages
     {
         public static string ActivePageKey => "ActivePage";
