@@ -1,8 +1,8 @@
 ﻿namespace Metrics_Track
 {
-    using AutoMapper;
     using Metrics_Track.Data.Models;
     using Metrics_Track.Infrastructure.Extensions;
+    using Metrics_Track.Infrastructure.Mapping;
     using Metrics_Track.Services.Admin.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -45,8 +45,8 @@
                 options.ExpireTimeSpan = TimeSpan.FromHours(9);
                 options.SlidingExpiration = false;
             });
-
-            services.AddAutoMapper();
+            
+            AutoMapperConfiguration.Configure();
 
             services.AddDomainServices();
 
@@ -71,7 +71,7 @@
 
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }

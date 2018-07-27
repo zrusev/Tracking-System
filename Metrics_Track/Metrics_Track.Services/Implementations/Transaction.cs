@@ -67,7 +67,7 @@
                      .FromSql(query, idLogin, DateTime.Now.Date)
                      .AsNoTracking()
                      .ProjectTo<DailyTransactionsListModel>()
-                     .ToListAsync();
+                     .ToListAsync();            
         }
 
         public IEnumerable<PreviousTransactionModel> PreviousTransaction(int transactionId)
