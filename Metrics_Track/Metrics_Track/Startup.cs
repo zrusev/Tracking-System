@@ -6,8 +6,8 @@
     using Metrics_Track.Services.Admin.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -31,13 +31,13 @@
                 options.UseSqlServer(connectionString,
                     x => x.MigrationsHistoryTable("__EFMigrationsHistory", "CPS")));
 
-            services.AddIdentity<User, IdentityRole>(options =>  
-                     {options.Password.RequireUppercase = false;
-                      options.Password.RequireNonAlphanumeric = false;
-                      options.Password.RequireDigit = false;
-
-                      options.User.RequireUniqueEmail = true;
-                     })
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.User.RequireUniqueEmail = true;
+            })
                 .AddEntityFrameworkStores<TrackerDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -45,6 +45,11 @@
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.Configure<CookieTempDataProviderOptions>(options => 
+            {
+                options.Cookie.IsEssential = true;
             });
 
             services.ConfigureApplicationCookie(options =>
@@ -62,16 +67,24 @@
 
             services.AddDistributedMemoryCache();
 
-            services.AddSession(options => {
+            services.AddSession(options => 
+            {
                 options.Cookie.Name = ".MetricsTrack.Session";
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.IsEssential = true;
             });
 
             services.Configure<EmailConfigModel>(Configuration.GetSection("Email"));            
             services.Configure<EmailConfigModel>(options => options.UserPassword = Configuration["EmailPassword"]);
 
             services.AddMvc()
-                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .AddRazorPagesOptions(options => {
+                    options.Conventions.AddAreaPageRoute(WebConstants.IdentityArea, "/Account/Privacy", "/Account/Privacy");
+                    options.Conventions.AddAreaPageRoute(WebConstants.IdentityArea, "/Manage/PersonalData", "/Manage/PersonalData");
+                    options.Conventions.AddAreaPageRoute(WebConstants.IdentityArea, "/Manage/DeletePersonalData", "/Manage/DeletePersonalData");
+                    options.Conventions.AddAreaPageRoute(WebConstants.IdentityArea, "/Manage/DownloadPersonalData", "/Manage/DownloadPersonalData");
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -104,13 +117,13 @@
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                 name: "dashboard",
-                 template: "{id}",
-                 defaults: new { controller = "Dashboard", action = "Index" });
+                    name: "dashboard",
+                    template: "{id}",
+                    defaults: new { controller = "Dashboard", action = "Index" });
 
                 routes.MapRoute(
-                  name: "areas",
-                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",

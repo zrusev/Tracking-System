@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics_Track.Data", "Metri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics_Track.Services", "Metrics_Track.Services\Metrics_Track.Services.csproj", "{66C9DF63-5C67-4167-95AF-03D1FBDF5E18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics_Track.Common", "Metrics_Track.Common\Metrics_Track.Common.csproj", "{C68F5726-4263-47B5-ACAA-40034974AF87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics_Track.Common", "Metrics_Track.Common\Metrics_Track.Common.csproj", "{C68F5726-4263-47B5-ACAA-40034974AF87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -27,4 +27,10 @@
     <ProjectReference Include="..\Metrics_Tracker.Data\Metrics_Track.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Areas\Identity\Pages\Manage\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

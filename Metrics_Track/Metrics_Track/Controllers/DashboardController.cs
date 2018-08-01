@@ -73,7 +73,7 @@
 
             var modelMining = this.mining.MiningByUserId(currentUser.Id);
 
-            var cvm = new CountryViewModel();
+            var cvm = new CountriesViewModel();
 
             foreach (var model in modelCountries)
             {
