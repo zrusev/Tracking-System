@@ -66,7 +66,7 @@
         {
             this.processList.UpdateCountryProcessIds(idCountry, IdProcesses);
 
-            TempData.AddSuccessMessage("Mapping has been updated successfully.");
+            TempData.AddSuccessMessage(WebConstants.SuccessfulMapping);
 
             return RedirectToAction(nameof(Index));
         }

@@ -15,5 +15,8 @@
         public const int UserNameMaxLength = 100;
 
         public const int MaxItemsPerPage = 25;
+
+        public const string SuccessfulMapping = "Mapping has been updated successfully.";
+        public const string SelectSingleProcess = "Please select a single process only.";
     }
 }

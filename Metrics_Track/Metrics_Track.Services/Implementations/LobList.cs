@@ -1,6 +1,5 @@
 ﻿namespace Metrics_Track.Services.Implementations
 {
-    using AutoMapper.QueryableExtensions;
     using Contracts;
     using Metrics_Track.Data.Models;
     using Models.Lob;

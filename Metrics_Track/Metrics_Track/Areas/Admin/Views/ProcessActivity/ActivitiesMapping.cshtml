@@ -1,0 +1,31 @@
+﻿@model ProcessActivityMappingViewModel
+@{
+    ViewData["Title"] = "Process to Activities Administration";
+}
+
+<div class="container-fluid">
+    <h2>@ViewData["Title"]</h2>
+    <div class="col-lg-8">
+        <h5>Process name: <b>@Model.SelectedProcess</b></h5>
+        Mapped activities: <b>@Model.IdActivities.Count()/@Model.Activities.Count()</b>
+        <input type="text" class="pull-right" id="inputName" onkeyup="myFunction('IdActivities')" placeholder="Search for name..." title="Type in a name" style="width:400px;">
+    </div>
+    <form class="col-lg-8" method="post">
+        <div class="form-group">
+            <input asp-for="IdSelectedProcess" class="hidden" name="idProcess" />
+            <input asp-for="IdActivities" class="hidden" name="IdLobs" id="idActivitiesHidden"/>
+        </div>
+        <div class="form-group">
+            <label asp-for="Activities">All Activities:</label>
+            @Html.ListBoxFor(x => x.IdActivities, Model.Activities, new { @class = "form-control", @style = "height: 600px;" })
+            <small>* Press and hold Ctrl to select multiple countries</small>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-6">
+                <button type="submit" class="btn btn-sm btn-default" asp-area="Admin" asp-action="ActivitiesMapping" style="color: white; background-color: #00A4E4;">Modify</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@{ await Html.RenderPartialAsync("_FilterScriptsPartial"); }

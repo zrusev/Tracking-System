@@ -135,5 +135,24 @@
             this.db.TrelProcessLob.AddRange(newMap);
             this.db.SaveChanges();
         }
+
+        public void UpdateProcessActivityIds(int idProcess, int[] ids)
+        {
+            var currentIds = this.db
+                .TrelProcessActivity
+                .Where(i => i.IdProcess == idProcess)
+                .ToList();
+
+            if (currentIds.Count > 0)
+            {
+                this.db.TrelProcessActivity.RemoveRange(currentIds);
+            }
+
+            var newMap = ids.SelectMany(p => new int[] { idProcess },
+                                       (p, c) => new trel_ProcessActivity { IdProcess = c, IdActivity = p });
+
+            this.db.TrelProcessActivity.AddRange(newMap);
+            this.db.SaveChanges();
+        }
     }
 }

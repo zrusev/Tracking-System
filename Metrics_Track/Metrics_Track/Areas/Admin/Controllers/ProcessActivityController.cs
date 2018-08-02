@@ -1,5 +1,6 @@
 ﻿namespace Metrics_Track.Areas.Admin.Controllers
 {
+    using Admin.Models.ProcessActivity;
     using Admin.Models.ProcessLob;
     using Metrics_Track.Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
@@ -10,15 +11,15 @@
 
     [Area(WebConstants.AdminArea)]
     [Authorize(Roles = WebConstants.AdministratorRole)]
-    public class ProcessLobController : Controller
+    public class ProcessActivityController : Controller
     {
         private readonly IProcessList processList;
-        private readonly ILobList lobList;
+        private readonly IActivityList activityList;
 
-        public ProcessLobController(IProcessList processList, ILobList lobList)
+        public ProcessActivityController(IProcessList processList, IActivityList activityList)
         {
             this.processList = processList;
-            this.lobList = lobList;
+            this.activityList = activityList;
         }
 
         public IActionResult Index()
@@ -34,16 +35,16 @@
                 });
 
             var model = new ProcessLobViewModel
-                {
-                    IdProcesses = new int[] { },
-                    ProcessList = processes
-                };
+            {
+                IdProcesses = new int[] { },
+                ProcessList = processes
+            };
 
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult LobsMapping(int[] IdProcesses)
+        public IActionResult ActivitiesMapping(int[] IdProcesses)
         {
             if (IdProcesses.Length != 1)
             {
@@ -54,35 +55,36 @@
 
                 return RedirectToAction(nameof(Index));
             }
+
             var idSelection = IdProcesses[0];
 
             var process = this.processList.ById(idSelection);
 
-            var model = new ProcessLobMappingViewModel
+            var model = new ProcessActivityMappingViewModel
             {
                 IdSelectedProcess = process.IdProcess,
                 SelectedProcess = process.Process + " /" + process.ProcessMap + "/(" + process.IdProcess + ")"
             };
 
-            var lobs = this.lobList
+            var activities = this.activityList
                 .All()
-                .OrderBy(l => l.Lob)
+                .OrderBy(a => a.Activity)
                 .Select(s => new SelectListItem
                 {
-                    Value = s.ID_Lob.ToString(),
-                    Text = s.Lob
+                    Value = s.IdActivity.ToString(),
+                    Text = s.Activity
                 });
 
-            model.Lobs = lobs;
-            model.IdLobs = this.lobList.Ids(idSelection);
+            model.Activities = activities;
+            model.IdActivities = this.activityList.Ids(idSelection);
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult LobsMapping(int idProcess, int[] IdLobs)
+        public IActionResult ActivitiesMapping(int idProcess, int[] IdActivities)
         {
-            this.processList.UpdateProcessLobIds(idProcess, IdLobs);
+            this.processList.UpdateProcessActivityIds(idProcess, IdActivities);
 
             TempData.AddSuccessMessage(WebConstants.SuccessfulMapping);
 

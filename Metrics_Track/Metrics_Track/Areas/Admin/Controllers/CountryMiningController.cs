@@ -65,7 +65,7 @@
         {
             this.miningList.UpdateIds(idCountry, idMinings);
 
-            TempData.AddSuccessMessage("Mapping has been updated successfully.");
+            TempData.AddSuccessMessage(WebConstants.SuccessfulMapping);
 
             return RedirectToAction(nameof(Index));
         }
