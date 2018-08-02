@@ -37,6 +37,12 @@
     <Content Update="Areas\Admin\Views\ProcessActivity\ActivitiesMapping.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Areas\Admin\Views\ProcessDivision\DivisionsMapping.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\ProcessDivision\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Admin\Views\ProcessLob\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

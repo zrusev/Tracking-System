@@ -154,5 +154,24 @@
             this.db.TrelProcessActivity.AddRange(newMap);
             this.db.SaveChanges();
         }
+
+        public void UpdateProcessDivisionIds(int idProcess, int[] ids)
+        {
+            var currentIds = this.db
+                .TrelProcessDivision
+                .Where(i => i.IdProcess == idProcess)
+                .ToList();
+
+            if (currentIds.Count > 0)
+            {
+                this.db.TrelProcessDivision.RemoveRange(currentIds);
+            }
+
+            var newMap = ids.SelectMany(p => new int[] { idProcess },
+                                       (p, c) => new trel_ProcessDivision { IdProcess = c, IdDivision = p });
+
+            this.db.TrelProcessDivision.AddRange(newMap);
+            this.db.SaveChanges();
+        }
     }
 }

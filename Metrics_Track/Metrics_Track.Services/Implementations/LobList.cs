@@ -57,6 +57,7 @@
 
             return lob.IdLob;
         }
+
         public int AddLob(LobModel model)
         {
             var lob = new tbl_Lob()

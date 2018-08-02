@@ -5,20 +5,21 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Models.ProcessDivision;
     using Models.ProcessLob;
     using System.Linq;
 
     [Area(WebConstants.AdminArea)]
     [Authorize(Roles = WebConstants.AdministratorRole)]
-    public class ProcessLobController : Controller
+    public class ProcessDivisionController : Controller
     {
         private readonly IProcessList processList;
-        private readonly ILobList lobList;
+        private readonly IDivisionList divisionList;
 
-        public ProcessLobController(IProcessList processList, ILobList lobList)
+        public ProcessDivisionController(IProcessList processList, IDivisionList divisionList)
         {
             this.processList = processList;
-            this.lobList = lobList;
+            this.divisionList = divisionList;
         }
 
         public IActionResult Index()
@@ -34,16 +35,16 @@
                 });
 
             var model = new ProcessLobViewModel
-                {
-                    IdProcesses = new int[] { },
-                    ProcessList = processes
-                };
+            {
+                IdProcesses = new int[] { },
+                ProcessList = processes
+            };
 
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult LobsMapping(int[] IdProcesses)
+        public IActionResult DivisionsMapping(int[] IdProcesses)
         {
             if (IdProcesses.Length != 1)
             {
@@ -58,31 +59,31 @@
 
             var process = this.processList.ById(idSelection);
 
-            var model = new ProcessLobMappingViewModel
+            var model = new ProcessDivisionMappingViewModel
             {
                 IdSelectedProcess = process.IdProcess,
                 SelectedProcess = process.Process + " /" + process.ProcessMap + "/(" + process.IdProcess + ")"
             };
 
-            var lobs = this.lobList
+            var divisions = this.divisionList
                 .All()
-                .OrderBy(l => l.Lob)
+                .OrderBy(d => d.Division)
                 .Select(s => new SelectListItem
                 {
-                    Value = s.ID_Lob.ToString(),
-                    Text = s.Lob
+                    Value = s.IdDivision.ToString(),
+                    Text = s.Division
                 });
 
-            model.Lobs = lobs;
-            model.IdLobs = this.lobList.Ids(idSelection);
+            model.Divisions = divisions;
+            model.IdDivisions = this.divisionList.Ids(idSelection);
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult LobsMapping(int idProcess, int[] IdLobs)
+        public IActionResult DivisionsMapping(int idProcess, int[] IdDivisions)
         {
-            this.processList.UpdateProcessLobIds(idProcess, IdLobs);
+            this.processList.UpdateProcessDivisionIds(idProcess, IdDivisions);
 
             TempData.AddSuccessMessage(WebConstants.SuccessfulMapping);
 

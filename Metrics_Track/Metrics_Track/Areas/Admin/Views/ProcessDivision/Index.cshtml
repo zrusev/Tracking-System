@@ -1,0 +1,28 @@
+﻿@model ProcessLobViewModel
+@{
+    ViewData["Title"] = "Process to Divisions Administration";
+}
+
+<div class="container-fluid">
+    <h2>@ViewData["Title"]</h2>
+    <div class="col-lg-8">
+        <input type="text" class="pull-right" id="inputName" onkeyup="myFunction('IdProcesses')" placeholder="Search for name..." title="Type in a name" style="width:400px;">
+    </div>
+    <form class="col-lg-8" method="get">
+        <div class="form-group">
+            <input asp-for="IdProcesses" class="hidden" name="id" id="id"/>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProcessList">All Processes: Process/Process Map/(ID Process)</label>
+            @Html.ListBoxFor(x => x.IdProcesses, Model.ProcessList, new { @class = "form-control", @style = "height: 600px;" })
+            <small>* Select a single process</small>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-6">
+                <button type="submit" class="btn btn-sm btn-default" asp-controller="ProcessDivision" asp-action="DivisionsMapping" style="color: white; background-color: #00A4E4;">Select</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@{ await Html.RenderPartialAsync("_FilterScriptsPartial"); }

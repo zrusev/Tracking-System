@@ -1,12 +1,12 @@
 ﻿namespace Metrics_Track.Areas.Admin.Controllers
 {
-    using Admin.Models.ProcessActivity;
-    using Admin.Models.ProcessLob;
     using Metrics_Track.Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Models.ProcessActivity;
+    using Models.ProcessLob;
     using System.Linq;
 
     [Area(WebConstants.AdminArea)]
