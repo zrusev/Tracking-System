@@ -64,7 +64,7 @@
         [HttpPost]
         public IActionResult ModifyCountryProcess(int idCountry, int[] IdProcesses)
         {
-            this.processList.UpdateIds(idCountry, IdProcesses);
+            this.processList.UpdateCountryProcessIds(idCountry, IdProcesses);
 
             TempData.AddSuccessMessage("Mapping has been updated successfully.");
 

@@ -98,7 +98,7 @@
             this.db.SaveChanges();
         }
 
-        public void UpdateIds(int idCountry, int[] ids)
+        public void UpdateCountryProcessIds(int idCountry, int[] ids)
         {
             var currentIds = this.db
                 .TrelCountryProcess
@@ -114,6 +114,25 @@
                                        (p, c) => new trel_CountryProcess { IdCountry = c, IdProcess = p });
  
             this.db.TrelCountryProcess.AddRange(newMap);
+            this.db.SaveChanges();
+        }
+
+        public void UpdateProcessLobIds(int idProcess, int[] ids)
+        {
+            var currentIds = this.db
+                .TrelProcessLob
+                .Where(i => i.IdProcess == idProcess)
+                .ToList();
+
+            if (currentIds.Count > 0)
+            {
+                this.db.TrelProcessLob.RemoveRange(currentIds);
+            }
+
+            var newMap = ids.SelectMany(p => new int[] { idProcess },
+                                       (p, c) => new trel_ProcessLob { IdProcess = c, IdLob = p });
+
+            this.db.TrelProcessLob.AddRange(newMap);
             this.db.SaveChanges();
         }
     }

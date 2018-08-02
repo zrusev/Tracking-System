@@ -17,6 +17,8 @@
 
         int[] Ids(int id);
 
-        void UpdateIds(int idCountry, int[] ids);
+        void UpdateCountryProcessIds(int idCountry, int[] ids);
+
+        void UpdateProcessLobIds(int idProcess, int[] ids);
     }
 }
