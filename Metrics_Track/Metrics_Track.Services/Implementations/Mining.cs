@@ -22,13 +22,15 @@
         {
             this.db
                 .TblUserActivity
-                .Add(new tbl_UserActivity {
+                .Add(new tbl_UserActivity
+                {
                     IdLogin = model.IdLogin,
                     Type = model.Type,
                     ChangeStamp = model.ChangeStamp,
                     Comment = model.Comment,
                     Sandbox = model.Sandbox
                 });
+
             this.db.SaveChanges();
         }
 

@@ -1,12 +1,12 @@
-﻿@model CountryProcessViewModel
+﻿@model CountryMiningViewModel
 @{
-    ViewData["Title"] = "Country to Processes Administration";
+    ViewData["Title"] = "Country to Minings Administration";
 }
 
 <div class="container-fluid">
     <h2>@ViewData["Title"]</h2>
     <div class="col-lg-8">
-        <form asp-area="Admin" asp-controller="CountryProcess" asp-action="Index" method="post">
+        <form asp-area="Admin" asp-controller="CountryMining" asp-action="Index" method="post">
             <select asp-for="IdCountry" asp-items="Model.CountryList" name="id" onchange="this.form.submit()" style="width:400px;">
                 <option>Please select a country</option>
             </select>
@@ -21,10 +21,10 @@
         <div class="container-fluid">
             <div class="col-lg-8">
                 <div class="col-lg-6">
-                    Mapped processes: <b>@Model.IdProcesses.Count()/@Model.Processes.Count()</b>
+                    Mapped minings: <b>@Model.IdMinings.Count()/@Model.Minings.Count()</b>
                 </div>
                 <div class="col-lg-6">
-                    <input type="text" class="pull-right" id="inputName" onkeyup="myFunction('IdProcesses')" placeholder="Search for name..." title="Type in a name" style="width:400px;">
+                    <input type="text" class="pull-right" id="inputName" onkeyup="myFunction('IdMinings')" placeholder="Search for name..." title="Type in a name" style="width:400px;">
                 </div>
             </div>
         </div>
@@ -34,13 +34,13 @@
                     <input asp-for="IdCountry" class="hidden" name="idCountry" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="Processes">All Processes: Process/Process Map/(ID Process)</label>
-                    @Html.ListBoxFor(x => x.IdProcesses, Model.Processes, new { @class = "form-control", @style = "height: 600px;" })
-                    <small>* Press and hold Ctrl to select multiple countries</small>
+                    <label asp-for="Minings">All Minings: State</label>
+                    @Html.ListBoxFor(x => x.IdMinings, Model.Minings, new { @class = "form-control", @style = "height: 600px;" })
+                    <small>* Press and hold Ctrl to select multiple minings</small>
                 </div>
                 <div class="form-group">
                     <div class="col-lg-6">
-                        <button type="submit" class="btn btn-sm btn-default" asp-area="Admin" asp-action="ModifyCountryProcess" style="color: white; background-color: #00A4E4;">Modify</button>
+                        <button type="submit" class="btn btn-sm btn-default" asp-area="Admin" asp-action="ModifyCountryMining" style="color: white; background-color: #00A4E4;">Modify</button>
                     </div>
                 </div>
             </form>

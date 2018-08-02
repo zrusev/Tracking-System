@@ -1,6 +1,5 @@
 ﻿namespace Metrics_Track.Services.Implementations
 {
-    using Admin.Models;
     using AutoMapper.QueryableExtensions;
     using Contracts;
     using Metrics_Track.Data.Models;
@@ -33,10 +32,10 @@
 
         public int[] Ids(int id)
             => this.db
-                    .TrelCountryProcess
-                    .Where(i => i.IdCountry == id)
-                    .Select(s => (int)s.IdProcess)
-                    .ToArray();
+                .TrelCountryProcess
+                .Where(i => i.IdCountry == id)
+                .Select(s => (int)s.IdProcess)
+                .ToArray();
 
         public int UpdateProcess(ProcessListModel model)
         {
@@ -68,18 +67,18 @@
         {
             var process = new tbl_Process()
             {
-            Process = model.Process,
-            FunctionName = model.FunctionName,
-            ProcessMap = model.ProcessMap,
-            Mnc = model.Mnc,
-            SlaType = model.SlaType,
-            SlaTarget = model.SlaTarget,
-            Level2Taxonomy = model.Level2Taxonomy,
-            Level3Taxonomy = model.Level3Taxonomy,
-            Pid = model.Pid,
-            NiceQueue = model.NiceQueue,
-            Group = model.Group,
-            SpphIdProcess = model.SpphIdProcess
+                Process = model.Process,
+                FunctionName = model.FunctionName,
+                ProcessMap = model.ProcessMap,
+                Mnc = model.Mnc,
+                SlaType = model.SlaType,
+                SlaTarget = model.SlaTarget,
+                Level2Taxonomy = model.Level2Taxonomy,
+                Level3Taxonomy = model.Level3Taxonomy,
+                Pid = model.Pid,
+                NiceQueue = model.NiceQueue,
+                Group = model.Group,
+                SpphIdProcess = model.SpphIdProcess
             };
 
             this.db.TblProcess.Add(process);

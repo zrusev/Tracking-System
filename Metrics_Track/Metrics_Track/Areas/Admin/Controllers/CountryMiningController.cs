@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Areas.Admin.Controllers
 {
-    using Admin.Models.CountryProcess;
+    using Admin.Models.CountryMining;
     using Metrics_Track.Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authorization;
@@ -10,17 +10,17 @@
 
     [Area(WebConstants.AdminArea)]
     [Authorize(Roles = WebConstants.AdministratorRole)]
-    public class CountryProcessController : Controller
+    public class CountryMiningController : Controller
     {
         private readonly ICountry country;
-        private readonly IProcessList processList;
+        private readonly IMiningList miningList;
 
-        public CountryProcessController(ICountry country, IProcessList processList)
+        public CountryMiningController(ICountry country, IMiningList miningList)
         {
             this.country = country;
-            this.processList = processList;
+            this.miningList = miningList;
         }
-        
+
         public IActionResult Index(int? id)
         {
             var countries = this.country
@@ -33,7 +33,7 @@
 
             var idSelection = (int)(id == null ? 0 : id);
 
-            var model = new CountryProcessViewModel
+            var model = new CountryMiningViewModel
             {
                 IdCountry = idSelection,
                 CountryList = countries
@@ -44,27 +44,26 @@
                 return View(model);
             }
 
-            var processes = this.processList
+            var minings = this.miningList
                 .All()
-                .OrderBy(p => p.Process)
-                .ThenBy(m => m.ProcessMap)
+                .OrderBy(s => s.State)
                 .Select(s => new SelectListItem
                 {
-                    Value = s.IdProcess.ToString(),
-                    Text =  s.Process + " /" + s.ProcessMap + "/(" + s.IdProcess + ")" 
+                    Value = s.IdMining.ToString(),
+                    Text = s.State
                 });
 
-            model.Processes = processes;
+            model.Minings = minings;
 
-            model.IdProcesses = this.processList.Ids(idSelection);
+            model.IdMinings = this.miningList.Ids(idSelection);
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult ModifyCountryProcess(int idCountry, int[] IdProcesses)
+        public IActionResult ModifyCountryMining(int idCountry, int[] idMinings)
         {
-            this.processList.UpdateIds(idCountry, IdProcesses);
+            this.miningList.UpdateIds(idCountry, idMinings);
 
             TempData.AddSuccessMessage("Mapping has been updated successfully.");
 

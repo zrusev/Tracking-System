@@ -1,7 +1,9 @@
 ﻿namespace Metrics_Track.Services.Implementations
 {
+    using AutoMapper.QueryableExtensions;
     using Contracts;
     using Metrics_Track.Data.Models;
+    using Microsoft.EntityFrameworkCore;
     using Models.Activity;
     using Models.Country;
     using Models.Lob;
@@ -9,10 +11,8 @@
     using Models.ProcessMap;
     using Models.Status;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using System.Linq;
-    using Microsoft.EntityFrameworkCore;
-    using AutoMapper.QueryableExtensions;
+    using System.Threading.Tasks;
 
     public class Country : ICountry
     {

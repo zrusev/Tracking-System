@@ -1,8 +1,8 @@
-﻿function myFunction() {
+﻿function myFunction(ids) {
     var input, filter, ul, li, a, i;
-    input = document.getElementById("inputProcess");
+    input = document.getElementById("inputName");
     filter = input.value.toUpperCase();
-    ul = document.getElementById("IdProcesses");
+    ul = document.getElementById(ids);
     li = ul.getElementsByTagName("option");
     for (i = 0; i < li.length; i++) {
         if (li[i].innerHTML.toUpperCase().indexOf(filter) > -1) {

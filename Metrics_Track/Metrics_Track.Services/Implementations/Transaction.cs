@@ -71,18 +71,18 @@
         }
 
         public IEnumerable<PreviousTransactionModel> PreviousTransaction(int transactionId)
-        =>  this.db
-                .TblVolumeMain
-                .Where(ti => ti.TransactionId == transactionId)
-                .Select(p => new PreviousTransactionModel
-                {
-                    Process = p.IdProcessNavigation.Process,
-                    Lob = p.IdLobNavigation.Lob,
-                    Premium = p.Premium,
-                    ReceivedDate = p.ReceivedDate,
-                    DocId = transactionId,
-                    Status = p.IdStatusNavigation.Status
-                });
+            =>  this.db
+                    .TblVolumeMain
+                    .Where(ti => ti.TransactionId == transactionId)
+                    .Select(p => new PreviousTransactionModel
+                    {
+                        Process = p.IdProcessNavigation.Process,
+                        Lob = p.IdLobNavigation.Lob,
+                        Premium = p.Premium,
+                        ReceivedDate = p.ReceivedDate,
+                        DocId = transactionId,
+                        Status = p.IdStatusNavigation.Status
+                    });
 
         public ReturnedTransactionModel ReturnedTransaction(int transactionId)
             => this.db
@@ -124,9 +124,9 @@
         public void UpdateStatusCode(int transactionId, short statusCode)
         {
             var transaction = this.db
-                      .TblVolumeMain
-                      .Where(ti => ti.TransactionId == transactionId)              
-                      .FirstOrDefault();
+                    .TblVolumeMain
+                    .Where(ti => ti.TransactionId == transactionId)              
+                    .FirstOrDefault();
 
             transaction.StatusCode = statusCode;
 
