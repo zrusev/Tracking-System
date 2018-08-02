@@ -6,19 +6,20 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Models.ProcessLob;
+    using Models.ProcessStatus;
     using System.Linq;
 
     [Area(WebConstants.AdminArea)]
     [Authorize(Roles = WebConstants.AdministratorRole)]
-    public class ProcessLobController : Controller
+    public class ProcessStatusController : Controller
     {
         private readonly IProcessList processList;
-        private readonly ILobList lobList;
+        private readonly IStatusList statusList;
 
-        public ProcessLobController(IProcessList processList, ILobList lobList)
+        public ProcessStatusController(IProcessList processList, IStatusList statusList)
         {
             this.processList = processList;
-            this.lobList = lobList;
+            this.statusList = statusList;
         }
 
         public IActionResult Index()
@@ -34,16 +35,16 @@
                 });
 
             var model = new ProcessLobViewModel
-                {
-                    IdProcesses = new int[] { },
-                    ProcessList = processes
-                };
+            {
+                IdProcesses = new int[] { },
+                ProcessList = processes
+            };
 
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult LobsMapping(int[] IdProcesses)
+        public IActionResult StatusesMapping(int[] IdProcesses)
         {
             if (IdProcesses.Length != 1)
             {
@@ -59,31 +60,31 @@
 
             var process = this.processList.ById(idSelection);
 
-            var model = new ProcessLobMappingViewModel
+            var model = new ProcessStatusMappingViewModel
             {
                 IdSelectedProcess = process.IdProcess,
                 SelectedProcess = process.Process + " /" + process.ProcessMap + "/(" + process.IdProcess + ")"
             };
 
-            var lobs = this.lobList
+            var statuses = this.statusList
                 .All()
-                .OrderBy(l => l.Lob)
+                .OrderBy(s => s.Status)
                 .Select(s => new SelectListItem
                 {
-                    Value = s.ID_Lob.ToString(),
-                    Text = s.Lob
+                    Value = s.IdStatus.ToString(),
+                    Text = s.Status
                 });
 
-            model.Lobs = lobs;
-            model.IdLobs = this.lobList.Ids(idSelection);
+            model.Statuses = statuses;
+            model.IdStatuses = this.statusList.Ids(idSelection);
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult LobsMapping(int idProcess, int[] IdLobs)
+        public IActionResult StatusesMapping(int idProcess, int[] IdStatuses)
         {
-            this.processList.UpdateProcessLobIds(idProcess, IdLobs);
+            this.processList.UpdateProcessStatusIds(idProcess, IdStatuses);
 
             TempData.AddSuccessMessage(WebConstants.SuccessfulMapping);
 

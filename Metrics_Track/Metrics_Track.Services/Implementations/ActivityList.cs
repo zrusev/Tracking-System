@@ -15,6 +15,7 @@
         {
             this.db = db;
         }
+
         public IEnumerable<ActivityModel> All()
             => this.db
                 .TblActivity

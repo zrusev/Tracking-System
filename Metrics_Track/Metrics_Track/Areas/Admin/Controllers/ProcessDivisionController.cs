@@ -55,6 +55,7 @@
 
                 return RedirectToAction(nameof(Index));
             }
+
             var idSelection = IdProcesses[0];
 
             var process = this.processList.ById(idSelection);

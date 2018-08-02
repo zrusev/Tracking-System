@@ -24,5 +24,7 @@
         void UpdateProcessActivityIds(int idProcess, int[] ids);
 
         void UpdateProcessDivisionIds(int idProcess, int[] ids);
+
+        void UpdateProcessStatusIds(int idProcess, int[] ids);
     }
 }
