@@ -7,6 +7,16 @@
     {
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction(nameof(Home));
+            }
+
+            return View();
+        }
+
+        public IActionResult Home()
+        {
             return View();
         }
 
