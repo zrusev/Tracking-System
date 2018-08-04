@@ -1,10 +1,12 @@
 ﻿namespace Metrics_Track.Controllers
 {
-    using Metrics_Track.Models;
+    using Infrastructure.Attributes;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
     using System.Diagnostics;
     public class HomeController : Controller
     {
+        [ViewLayout("_CleanLayout")]
         public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)

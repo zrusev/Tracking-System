@@ -23,6 +23,7 @@ Significant features:
 -   Environment variables
 -   Multithreading
 -   Partial views
+-	Layouts separation
 -   MVC Areas
 -   Dependency Injection
 -   SQL Injection, XSS, CSRF, parameter tampering, etc. prevention
@@ -30,6 +31,8 @@ Significant features:
 -   Session booster
 -   Session timeout notification
 -   AjaxOnlyAttribute
+-   Layout Validation Attribute
 -   ValidateAntiForgeryTokenMiddleware
 -   SessionExtensions
 -   AutoMapperProfile
+-	Animejs animation
