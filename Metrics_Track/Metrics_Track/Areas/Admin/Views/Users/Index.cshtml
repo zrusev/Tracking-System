@@ -15,11 +15,11 @@
         <thead>
             <tr style="color: white; background-color: #00A4E4;">
                 <th>Action</th>
-                <th>ID Login</th>
+                <th>E-mail</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>E-mail</th>
                 <th>Username</th>
+                <th>ID Login</th>
                 <th>Sandbox</th>
                 <th>Assigned countries</th>
                 <th>Team Leader</th>
@@ -32,11 +32,11 @@
                     <th>
                         <button class="btn btn-xs" onclick="location.href='@Url.Action("ById", "Users", new { userId = user.Id })'" style="color: white; background-color: #00A4E4;">Modify</button>
                     </th>
-                    <th>@user.IdLogin</th>
+                    <th>@user.Email</th>
                     <th>@user.FirstName</th>
                     <th>@user.LastName</th>
-                    <th>@user.Email</th>
                     <th>@user.Username</th>
+                    <th>@user.IdLogin</th>
                     <th>@user.Sandbox</th>
                     <th>
                         @foreach (var country in user.Countries)
@@ -47,11 +47,11 @@
                     <th>
                         <form asp-action="AssignToTeamLead" method="post">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <input type="hidden" name="UserId" value="@user.Id" />
                                     @Html.DropDownListFor(m => m.IdTeamLead, Model.TeamLeads, user.IdTeamLead == null ? "" : user.TeamLead)
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <input class="btn btn-xs" type="submit" value="Assign" style="color: white; background-color: #00A4E4;" />
                                 </div>
                             </div>

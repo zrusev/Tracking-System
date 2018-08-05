@@ -6,7 +6,13 @@
     public class UserViewModel
     {
         public AdminUserListingModel User { get; set; }
+
         public int[] IdCountries { get; set; }
+
+        public bool IsManager { get; set; }
+
+        public bool IsAdmin { get; set; }
+
         public IEnumerable<SelectListItem> Countries { get; set; }
     }
 }

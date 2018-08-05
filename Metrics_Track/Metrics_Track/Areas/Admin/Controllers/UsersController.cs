@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Models.Users;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -112,22 +113,26 @@
         [HttpGet]
         public async Task<IActionResult> ById(string userId)
         {
+            var appUser = await this.userManager.FindByIdAsync(userId);
+
+            var countries = this.country
+                .All()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.IdCountry.ToString(),
+                    Text = c.Country
+                });
+
             var user = await this.users.UserByIdAsync(userId);
 
-            var countries = this.country.All().Select(c => new SelectListItem
-            {
-                Value = c.IdCountry.ToString(),
-                Text = c.Country
-            });
-
-            var currentUser = new UserViewModel
+            return View(new UserViewModel
             {
                 User = user,
                 IdCountries = user.Countries.Select(i => i.IdCountry).ToArray(),
-                Countries = countries
-            };
-
-            return View(currentUser);
+                Countries = countries,
+                IsManager = await this.userManager.IsInRoleAsync(appUser, WebConstants.ManagerRole),
+                IsAdmin = await this.userManager.IsInRoleAsync(appUser, WebConstants.AdministratorRole)
+            });
         }
 
         [HttpPost]
@@ -139,18 +144,29 @@
             }
 
             var user = await this.userManager.FindByIdAsync(model.User.Id);
+
             var userExists = user != null;
 
             if (!userExists)
             {
-                ModelState.AddModelError(string.Empty, "Invalid identity details.");
+                TempData.AddErrorMessage("Invalid identity details.");
+                return View(model);
+            }
+
+            var targetUserId = user.Id;
+            var currentUserId = HttpContext.User.Claims.Select(s => s.Value).FirstOrDefault();
+
+            if (targetUserId.Equals(currentUserId))
+            {
+                TempData.AddErrorMessage("Self modifications are not allowed.");
+                return RedirectToAction(nameof(Index));
             }
 
             user.FirstName = model.User.FirstName;
             user.LastName = model.User.LastName;
             user.Email = model.User.Email;
             user.UserName = model.User.Username;
-            user.Sandbox = model.User.Sandbox;
+            user.Sandbox = model.User.Sandbox;            
 
             this.users.RemoveAgentToCountryTrel(user.Id);
 
@@ -189,10 +205,7 @@
         {
             var user = await this.userManager.FindByIdAsync(id);
 
-            //Remove team leader if necessary
-            //this.users.RemoveTeamLeaderById(id);
-
-            var roles = await this.userManager.GetRolesAsync(user);
+            this.users.RemoveTeamLeaderById(id);
 
             TempData.AddSuccessMessage("User removed successfully.");
             return RedirectToAction(nameof(Index));

@@ -10,8 +10,6 @@
 
     public class AdminUser : IAdminUser
     {
-        private const string AdministratorRole = "Administrator";
-
         private readonly TrackerDbContext db;
 
         public AdminUser(TrackerDbContext db)
@@ -21,24 +19,22 @@
 
         public async Task<IEnumerable<AdminUserListingModel>> AllAsync()
             => await this.db
-                .Users
-                .Select(u => new AdminUserListingModel
-                {
-                    Id = u.Id,
-                    Email = u.Email,
-                    Username = u.UserName,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    IdLogin = u.IdLogin,
-                    IdTeamLead = u.IdTeamLead,
-                    TeamLead = u.TeamLead.TeamLead,
-                    Sandbox = u.Sandbox,
-                    Countries = u.Countries.Select(c => c.Country).ToList()                    
-                })
-                .Where(u => u.Username != AdministratorRole)
-                .OrderBy(n => n.IdTeamLead != null)
-                .ThenByDescending(l => l.IdLogin)
-                .ToListAsync();
+                    .Users
+                    .Select(u => new AdminUserListingModel
+                    {
+                        Id = u.Id,
+                        Email = u.Email,
+                        Username = u.UserName,
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                        IdLogin = u.IdLogin,
+                        IdTeamLead = u.IdTeamLead,
+                        TeamLead = u.TeamLead.TeamLead,
+                        Sandbox = u.Sandbox,
+                        Countries = u.Countries.Select(c => c.Country).ToList()
+                    })
+                    .OrderBy(l => l.Email)                
+                    .ToListAsync();
 
         public async Task<AdminUserListingModel> UserByIdAsync(string userId)
             => await this.db

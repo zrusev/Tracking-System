@@ -15,7 +15,7 @@
             <label asp-for="User.IdLogin">ID Login</label>
             <input asp-for="User.IdLogin" readonly="readonly" class="form-control" />
         </div>
-        <div class="row">
+        <div class="form-group">
             <div class="form-group">
                 <div class="col-lg-6">
                     <label asp-for="User.FirstName">First Name</label>
@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="form-group">
             <div class="form-group">
                 <div class="col-lg-6">
                     <label asp-for="User.Email">E-mail</label>
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="form-group">
             <div class="col-lg-6">
                 <label asp-for="User.TeamLead">Team Leader</label>
                 <input asp-for="User.TeamLead" readonly="readonly" class="form-control" />
@@ -47,6 +47,16 @@
             <div class="col-lg-6">
                 <label asp-for="User.Sandbox">Sandbox</label>
                 <input asp-for="User.Sandbox" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-6">
+                <label asp-for="@Model.IsManager"></label>
+                <input type="checkbox" id="@Model.IsManager" asp-for="@Model.IsManager" value="@Model.IsManager" />
+            </div>
+            <div class="col-lg-6">
+                <label asp-for="@Model.IsAdmin"></label>
+                <input type="checkbox" id="@Model.IsAdmin" asp-for="@Model.IsAdmin" value="@Model.IsAdmin" />
             </div>
         </div>
         <div class="form-group">

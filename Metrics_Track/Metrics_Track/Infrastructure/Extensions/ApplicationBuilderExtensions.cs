@@ -29,6 +29,7 @@
                         {
                             adminName,
                             WebConstants.AgentRole,
+                            WebConstants.ManagerRole
                         };
 
                         foreach (var role in roles)

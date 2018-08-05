@@ -4,6 +4,7 @@
     {
         public const string AdministratorRole = "Administrator";
         public const string AgentRole = "Agent";
+        public const string ManagerRole = "Manager";
 
         public const string TempDataSuccessMessageKey = "SuccessMessage";
         public const string TempDataErrorMessageKey = "ErrorMessage";
