@@ -206,11 +206,21 @@
             if (modelRole == true && currentManagerRole == false)
             {
                 await this.userManager.AddToRoleAsync(user, targetRole);
+
+                if (targetRole.Equals(WebConstants.ManagerRole))
+                {
+                    this.users.AddToManagersList(user);
+                }
             }
 
             if (modelRole == false && currentManagerRole == true)
             {
                 await this.userManager.RemoveFromRoleAsync(user, targetRole);
+
+                if (targetRole.Equals(WebConstants.ManagerRole))
+                {
+                    this.users.RemoveFromManagersList(user);
+                }
             }
         }
 

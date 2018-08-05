@@ -82,5 +82,28 @@
             this.db.Users.Update(user);
             this.db.SaveChanges();
         }
+
+        public void AddToManagersList(User user)
+        {
+            var teamLead = new tbl_TeamLead
+            {
+                TeamLead = user.FirstName + " " + user.LastName,
+                User = user
+            };
+
+            this.db.TblTeamLead.Add(teamLead);
+            this.db.SaveChanges();
+        }
+
+        public void RemoveFromManagersList(User user)
+        {
+            var teamLead = this.db
+                .TblTeamLead
+                .Where(u => u.User.IdTeamLead == user.IdTeamLead)
+                .SingleOrDefault();
+
+            this.db.TblTeamLead.Remove(teamLead);
+            this.db.SaveChanges();
+        }
     }
 }

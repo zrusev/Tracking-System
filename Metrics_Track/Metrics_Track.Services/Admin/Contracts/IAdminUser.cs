@@ -1,5 +1,6 @@
 ﻿namespace Metrics_Track.Services.Admin.Contracts
 {
+    using Metrics_Track.Data.Models;
     using Models;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -12,5 +13,9 @@
         void RemoveAgentToCountryTrel(string agentId);
 
         void RemoveTeamLeaderById(string agengId);
+
+        void AddToManagersList(User user);
+
+        void RemoveFromManagersList(User user);
     }
 }
