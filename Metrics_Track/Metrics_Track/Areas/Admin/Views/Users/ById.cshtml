@@ -15,31 +15,27 @@
             <label asp-for="User.IdLogin">ID Login</label>
             <input asp-for="User.IdLogin" readonly="readonly" class="form-control" />
         </div>
-        <div class="form-group">
-            <div class="form-group">
-                <div class="col-lg-6">
-                    <label asp-for="User.FirstName">First Name</label>
-                    <input asp-for="User.FirstName" class="form-control" />
-                </div>
-                <div class="col-lg-6">
-                    <label asp-for="User.LastName">Last Name</label>
-                    <input asp-for="User.LastName" class="form-control" />
-                </div>
+        <div class="form-group row">
+            <div class="col-lg-6">
+                <label asp-for="User.FirstName">First Name</label>
+                <input asp-for="User.FirstName" class="form-control" />
+            </div>
+            <div class="col-lg-6">
+                <label asp-for="User.LastName">Last Name</label>
+                <input asp-for="User.LastName" class="form-control" />
             </div>
         </div>
-        <div class="form-group">
-            <div class="form-group">
-                <div class="col-lg-6">
-                    <label asp-for="User.Email">E-mail</label>
-                    <input asp-for="User.Email" class="form-control" />
-                </div>
-                <div class="col-lg-6">
-                    <label asp-for="User.Username">Username</label>
-                    <input asp-for="User.Username" class="form-control" />
-                </div>
+        <div class="form-group row">
+            <div class="col-lg-6">
+                <label asp-for="User.Email">E-mail</label>
+                <input asp-for="User.Email" class="form-control" />
+            </div>
+            <div class="col-lg-6">
+                <label asp-for="User.Username">Username</label>
+                <input asp-for="User.Username" class="form-control" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <div class="col-lg-6">
                 <label asp-for="User.TeamLead">Team Leader</label>
                 <input asp-for="User.TeamLead" readonly="readonly" class="form-control" />
@@ -49,14 +45,14 @@
                 <input asp-for="User.Sandbox" class="form-control" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-check row">
             <div class="col-lg-6">
                 <label asp-for="@Model.IsManager"></label>
-                <input type="checkbox" id="@Model.IsManager" asp-for="@Model.IsManager" value="@Model.IsManager" />
+                <input asp-for="@Model.IsManager" id="IsManager" class="form-check-input" />
             </div>
             <div class="col-lg-6">
                 <label asp-for="@Model.IsAdmin"></label>
-                <input type="checkbox" id="@Model.IsAdmin" asp-for="@Model.IsAdmin" value="@Model.IsAdmin" />
+                <input asp-for="@Model.IsAdmin" id="IsAdmin" class="form-check-input" />
             </div>
         </div>
         <div class="form-group">

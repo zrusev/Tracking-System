@@ -170,25 +170,48 @@
 
             this.users.RemoveAgentToCountryTrel(user.Id);
 
-            var countryList = new List<trel_AgentCountry>();
-
-            foreach (var id in model.IdCountries)
+            if (model.IdCountries != null)
             {
-                var trel = new trel_AgentCountry
+                var countryList = new List<trel_AgentCountry>();
+
+                foreach (var id in model.IdCountries)
                 {
-                    IdAgent = user.Id,
-                    IdCountry = id
-                };
-                countryList.Add(trel);
+                    var trel = new trel_AgentCountry
+                    {
+                        IdAgent = user.Id,
+                        IdCountry = id
+                    };
+
+                    countryList.Add(trel);
+                }
+
+                user.Countries = countryList;
             }
 
-            user.Countries = countryList;
-
             await this.userManager.UpdateAsync(user);
+
+            await SetRolesAsync(user, model.IsManager, WebConstants.ManagerRole);
+
+            await SetRolesAsync(user, model.IsAdmin, WebConstants.AdministratorRole);
 
             TempData.AddSuccessMessage($"{user.FirstName} {user.LastName} has been updated successfully.");
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task SetRolesAsync(User user, bool modelRole, string targetRole)
+        {
+            var currentManagerRole = await this.userManager.IsInRoleAsync(user, targetRole);
+
+            if (modelRole == true && currentManagerRole == false)
+            {
+                await this.userManager.AddToRoleAsync(user, targetRole);
+            }
+
+            if (modelRole == false && currentManagerRole == true)
+            {
+                await this.userManager.RemoveFromRoleAsync(user, targetRole);
+            }
         }
 
         [HttpPost]
@@ -206,6 +229,8 @@
             var user = await this.userManager.FindByIdAsync(id);
 
             this.users.RemoveTeamLeaderById(id);
+
+            await this.userManager.RemoveFromRoleAsync(user, WebConstants.AgentRole);
 
             TempData.AddSuccessMessage("User removed successfully.");
             return RedirectToAction(nameof(Index));

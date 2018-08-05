@@ -5,66 +5,62 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div class="row">
+<div class="container-fluid">
     <form class="col-lg-4" asp-area="Admin" asp-action="AddProcess" method="post">
         <div asp-validation-summary="All" style="color:red;"></div>
-        <div class="form-group">
+        <div class="form-group row">
             <label asp-for="Process">Process</label>
             <input asp-for="Process" class="form-control" />
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <label asp-for="FunctionName">Function Name</label>
             <input asp-for="FunctionName" class="form-control" />
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <label asp-for="ProcessMap">Process Map</label>
             <input asp-for="ProcessMap" class="form-control" />
         </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-6">
-                    <label asp-for="SlaType">SLA Type</label>
-                    <input asp-for="SlaType" class="form-control" />
-                </div>
-                <div class="col-lg-6">
-                    <label asp-for="SlaTarget">SLA Target</label>
-                    <input asp-for="SlaTarget" class="form-control" />
-                </div>
+        <div class="form-group row">
+            <div class="col-lg-6">
+                <label asp-for="SlaType">SLA Type</label>
+                <input asp-for="SlaType" class="form-control" />
+            </div>
+            <div class="col-lg-6">
+                <label asp-for="SlaTarget">SLA Target</label>
+                <input asp-for="SlaTarget" class="form-control" />
             </div>
         </div>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-lg-6">
-                    <label asp-for="Level2Taxonomy">Level2Taxonomy</label>
-                    <input asp-for="Level2Taxonomy" class="form-control" />
-                </div>
-                <div class="col-lg-6">
-                    <label asp-for="Level3Taxonomy">Level3Taxonomy</label>
-                    <input asp-for="Level3Taxonomy" class="form-control" />
-                </div>
+        <div class="form-group row">
+            <div class="col-lg-6">
+                <label asp-for="Level2Taxonomy">Level2Taxonomy</label>
+                <input asp-for="Level2Taxonomy" class="form-control" />
+            </div>
+            <div class="col-lg-6">
+                <label asp-for="Level3Taxonomy">Level3Taxonomy</label>
+                <input asp-for="Level3Taxonomy" class="form-control" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <label asp-for="Mnc">MNC</label>
             <input asp-for="Mnc" class="form-control" />
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <label asp-for="Pid">PID</label>
             <input asp-for="Pid" class="form-control" />
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <label asp-for="NiceQueue">Nice Queue</label>
             <input asp-for="NiceQueue" class="form-control" />
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <label asp-for="Group">Group</label>
             <input asp-for="Group" class="form-control" />
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <label asp-for="SpphIdProcess">Spph Id Process</label>
             <input asp-for="SpphIdProcess" class="form-control" />
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <div class="col-lg-6">
                 <button type="submit" class="btn btn-sm pull-left" style="color:white; background-color:#00A4E4;">Save</button>
             </div>
