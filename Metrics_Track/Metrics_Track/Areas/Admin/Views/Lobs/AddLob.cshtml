@@ -4,44 +4,41 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-
-<div class="container-fluid">
-    <form class="col-lg-4" asp-area="Admin" asp-action="AddLob" method="post">
-        <div asp-validation-summary="All" style="color:red;"></div>
-        <div class="form-group row">
-            <label asp-for="Lob">Lob</label>
-            <input asp-for="Lob" class="form-control" />
+<form class="col-lg-4" asp-area="Admin" asp-action="AddLob" method="post">
+    <div asp-validation-summary="All" style="color:red;"></div>
+    <div class="form-group">
+        <label asp-for="Lob">Lob</label>
+        <input asp-for="Lob" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="MmcpLob">MMCP Lob</label>
+        <input asp-for="MmcpLob" class="form-control" />
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label asp-for="MmcpSegment">MMCP Segment</label>
+            <input asp-for="MmcpSegment" class="form-control" />
         </div>
-        <div class="form-group row">
-            <label asp-for="MmcpLob">MMCP Lob</label>
-            <input asp-for="MmcpLob" class="form-control" />
+        <div class="col-lg-6">
+            <label asp-for="ProductLine1">Product Line 1</label>
+            <input asp-for="ProductLine1" class="form-control" />
         </div>
-        <div class="form-group row">
-            <div class="col-lg-6">
-                <label asp-for="MmcpSegment">MMCP Segment</label>
-                <input asp-for="MmcpSegment" class="form-control" />
-            </div>
-            <div class="col-lg-6">
-                <label asp-for="ProductLine1">Product Line 1</label>
-                <input asp-for="ProductLine1" class="form-control" />
-            </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <label asp-for="ProductLine2">Product Line 2</label>
+            <input asp-for="ProductLine2" class="form-control" />
         </div>
-        <div class="form-group row">
-            <div class="col-lg-6">
-                <label asp-for="ProductLine2">Product Line 2</label>
-                <input asp-for="ProductLine2" class="form-control" />
-            </div>
-            <div class="col-lg-6">
-                <label asp-for="ProductLine3">Product Line 3</label>
-                <input asp-for="ProductLine3" class="form-control" />
-            </div>
+        <div class="col-lg-6">
+            <label asp-for="ProductLine3">Product Line 3</label>
+            <input asp-for="ProductLine3" class="form-control" />
         </div>
-        <div class="form-group row">
-            <label asp-for="SpphIdProduct">SPPH ID Product</label>
-            <input asp-for="SpphIdProduct" class="form-control" />
-        </div>
-        <div class="form-group row">
-            <button type="submit" class="btn btn-sm pull-left" style="color:white; background-color:#00A4E4;">Save</button>
-        </div>
-    </form>
-</div>
+    </div>
+    <div class="form-group">
+        <label asp-for="SpphIdProduct">SPPH ID Product</label>
+        <input asp-for="SpphIdProduct" class="form-control" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-sm pull-left" style="color:white; background-color:#00A4E4;">Save</button>
+    </div>
+</form>
