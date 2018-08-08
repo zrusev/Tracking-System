@@ -184,16 +184,16 @@ function countdownDisplay() {
 }
 
 function sessLogOut() {
-    var token = $('input[name="__RequestVerificationToken"]', $("#submittranform")).val();
+    var token = $('input[name="__RequestVerificationToken"]').val();
     $.ajax({
         type: 'POST',
         url: '/account/logout',
-        data: { "__RequestVerificationToken" : token },
-        success: function (response) {
-            window.location.href = response.Url;
+        data: { "__RequestVerificationToken": token },
+        success: function () {
+            //will always fail as 200 is expected but 301/302 is received 
         },
-        error: function() {
-            alert("Internal error. Please contact support.");
+        error: function () {
+            window.location.href = '/account/login';
         }
     });
 }

@@ -44,8 +44,7 @@
             translateY: 150
         });
 
-        var promise = morphing.finished.then(() => {
-
+        var promise = morphing.finished.then(function () {
             btn2.onclick = function () {
                 var morphing = anime({
                     targets: '.polymorph',
@@ -65,6 +64,6 @@
                     translateY: -800
                 });
             };
-        })
+        });
     }
 </script>
