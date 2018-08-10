@@ -30,7 +30,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (User.IsInRole(WebConstants.AdministratorRole))
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(WebConstants.AdministratorRole))
                     {
                         <li><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
                         <li><a asp-area="Admin" asp-controller="Countries" asp-action="Index">Countries</a></li>
@@ -52,11 +52,14 @@
                             </ul>
                         </li>
                     }
-
-                    @if (User.IsInRole(WebConstants.AgentRole) && User.Identity.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(WebConstants.AgentRole))
                     {
                         <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
                         <li><a asp-area="" asp-controller="Dashboard" asp-action="MyDailyTransactions">My Daily Transactions</a></li>
+                    }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(WebConstants.ManagerRole))
+                    {
+                        <li><a asp-area="Management" asp-page="/CurrentStatus">Current Status</a></li>
                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")

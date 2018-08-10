@@ -11,6 +11,7 @@
 
         public const string AdminArea = "Admin";
         public const string IdentityArea = "Identity";
+        public const string ManagementArea = "Management";
 
         public const int UserNameMinLength = 2;
         public const int UserNameMaxLength = 100;

@@ -3,9 +3,11 @@
     using AutoMapper.QueryableExtensions;
     using Contracts;
     using Metrics_Track.Data.Models;
+    using Microsoft.EntityFrameworkCore;
     using Models.Status;
     using System.Collections.Generic;
     using System.Linq;
+
     public class Status : IStatus
     {
         private readonly TrackerDbContext db;
@@ -66,6 +68,20 @@
 
             this.db.TblStatus.Remove(division);
             this.db.SaveChanges();
+        }
+
+        public IEnumerable<CurrentStatusListModel> AllCurrentStatuses()
+        {
+            string query = @"SELECT [ID_Login], [Display Name], [Team Leader], [Type], [Last Update], [Comment], [Sandbox]
+                               FROM [CPS].[SSC_View_UserCurrent]
+                              WHERE Type <> 'Login'";
+
+            return this.db
+                .SSCViewCurrentStatus
+                .FromSql(query)
+                .AsNoTracking()
+                .ProjectTo<CurrentStatusListModel>()
+                .ToList();
         }
     }
 }

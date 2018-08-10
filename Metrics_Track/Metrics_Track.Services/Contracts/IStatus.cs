@@ -13,5 +13,7 @@
         int AddStatus(StatusModel model);
 
         void RemoveStatus(int id);
+
+        IEnumerable<CurrentStatusListModel> AllCurrentStatuses();
     }
 }

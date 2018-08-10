@@ -4,14 +4,16 @@ using Metrics_Track.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Metrics_Track.Data.Migrations
 {
     [DbContext(typeof(TrackerDbContext))]
-    partial class TrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180810082734_SSCViewCurrentStatus")]
+    partial class SSCViewCurrentStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,7 +25,7 @@ namespace Metrics_Track.Data.Migrations
 
             modelBuilder.Entity("Metrics_Track.Data.Models.SSC_View_CurrentStatus", b =>
                 {
-                    b.Property<int>("LoginId")
+                    b.Property<int>("ID_Login")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID_Login")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -43,7 +45,7 @@ namespace Metrics_Track.Data.Migrations
 
                     b.Property<string>("Type");
 
-                    b.HasKey("LoginId");
+                    b.HasKey("ID_Login");
 
                     b.ToTable("SSCViewCurrentStatus");
                 });

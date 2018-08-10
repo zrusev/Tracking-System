@@ -60,7 +60,12 @@
 
         public async Task<List<DailyTransactionsListModel>> DailyTransactions(int idLogin)
         {
-            string query = "SELECT TOP 10 [Transaction_ID],[Function Name],[Country],[Team Leader],[User Name],[Process],[Process Map],[Activity],[LOB],[ReceivedDate],[StartDate],[CompleteDate],[Comment],[ID_Number],[Status],[Premium],[Currency_Code],[MNC],[Priority],[SLA Hrs],[SLA Target],[SLA Type],[SLA Transaction],[SLA Achievment],[Handling Time],[Multi-Step Transaction],[Audit],[ID_Login],[AspID_Login] FROM [CPS].[SSC_View_MyTransactions] WHERE [AspID_Login] = {0} AND CompleteDate >= {1}";
+            string query = @"SELECT [Transaction_ID], [Function Name], [Country], [Team Leader], [User Name], [Process], [Process Map], [Activity], [LOB], [ReceivedDate], 
+                                    [StartDate], [CompleteDate], [Comment], [ID_Number], [Status], [Premium], [Currency_Code], [MNC], [Priority], [SLA Hrs], [SLA Target], 
+                                    [SLA Type], [SLA Transaction], [SLA Achievment], [Handling Time], [Multi-Step Transaction], [Audit], [ID_Login], [AspID_Login] 
+                               FROM [CPS].[SSC_View_MyTransactions] 
+                              WHERE [AspID_Login] = {0} 
+                                AND CompleteDate >= {1}";
 
             return await this.db
                      .SSCViewMyTransactions

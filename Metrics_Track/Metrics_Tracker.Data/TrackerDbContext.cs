@@ -43,6 +43,7 @@
         public DbSet<trel_CountryMining> TrelCountryMining { get; set; }
         public DbSet<SSC_View_MyTransactions> SSCViewMyTransactions { get; set; }
         public DbSet<tbl_TeamLead> TblTeamLead { get; set; }
+        public DbSet<SSC_View_CurrentStatus> SSCViewCurrentStatus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -802,6 +803,7 @@
             builder.Entity<SSC_View_MyTransactions>(entity =>
             {
                 entity.HasKey(i => i.TransactionId);
+
                 entity.Property(e => e.TransactionId).HasColumnName("Transaction_ID");
 
                 entity.Property(e => e.CurrencyCode).HasColumnName("Currency_Code");
@@ -836,7 +838,7 @@
             });
 
             builder.Entity<tbl_TeamLead>(entity =>
-           {
+            {
                entity.ToTable("tbl_TeamLead", "CPS");
 
                entity.HasKey(i => i.IdTeamLead);
@@ -846,7 +848,20 @@
                entity.Property(e => e.TeamLead).HasMaxLength(255);
 
                entity.HasOne(u => u.User).WithOne(t => t.TeamLead).HasForeignKey<User>(k => k.IdTeamLead);
-           });
+            });
+
+            builder.Entity<SSC_View_CurrentStatus>(entity =>
+            {
+                entity.HasKey(i => i.ID_Login);
+
+                entity.Property(e => e.ID_Login).HasColumnName("ID_Login");
+
+                entity.Property(e => e.DisplayName).HasColumnName("Display Name");
+
+                entity.Property(e => e.TeamLead).HasColumnName("Team Leader"); 
+                
+                entity.Property(e => e.LastUpdate).HasColumnName("Last Update");
+            });
 
             base.OnModelCreating(builder);
         }

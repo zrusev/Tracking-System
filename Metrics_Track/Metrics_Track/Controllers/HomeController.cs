@@ -11,20 +11,16 @@
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(nameof(Home));
+                return RedirectToAction(nameof(Workspace));
             }
 
             return View();
         }
 
-        public IActionResult Home()
-        {
-            return View();
-        }
+        public IActionResult Workspace() => View();
 
         public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        
     }
 }

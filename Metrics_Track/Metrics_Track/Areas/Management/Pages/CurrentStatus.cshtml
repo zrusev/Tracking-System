@@ -1,0 +1,41 @@
+﻿@page
+@using Metrics_Track.Areas.Management.Pages
+@model CurrentStatusModel
+@{
+    ViewData["Title"] = "Users Administration";
+}
+
+<div class="container-fluid">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
+<div class="container-fluid">
+    <h5><b>Current Statuses</b></h5>
+    <table class="table table-bordered table-condensed table-hover" style="font-size:10px;">
+        <thead>
+            <tr style="color: white; background-color: #00A4E4;">
+                <th>ID Login</th>
+                <th>Display Name</th>
+                <th>Team Leader</th>
+                <th>Type</th>
+                <th>Last Update</th>
+                <th>Comment</th>
+                <th>Sandbox</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var status in Model.Statuses)
+            {
+            <tr>
+                <th>@status.ID_Login</th>
+                <th>@status.DisplayName</th>
+                <th>@status.TeamLead</th>
+                <th>@status.Type</th>
+                <th>@status.LastUpdate</th>
+                <th>@status.Comment</th>
+                <th>@status.Sandbox</th>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
