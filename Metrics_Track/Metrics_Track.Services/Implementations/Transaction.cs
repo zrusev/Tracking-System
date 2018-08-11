@@ -138,5 +138,19 @@
             this.db.TblVolumeMain.Update(transaction);
             this.db.SaveChanges();
         }
+
+        public IEnumerable<AllTransactionsListModel> AllTransactions(DateTime receivedDate, DateTime completeDate)
+        {
+            string query = @"SELECT * FROM [CPS].[SSC_View_Reporting] WHERE [Received Date] >= {0} AND [Complete Date] < {1}";
+
+            return this.db
+                     .SCCViewReporting
+                     .FromSql(query, receivedDate, completeDate)
+                     .AsNoTracking()
+                     .Take(25)
+                     .ProjectTo<AllTransactionsListModel>()
+                     .OrderByDescending(t => t.TransactionId)
+                     .ToList();
+        }
     }
 }

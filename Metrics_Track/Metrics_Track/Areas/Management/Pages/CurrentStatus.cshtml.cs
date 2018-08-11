@@ -4,7 +4,7 @@ namespace Metrics_Track.Areas.Management.Pages
     using Metrics_Track.Services.Models.Status;
     using System.Collections.Generic;
 
-    public class CurrentStatusModel : SandboxModel
+    public class CurrentStatusModel : ManagementModel
     {
         private readonly IStatus status;
 

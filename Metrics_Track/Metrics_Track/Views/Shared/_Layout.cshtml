@@ -59,6 +59,7 @@
                     }
                     @if (User.Identity.IsAuthenticated && User.IsInRole(WebConstants.ManagerRole))
                     {
+                        <li><a asp-area="Management" asp-page="/Reporting">Transactions</a></li>
                         <li><a asp-area="Management" asp-page="/CurrentStatus">Current Status</a></li>
                     }
                 </ul>

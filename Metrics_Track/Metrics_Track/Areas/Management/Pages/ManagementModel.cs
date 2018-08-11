@@ -6,7 +6,7 @@
 
     [Area(WebConstants.ManagementArea)]
     [Authorize(Roles = WebConstants.ManagerRole)]
-    public class SandboxModel : PageModel
+    public class ManagementModel : PageModel
     {
     }
 }

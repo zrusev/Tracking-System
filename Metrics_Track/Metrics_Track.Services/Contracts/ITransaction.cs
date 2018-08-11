@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Services.Contracts
 {
-    using Metrics_Track.Services.Models.Transaction;
+    using Models.Transaction;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     public interface ITransaction
@@ -14,5 +15,7 @@
         ReturnedTransactionModel ReturnedTransaction(int transactionId);
 
         void UpdateStatusCode(int transactionId, short statusCode);
+
+        IEnumerable<AllTransactionsListModel> AllTransactions(DateTime receivedDate, DateTime completeDate);
     }
 }

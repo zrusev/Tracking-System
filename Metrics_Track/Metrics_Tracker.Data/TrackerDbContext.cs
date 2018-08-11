@@ -44,6 +44,7 @@
         public DbSet<SSC_View_MyTransactions> SSCViewMyTransactions { get; set; }
         public DbSet<tbl_TeamLead> TblTeamLead { get; set; }
         public DbSet<SSC_View_CurrentStatus> SSCViewCurrentStatus { get; set; }
+        public DbSet<SCC_View_Reporting> SCCViewReporting { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -861,6 +862,45 @@
                 entity.Property(e => e.TeamLead).HasColumnName("Team Leader"); 
                 
                 entity.Property(e => e.LastUpdate).HasColumnName("Last Update");
+            });
+
+            builder.Entity<SCC_View_Reporting>(entity =>
+            {
+                entity.HasKey(i => i.TransactionId);
+
+                entity.Property(e => e.TransactionId).HasColumnName("Transaction ID");
+                
+                entity.Property(e => e.FunctionName).HasColumnName("Function Name");
+
+                entity.Property(e => e.TeamLead).HasColumnName("Team Leader");
+
+                entity.Property(e => e.UserName).HasColumnName("User Name");
+
+                entity.Property(e => e.ProcessMap).HasColumnName("Process Map");
+
+                entity.Property(e => e.ReceivedDate).HasColumnName("Received Date");
+
+                entity.Property(e => e.StartDate).HasColumnName("Start Date");
+
+                entity.Property(e => e.CompleteDate).HasColumnName("Complete Date");
+
+                entity.Property(e => e.ID_Number).HasColumnName("ID Number");
+
+                entity.Property(e => e.CurrencyCode).HasColumnName("Currency Code");
+
+                entity.Property(e => e.InceptionDate).HasColumnName("Inception Date");
+
+                entity.Property(e => e.DateReceivedInAig).HasColumnName("Date Received In Company");
+
+                entity.Property(e => e.SlaHrs).HasColumnName("SLA Hrs");
+
+                entity.Property(e => e.SlaTarget).HasColumnName("SLA Target");
+
+                entity.Property(e => e.SlaType).HasColumnName("SLA Type");
+
+                entity.Property(e => e.SlaAchievement).HasColumnName("SLA Achievement");
+
+                entity.Property(e => e.HandlingTime).HasColumnName("Handling Time");
             });
 
             base.OnModelCreating(builder);
