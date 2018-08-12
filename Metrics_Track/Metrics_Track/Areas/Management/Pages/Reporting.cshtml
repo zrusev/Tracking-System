@@ -16,6 +16,7 @@
         <label asp-for="CompleteDate"></label>
         <input asp-for="CompleteDate" />
         <button type="submit" class="btn btn-group-sm" style="color:white; background-color:#00A4E4;">Search</button>
+        <button type="submit" asp-page-handler="Download" class="btn btn-group-sm" style="color:white; background-color:#00A4E4;">Download to Excel</button>
     </form>
     <hr />
     <table class="table table-bordered table-condensed table-hover" style="font-size:10px;">
@@ -54,36 +55,36 @@
         <tbody>
             @foreach (var transaction in Model.AllTransactions)
             {
-            <tr>
-                <th>@transaction.TransactionId</th>
-                <th>@transaction.FunctionName</th>
-                <th>@transaction.Country</th>
-                <th>@transaction.TeamLead</th>
-                <th>@transaction.UserName</th>
-                <th>@transaction.Process</th>
-                <th>@transaction.ProcessMap</th>
-                <th>@transaction.Activity</th>
-                <th>@transaction.Lob</th>
-                <th>@transaction.ReceivedDate</th>
-                <th>@transaction.StartDate</th>
-                <th>@transaction.CompleteDate</th>
-                <th>@transaction.Comment</th>
-                <th>@transaction.ID_Number</th>
-                <th>@transaction.Status</th>
-                <th>@transaction.Premium</th>
-                <th>@transaction.CurrencyCode</th>
-                <th>@transaction.Priority</th>
-                <th>@transaction.InceptionDate</th>
-                <th>@transaction.DateReceivedInAig</th>
-                <th>@transaction.SlaHrs</th>
-                <th>@transaction.SlaTarget</th>
-                <th>@transaction.SlaType</th>
-                <th>@transaction.SlaAchievement</th>
-                <th>@transaction.HandlingTime</th>
-                <th>@transaction.Week</th>
-                <th>@transaction.Month</th>
-                <th>@transaction.Sandbox</th>
-            </tr>
+                <tr>
+                    <th>@transaction.TransactionId</th>
+                    <th>@transaction.FunctionName</th>
+                    <th>@transaction.Country</th>
+                    <th>@transaction.TeamLead</th>
+                    <th>@transaction.UserName</th>
+                    <th>@transaction.Process</th>
+                    <th>@transaction.ProcessMap</th>
+                    <th>@transaction.Activity</th>
+                    <th>@transaction.Lob</th>
+                    <th>@transaction.ReceivedDate</th>
+                    <th>@transaction.StartDate</th>
+                    <th>@transaction.CompleteDate</th>
+                    <th>@transaction.Comment</th>
+                    <th>@transaction.ID_Number</th>
+                    <th>@transaction.Status</th>
+                    <th>@transaction.Premium</th>
+                    <th>@transaction.CurrencyCode</th>
+                    <th>@transaction.Priority</th>
+                    <th>@transaction.InceptionDate</th>
+                    <th>@transaction.DateReceivedInAig</th>
+                    <th>@transaction.SlaHrs</th>
+                    <th>@transaction.SlaTarget</th>
+                    <th>@transaction.SlaType</th>
+                    <th>@transaction.SlaAchievement</th>
+                    <th>@transaction.HandlingTime</th>
+                    <th>@transaction.Week</th>
+                    <th>@transaction.Month</th>
+                    <th>@transaction.Sandbox</th>
+                </tr>
             }
         </tbody>
     </table>
