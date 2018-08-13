@@ -2,4 +2,17 @@
 @using Metrics_Track.Areas.Management.Pages
 @model FileHandlerModel
 @{
+    ViewData["Title"] = "Transactions Administration";
 }
+
+<div class="container-fluid">
+    <h2>@ViewData["Title"]</h2>
+    <hr />
+    <h5>@ViewData["message"]</h5>
+    <br />
+    <a asp-page="/Reporting" class="btn btn-group-sm" style="color:white; background-color:#00A4E4;">Back</a>
+</div>
+
+<script type="text/javascript">
+    window.location.href = '/management/filehandler?Handler=DataSet';
+</script>

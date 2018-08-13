@@ -139,7 +139,7 @@
             this.db.SaveChanges();
         }
 
-        public IEnumerable<AllTransactionsListModel> AllTransactions(DateTime receivedDate, DateTime completeDate)
+        public ICollection<AllTransactionsListModel> AllTransactions(DateTime receivedDate, DateTime completeDate)
         {
             string query = @"SELECT * FROM [CPS].[SSC_View_Reporting] WHERE [Received Date] >= {0} AND [Complete Date] < {1}";
 

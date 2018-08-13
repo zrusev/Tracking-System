@@ -10,6 +10,7 @@ namespace Metrics_Track.Areas.Management.Pages
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     public class FileHandlerModel : ManagementModel
@@ -20,10 +21,19 @@ namespace Metrics_Track.Areas.Management.Pages
         {
             this.hostingEnvironment = hostingEnvironment;
         }
-
-        public async Task<IActionResult> OnGetTransactions()
+        public void OnGet()
         {
-            var transactions = TempData.Get<IEnumerable<AllTransactionsListModel>>("filtered");
+            ViewData["message"] =  @TempData.Get<string>("inputMessage");
+        }
+
+        public async Task<IActionResult> OnGetDataSetAsync()
+        {
+            var transactions = TempData.Get<ICollection<AllTransactionsListModel>>("filtered");
+
+            if (transactions == null)
+            {
+                return RedirectToPage("/Reporting");
+            }
 
             string sWebRootFolder = hostingEnvironment.WebRootPath;
 
@@ -40,7 +50,11 @@ namespace Metrics_Track.Areas.Management.Pages
             {
                 IWorkbook workbook;
                 workbook = new XSSFWorkbook();
-                ISheet excelSheet = workbook.CreateSheet("Demo");
+                ISheet excelSheet = workbook.CreateSheet("Extracted_on_" + 
+                                    Regex.Replace(DateTime.Now.ToString(),
+                                                  @"[\/\\[\]\:\|\<>\+\=\;\,\?\*]", 
+                                                  "_",
+                                                  RegexOptions.CultureInvariant));
                 IRow row = excelSheet.CreateRow(0);
 
                 var headers = transactions

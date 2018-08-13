@@ -16,6 +16,6 @@
 
         void UpdateStatusCode(int transactionId, short statusCode);
 
-        IEnumerable<AllTransactionsListModel> AllTransactions(DateTime receivedDate, DateTime completeDate);
+        ICollection<AllTransactionsListModel> AllTransactions(DateTime receivedDate, DateTime completeDate);
     }
 }

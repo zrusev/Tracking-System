@@ -19,8 +19,8 @@ namespace Metrics_Track.Areas.Management.Pages
             this.ReceivedDate = DateTime.Today.AddMonths(-1);
             this.CompleteDate = DateTime.Today.AddDays(1);
         }
-
-        public IEnumerable<AllTransactionsListModel> AllTransactions { get; set; }
+        
+        public ICollection<AllTransactionsListModel> AllTransactions { get; set; }
 
         [BindProperty]
         [Display(Name = "Received Date")]
@@ -33,22 +33,12 @@ namespace Metrics_Track.Areas.Management.Pages
         public void OnPost()
         {
             this.AllTransactions = this.transaction.AllTransactions(this.ReceivedDate, this.CompleteDate);
-            
-            TempData.Put<IEnumerable<AllTransactionsListModel>>("filtered", this.AllTransactions);  //prevent the same query
-            TempData.Put<string>("fileName", $"_{ReceivedDate.ToShortDateString()}_{CompleteDate.ToShortDateString()}");
+
+            TempData.Put<ICollection<AllTransactionsListModel>>("filtered", this.AllTransactions);  //prevent the same query twice
+            TempData.Put<string>("fileName", $"_{ReceivedDate.ToShortDateString().Replace('/', '_')}_{CompleteDate.ToShortDateString().Replace('/', '_')}");
+            TempData.Put<string>("inputMessage", $"Successfully exported {this.AllTransactions.Count} transactions!");
         }
 
-        public IActionResult OnPostDownload()
-        {
-            if (TempData.Get<IEnumerable<AllTransactionsListModel>>("filtered") == null)
-            {
-                var transactions = this.transaction.AllTransactions(this.ReceivedDate, this.CompleteDate);
-
-                TempData.Put<IEnumerable<AllTransactionsListModel>>("filtered", transactions);
-                TempData.Put<string>("fileName", $"_{ReceivedDate.ToShortDateString()}_{CompleteDate.ToShortDateString()}");
-            }
-
-            return RedirectToPage("/FileHandler", "Transactions");
-        }
+        public IActionResult OnPostDownload() => RedirectToPage("/FileHandler");    
     }
 }
