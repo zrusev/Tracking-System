@@ -1,5 +1,7 @@
-﻿@page
+﻿@page "{id?}"
 @using Metrics_Track.Areas.Management.Pages
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
 @model ReportingModel
 @{
     ViewData["Title"] = "Transactions Administration";
@@ -8,15 +10,15 @@
 <div class="container-fluid">
     <h2>@ViewData["Title"]</h2>
     <hr />
-    <form method="post">
+    <form method="post" asp-page-handler="Results">
         <label asp-for="ReceivedDate"></label>
-        <input asp-for="ReceivedDate" />
+        <input asp-for="ReceivedDate" id="received" />
         <label asp-for="CompleteDate"></label>
-        <input asp-for="CompleteDate" />
+        <input asp-for="CompleteDate" id="complete" />
         <button type="submit" class="btn btn-group-sm" style="color:white; background-color:#00A4E4;">Search</button>
         <button type="submit" asp-page-handler="Download" class="btn btn-group-sm" style="color:white; background-color:#00A4E4;">Download to Excel</button>
     </form>
-    <hr />
+    <hr />    
     <table class="table table-bordered table-condensed table-hover" style="font-size:10px;">
         <thead>
             <tr style="color: white; background-color: #00A4E4;">
@@ -51,7 +53,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var transaction in Model.AllTransactions)
+            @foreach (var transaction in Model.PagedTransactions)
             {
                 <tr>
                     <th>@transaction.TransactionId</th>
@@ -86,4 +88,8 @@
             }
         </tbody>
     </table>
+    @if (Model.AllTransactions.Count > 0)
+    {
+        @Html.PagedListPager((IPagedList)Model.PagedTransactions, id => Url.Page("/Reporting", "Results", new { id, Model.ReceivedDate, Model.CompleteDate }))
+    }
 </div>

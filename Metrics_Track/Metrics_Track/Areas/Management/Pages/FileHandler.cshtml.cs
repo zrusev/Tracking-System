@@ -1,13 +1,12 @@
 namespace Metrics_Track.Areas.Management.Pages
 {
     using Metrics_Track.Infrastructure.Extensions;
-    using Metrics_Track.Services.Models.Transaction;
+    using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using NPOI.SS.UserModel;
     using NPOI.XSSF.UserModel;
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -16,10 +15,13 @@ namespace Metrics_Track.Areas.Management.Pages
     public class FileHandlerModel : ManagementModel
     {
         private IHostingEnvironment hostingEnvironment;
+        private readonly ITransaction transaction;
 
-        public FileHandlerModel(IHostingEnvironment hostingEnvironment)
+
+        public FileHandlerModel(IHostingEnvironment hostingEnvironment, ITransaction transaction)
         {
             this.hostingEnvironment = hostingEnvironment;
+            this.transaction = transaction;
         }
         public void OnGet()
         {
@@ -28,10 +30,14 @@ namespace Metrics_Track.Areas.Management.Pages
 
         public async Task<IActionResult> OnGetDataSetAsync()
         {
-            var transactions = TempData.Get<ICollection<AllTransactionsListModel>>("filtered");
+            DateTime receivedDate = DateTime.Parse(@TempData.Get<string>("ReceivedDate"));
+            DateTime completeDate = DateTime.Parse(@TempData.Get<string>("CompleteDate"));
+            
+            var transactions = this.transaction.AllTransactions(receivedDate, completeDate);
 
             if (transactions == null)
             {
+                TempData.AddErrorMessage("No records found. Try again.");
                 return RedirectToPage("/Reporting");
             }
 

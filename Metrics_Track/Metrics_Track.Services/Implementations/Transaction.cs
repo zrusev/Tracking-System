@@ -147,7 +147,7 @@
                      .SCCViewReporting
                      .FromSql(query, receivedDate, completeDate)
                      .AsNoTracking()
-                     .Take(25)
+                     .Take(500)
                      .ProjectTo<AllTransactionsListModel>()
                      .OrderByDescending(t => t.TransactionId)
                      .ToList();
