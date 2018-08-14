@@ -12,6 +12,8 @@
 
     public class Transaction : ITransaction
     {
+        private const int maxResultsPerQuery = 500;
+
         private readonly TrackerDbContext db;
 
         public Transaction(TrackerDbContext db)
@@ -141,15 +143,17 @@
 
         public ICollection<AllTransactionsListModel> AllTransactions(DateTime receivedDate, DateTime completeDate)
         {
-            string query = @"SELECT * FROM [CPS].[SSC_View_Reporting] WHERE [Received Date] >= {0} AND [Complete Date] < {1}";
+            string query = @"SELECT TOP ({0}) * 
+                                         FROM [CPS].[SSC_View_Reporting] 
+                                        WHERE [Complete Date] >= {1} 
+                                          AND [Complete Date] < {2} 
+                                     ORDER BY [Transaction ID] DESC";
 
             return this.db
                      .SCCViewReporting
-                     .FromSql(query, receivedDate, completeDate)
+                     .FromSql(query, maxResultsPerQuery, receivedDate, completeDate)
                      .AsNoTracking()
-                     .Take(500)
                      .ProjectTo<AllTransactionsListModel>()
-                     .OrderByDescending(t => t.TransactionId)
                      .ToList();
         }
     }

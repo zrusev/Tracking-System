@@ -17,7 +17,6 @@ namespace Metrics_Track.Areas.Management.Pages
         private IHostingEnvironment hostingEnvironment;
         private readonly ITransaction transaction;
 
-
         public FileHandlerModel(IHostingEnvironment hostingEnvironment, ITransaction transaction)
         {
             this.hostingEnvironment = hostingEnvironment;
@@ -25,25 +24,25 @@ namespace Metrics_Track.Areas.Management.Pages
         }
         public void OnGet()
         {
-            ViewData["message"] =  @TempData.Get<string>("inputMessage");
+            ViewData["message"] =  TempData.Get<string>("inputMessage");
         }
 
         public async Task<IActionResult> OnGetDataSetAsync()
         {
-            DateTime receivedDate = DateTime.Parse(@TempData.Get<string>("ReceivedDate"));
-            DateTime completeDate = DateTime.Parse(@TempData.Get<string>("CompleteDate"));
+            DateTime receivedDate = DateTime.Parse(TempData.Get<string>("ReceivedDate"));
+            DateTime completeDate = DateTime.Parse(TempData.Get<string>("CompleteDate"));
             
             var transactions = this.transaction.AllTransactions(receivedDate, completeDate);
 
             if (transactions == null)
             {
-                TempData.AddErrorMessage("No records found. Try again.");
+                TempData.AddErrorMessage("No records have been found. Try again.");
                 return RedirectToPage("/Reporting");
             }
 
             string sWebRootFolder = hostingEnvironment.WebRootPath;
 
-            string sFileExtension = TempData.Get<string>("fileName");
+            string sFileExtension = $"_{receivedDate.ToShortDateString().Replace('/', '_')}_{completeDate.ToShortDateString().Replace('/', '_')}";
             string sFileName = $"Metrics_Track_Reporting{sFileExtension}.xlsx";
 
             string URL = string.Format("{0}://{1}/{2}", Request.Scheme, Request.Host, sFileName);
@@ -59,7 +58,7 @@ namespace Metrics_Track.Areas.Management.Pages
                 ISheet excelSheet = workbook.CreateSheet("Extracted_on_" + 
                                     Regex.Replace(DateTime.Now.ToString(),
                                                   @"[\/\\[\]\:\|\<>\+\=\;\,\?\*]", 
-                                                  "_",
+                                                  string.Empty,
                                                   RegexOptions.CultureInvariant));
                 IRow row = excelSheet.CreateRow(0);
 

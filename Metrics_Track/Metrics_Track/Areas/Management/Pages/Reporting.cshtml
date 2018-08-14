@@ -1,4 +1,4 @@
-﻿@page "{id?}"
+﻿@page
 @using Metrics_Track.Areas.Management.Pages
 @using X.PagedList.Mvc.Core;
 @using X.PagedList;
@@ -10,15 +10,31 @@
 <div class="container-fluid">
     <h2>@ViewData["Title"]</h2>
     <hr />
-    <form method="post" asp-page-handler="Results">
-        <label asp-for="ReceivedDate"></label>
-        <input asp-for="ReceivedDate" id="received" />
-        <label asp-for="CompleteDate"></label>
-        <input asp-for="CompleteDate" id="complete" />
-        <button type="submit" class="btn btn-group-sm" style="color:white; background-color:#00A4E4;">Search</button>
-        <button type="submit" asp-page-handler="Download" class="btn btn-group-sm" style="color:white; background-color:#00A4E4;">Download to Excel</button>
+    <form class="row col-lg-6" method="get">
+        <div class="form-group col-lg-4">
+            <label asp-for="ReceivedDate">Received Date</label>
+            <div class='input-group date' id='datetimepicker1'>
+                <input asp-for="ReceivedDate" class="form-control form-date" placeholder="Enter Received date" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-lg-4">
+            <label asp-for="CompleteDate">Complete Date</label>
+            <div class='input-group date' id='datetimepicker2'>
+                <input asp-for="CompleteDate" class="form-control form-date" placeholder="Enter Complete date" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-lg-4" style="margin-top:25px;">
+            <button type="submit" class="btn btn-group-sm" style="color:white; background-color:#00A4E4;">Search</button>
+            <a href="@Url.Page("/Reporting", "Download", new { Model.ReceivedDate, Model.CompleteDate })" class="btn btn-group-sm" style="color:white; background-color:#00A4E4;">Download to Excel</a>
+        </div>
     </form>
-    <hr />    
+    <hr />
     <table class="table table-bordered table-condensed table-hover" style="font-size:10px;">
         <thead>
             <tr style="color: white; background-color: #00A4E4;">
@@ -93,3 +109,25 @@
         @Html.PagedListPager((IPagedList)Model.PagedTransactions, id => Url.Page("/Reporting", "Results", new { id, Model.ReceivedDate, Model.CompleteDate }))
     }
 </div>
+
+@section Scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+
+    <script language="javascript" type="text/javascript">
+        $(function () {
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                });
+                $('#datetimepicker2').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                });
+            });
+        });
+    </script>
+}
