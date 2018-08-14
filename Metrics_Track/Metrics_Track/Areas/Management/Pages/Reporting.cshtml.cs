@@ -46,7 +46,7 @@ namespace Metrics_Track.Areas.Management.Pages
 
             this.AllTransactions = this.transaction.AllTransactions(this.ReceivedDate, this.CompleteDate);
 
-            TempData.Put<string>("inputMessage", $"Successfully exported {this.AllTransactions.Count} transactions. Loading file...");
+            TempData.Put<string>("inputMessage", $"Successfully exported {this.AllTransactions.Count} transactions. Please wait. Generating file...");
 
             this.PagedTransactions = this.AllTransactions.ToPagedList(pageNumber, WebConstants.MaxItemsPerPage);
 

@@ -4,6 +4,7 @@ namespace Metrics_Track.Areas.Management.Pages
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
     using NPOI.XSSF.UserModel;
     using System;
@@ -34,9 +35,9 @@ namespace Metrics_Track.Areas.Management.Pages
             
             var transactions = this.transaction.AllTransactions(receivedDate, completeDate);
 
-            if (transactions == null)
+            if (transactions.Count() == 0)
             {
-                TempData.AddErrorMessage("No records have been found. Try again.");
+                TempData.AddErrorMessage("No records have been found for this period.");
                 return RedirectToPage("/Reporting");
             }
 
@@ -60,6 +61,7 @@ namespace Metrics_Track.Areas.Management.Pages
                                                   @"[\/\\[\]\:\|\<>\+\=\;\,\?\*]", 
                                                   string.Empty,
                                                   RegexOptions.CultureInvariant));
+                
                 IRow row = excelSheet.CreateRow(0);
 
                 var headers = transactions
@@ -69,9 +71,23 @@ namespace Metrics_Track.Areas.Management.Pages
                                 .Select(p => p.Name)
                                 .ToList();
 
+                var boldFont = workbook.CreateFont();
+                boldFont.Boldweight = (short)FontBoldWeight.Bold;
+                boldFont.Color = HSSFColor.White.Index;
+
+                ICellStyle boldStyle = workbook.CreateCellStyle();
+
+                boldStyle.SetFont(boldFont);
+                boldStyle.BorderBottom = BorderStyle.Medium;
+                boldStyle.FillBackgroundColor = HSSFColor.LightBlue.Index;
+                boldStyle.FillPattern = FillPattern.SolidForeground;
+
                 for (int i = 0; i < headers.Count(); i++)
                 {
-                    row.CreateCell(i).SetCellValue(headers[i]);
+                    var cell = row.CreateCell(i);
+
+                    cell.SetCellValue(headers[i]);
+                    cell.CellStyle = boldStyle;
                 }
 
                 int counter = 1;
