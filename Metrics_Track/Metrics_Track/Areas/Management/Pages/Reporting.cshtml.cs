@@ -26,13 +26,13 @@ namespace Metrics_Track.Areas.Management.Pages
 
         [BindProperty(SupportsGet = true)]
         [Required(ErrorMessage = "Received date is required.")]
-        [Display(Name = "Received Date"), DataType(DataType.DateTime)]
+        [Display(Name = "Received Date"), DataType(DataType.Text)]
         public DateTime ReceivedDate { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
 
         [BindProperty(SupportsGet = true)]
         [Required(ErrorMessage = "Complete date is required.")]
-        [Display(Name = "Complete Date"), DataType(DataType.DateTime)]
-        public DateTime CompleteDate { get; set; } = DateTime.Now.AddDays(1);
+        [Display(Name = "Complete Date"), DataType(DataType.Text)]
+        public DateTime CompleteDate { get; set; } = DateTime.Now;
 
         public IActionResult OnGet(int? id)
         {
