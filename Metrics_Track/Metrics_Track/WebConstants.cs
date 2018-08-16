@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track
+﻿namespace Metrics_Track.Web
 {
     public class WebConstants
     {

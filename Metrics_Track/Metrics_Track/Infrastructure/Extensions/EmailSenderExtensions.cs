@@ -1,8 +1,9 @@
-namespace Metrics_Track.Infrastructure.Extensions
+namespace Metrics_Track.Web.Infrastructure.Extensions
 {
     using Metrics_Track.Services.Admin.Contracts;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
+
     public static class EmailSenderExtensions
     {
         public static Task SendEmailConfirmationAsync(this IEmailService emailSender, string email, string link)

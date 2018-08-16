@@ -1,6 +1,8 @@
-namespace Microsoft.AspNetCore.Mvc
+namespace Metrics_Track.Web.Infrastructure.Extensions
 {
-    using Metrics_Track.Areas.Identity.Controllers;
+    using Areas.Identity.Controllers;
+    using Microsoft.AspNetCore.Mvc;
+
     public static class UrlHelperExtensions
     {
         public static string EmailConfirmationLink(this IUrlHelper urlHelper, string userId, string code, string scheme)

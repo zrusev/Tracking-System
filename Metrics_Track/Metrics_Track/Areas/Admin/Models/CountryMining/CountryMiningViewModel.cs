@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.CountryMining
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.CountryMining
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;

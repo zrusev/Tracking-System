@@ -1,6 +1,7 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.Users
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.Users
 {
     using System.ComponentModel.DataAnnotations;
+
     public class AddUserToTeamLeadFormModel
     {
         [Required]

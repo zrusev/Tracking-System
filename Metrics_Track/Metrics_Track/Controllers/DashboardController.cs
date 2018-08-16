@@ -1,8 +1,8 @@
-﻿namespace Metrics_Track.Controllers
+﻿namespace Metrics_Track.Web.Controllers
 {
+    using Infrastructure.Attributes;
+    using Infrastructure.Extensions;
     using Metrics_Track.Data.Models;
-    using Metrics_Track.Infrastructure.Attributes;
-    using Metrics_Track.Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Transaction;
     using Metrics_Track.Services.Models.User;
@@ -18,16 +18,16 @@
     [Authorize(Roles = WebConstants.AgentRole)]
     public class DashboardController : Controller
     {
+        private const int CompleteTransactionIdStatusCode = 1;
+        private const int PendingIdStatusCode = 5;
+        private const int PendingTransactionCode = 2;
+        private const short VoidStatusCode = 3;
+
         private readonly ICountry countries;
         private readonly IMining mining;
         private readonly ITransaction transaction;
         private readonly IPendingList pendingList;
         private readonly UserManager<User> userManager;        
-
-        private const int CompleteTransactionIdStatusCode = 1;
-        private const int PendingIdStatusCode = 5;
-        private const int PendingTransactionCode = 2;
-        private const short VoidStatusCode = 3;
 
         public DashboardController(ICountry countries, IMining mining, ITransaction transaction, IPendingList pendingList, UserManager<User> userManager)
         {
@@ -182,11 +182,12 @@
                 return Json(new { success = false, errors = "The transaction has been assigned to somebody else." });
             
             //if (transaction.StatusCode != PendingTransactionCode)
-            //    return Json(new { success = false, errors = "The transaction is no longer pending." });            
+            //return Json(new { success = false, errors = "The transaction is no longer pending." });            
 
             this.transaction.UpdateStatusCode(transactionId, VoidStatusCode);
 
-            return Json(new {
+            return Json(new
+            {
                 success = true,
                 IdCountry = transaction.IdCountry,                
                 IdProcess = transaction.IdProcess,
@@ -231,6 +232,7 @@
             var modelMining = this.mining.ById(id);
             return Json(modelMining);
         }
+
         private async Task<User> GetUserDetailsAsync() => await userManager.GetUserAsync(User);
     }
 }

@@ -1,8 +1,8 @@
-﻿namespace Metrics_Track
+﻿namespace Metrics_Track.Web
 {
+    using Infrastructure.Extensions;
+    using Infrastructure.Mapping;
     using Metrics_Track.Data.Models;
-    using Metrics_Track.Infrastructure.Extensions;
-    using Metrics_Track.Infrastructure.Mapping;
     using Metrics_Track.Services.Admin.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -78,7 +78,8 @@
             services.Configure<EmailConfigModel>(options => options.UserPassword = Configuration["EmailPassword"]);
 
             services.AddMvc()
-                .AddRazorPagesOptions(options => {
+                .AddRazorPagesOptions(options => 
+                {
                     options.Conventions.AddAreaPageRoute(WebConstants.IdentityArea, "/Account/Privacy", "/Account/Privacy");
                     options.Conventions.AddAreaPageRoute(WebConstants.IdentityArea, "/Manage/PersonalData", "/Manage/PersonalData");
                     options.Conventions.AddAreaPageRoute(WebConstants.IdentityArea, "/Manage/DeletePersonalData", "/Manage/DeletePersonalData");

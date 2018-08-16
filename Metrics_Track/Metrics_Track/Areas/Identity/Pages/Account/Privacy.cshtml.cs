@@ -1,4 +1,4 @@
-namespace Metrics_Track.Areas.Identity.Pages.Account
+namespace Metrics_Track.Web.Areas.Identity.Pages.Account
 {
     using Microsoft.AspNetCore.Mvc.RazorPages;
 

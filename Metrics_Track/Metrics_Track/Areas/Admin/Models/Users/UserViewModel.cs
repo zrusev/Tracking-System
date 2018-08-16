@@ -1,8 +1,9 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.Users
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.Users
 {
     using Metrics_Track.Services.Admin.Models;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
+
     public class UserViewModel
     {
         public AdminUserListingModel User { get; set; }

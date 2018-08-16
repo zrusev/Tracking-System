@@ -1,27 +1,28 @@
-﻿namespace Metrics_Track.Infrastructure
+﻿namespace Metrics_Track.Web.Infrastructure
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Antiforgery;
     using Microsoft.AspNetCore.Http;
+
     public class ValidateAntiForgeryTokenMiddleware
     {
-        private readonly RequestDelegate _next;
-        private readonly IAntiforgery _antiforgery;
+        private readonly RequestDelegate next;
+        private readonly IAntiforgery antiforgery;
 
         public ValidateAntiForgeryTokenMiddleware(RequestDelegate next, IAntiforgery antiforgery)
         {
-            _next = next;
-            _antiforgery = antiforgery;
+            this.next = next;
+            this.antiforgery = antiforgery;
         }
 
         public async Task Invoke(HttpContext context)
         {
             if (HttpMethods.IsPost(context.Request.Method))
             {
-                await _antiforgery.ValidateRequestAsync(context);
+                await this.antiforgery.ValidateRequestAsync(context);
             }
 
-            await _next(context);
+            await this.next(context);
         }
     }
 }

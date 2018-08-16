@@ -1,9 +1,8 @@
-﻿namespace Metrics_Track.Areas.Identity.Controllers
+﻿namespace Metrics_Track.Web.Areas.Identity.Controllers
 {
     using Infrastructure.Extensions;
-    using Metrics_Track.Services.Admin.Contracts;
     using Metrics_Track.Data.Models;
-    using Metrics_Track.Services.Contracts;
+    using Metrics_Track.Services.Admin.Contracts;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -21,14 +20,14 @@
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
+        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
+        private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
+
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly IEmailService emailSender;
         private readonly ILogger logger;
         private readonly UrlEncoder urlEncoder;
-
-        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
-        private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
         public ManageController(
           UserManager<User> userManager,
@@ -525,6 +524,7 @@
                 result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
                 currentPosition += 4;
             }
+
             if (currentPosition < unformattedKey.Length)
             {
                 result.Append(unformattedKey.Substring(currentPosition));

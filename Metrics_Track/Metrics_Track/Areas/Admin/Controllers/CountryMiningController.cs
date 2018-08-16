@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Areas.Admin.Controllers
+﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
-    using Metrics_Track.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

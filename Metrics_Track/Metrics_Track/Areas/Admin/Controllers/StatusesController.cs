@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Areas.Admin.Controllers
+﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
-    using Metrics_Track.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Status;
     using Microsoft.AspNetCore.Authorization;
@@ -30,6 +30,7 @@
 
             return View(new StatusListViewModel { StatusList = onePageList });
         }
+
         [HttpGet]
         public IActionResult ById(string statusId)
         {
@@ -68,8 +69,7 @@
         }
 
         [HttpGet]
-        public IActionResult AddStatus()
-            => View(new AddStatusViewModel());
+        public IActionResult AddStatus() => View(new AddStatusViewModel());
 
         [HttpPost]
         public IActionResult AddStatus(AddStatusViewModel model)

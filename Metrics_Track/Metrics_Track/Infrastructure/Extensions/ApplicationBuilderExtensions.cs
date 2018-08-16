@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Infrastructure.Extensions
+﻿namespace Metrics_Track.Web.Infrastructure.Extensions
 {
     using Metrics_Track.Data.Models;
     using Microsoft.AspNetCore.Builder;
@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using System.Threading.Tasks;
+
     public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder UseAntiforgeryTokens(this IApplicationBuilder app)

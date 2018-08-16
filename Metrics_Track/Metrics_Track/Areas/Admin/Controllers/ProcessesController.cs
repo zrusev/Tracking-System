@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Areas.Admin.Controllers
+﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
-    using Metrics_Track.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Process;
     using Microsoft.AspNetCore.Authorization;
@@ -80,8 +80,7 @@
         }
 
         [HttpGet]
-        public IActionResult AddProcess()
-            => View(new AddProcessViewModel());
+        public IActionResult AddProcess() => View(new AddProcessViewModel());
 
         [HttpPost]
         public IActionResult AddProcess(AddProcessViewModel model)

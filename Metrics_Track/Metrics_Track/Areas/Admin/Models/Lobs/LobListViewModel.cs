@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.Lobs
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.Lobs
 {
     using Metrics_Track.Services.Models.Lob;
     using System.Collections.Generic;

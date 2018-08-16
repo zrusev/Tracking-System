@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track
+﻿namespace Metrics_Track.Web
 {
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
@@ -17,7 +17,7 @@
                 .ConfigureAppConfiguration(ConfigConfiguration)
                 .UseStartup<Startup>();
 
-        static void ConfigConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder configurationBuilder)
+        private static void ConfigConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder configurationBuilder)
         {
             configurationBuilder.SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)

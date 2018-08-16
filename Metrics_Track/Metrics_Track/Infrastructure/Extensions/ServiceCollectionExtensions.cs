@@ -1,9 +1,10 @@
-﻿namespace Metrics_Track.Infrastructure.Extensions
+﻿namespace Metrics_Track.Web.Infrastructure.Extensions
 {
     using Metrics_Track.Services.Contracts;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq;
     using System.Reflection;
+
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddDomainServices(this IServiceCollection services)

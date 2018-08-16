@@ -1,8 +1,9 @@
-﻿namespace Metrics_Track.Areas.Identity.Navigation
+﻿namespace Metrics_Track.Web.Areas.Identity.Navigation
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using System;
+
     public static class ManageNavPages
     {
         public static string ActivePageKey => "ActivePage";
@@ -34,7 +35,6 @@
         public static string DeletePersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, DeletePersonalData);
 
         public static string PersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, PersonalData);
-
 
         public static string PageNavClass(ViewContext viewContext, string page)
         {

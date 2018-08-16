@@ -1,6 +1,7 @@
-﻿namespace Metrics_Track.Areas.Identity.Models.ManageViewModels
+﻿namespace Metrics_Track.Web.Areas.Identity.Models.ManageViewModels
 {
     using System.ComponentModel.DataAnnotations;
+
     public class ChangePasswordViewModel
     {
         [Required]

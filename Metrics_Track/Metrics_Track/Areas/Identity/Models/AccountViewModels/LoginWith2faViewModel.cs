@@ -1,6 +1,7 @@
-﻿namespace Metrics_Track.Areas.Identity.Models.AccountViewModels
+﻿namespace Metrics_Track.Web.Areas.Identity.Models.AccountViewModels
 {
     using System.ComponentModel.DataAnnotations;
+
     public class LoginWith2faViewModel
     {
         [Required]

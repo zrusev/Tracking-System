@@ -1,9 +1,10 @@
-﻿namespace Metrics_Track.Infrastructure.Mapping
+﻿namespace Metrics_Track.Web.Infrastructure.Mapping
 {
     using AutoMapper;
-    using Metrics_Track.Common.Mapping;
+    using Common.Mapping;
     using System;
     using System.Linq;
+
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
@@ -11,7 +12,7 @@
             var allTypes = AppDomain
                 .CurrentDomain
                 .GetAssemblies()
-                .Where(a => a.GetName().Name.Contains("Metrics_Track"))
+                .Where(a => a.GetName().Name.Contains("Metrics_Track.Web"))
                 .SelectMany(a => a.GetTypes());
 
             allTypes
@@ -49,4 +50,3 @@
         }
     }
 }
-

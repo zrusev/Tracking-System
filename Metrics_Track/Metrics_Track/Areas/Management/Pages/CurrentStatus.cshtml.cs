@@ -1,4 +1,4 @@
-namespace Metrics_Track.Areas.Management.Pages
+namespace Metrics_Track.Web.Areas.Management.Pages
 {
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Status;
@@ -13,7 +13,7 @@ namespace Metrics_Track.Areas.Management.Pages
             this.status = status;
         }
 
-        public IEnumerable<CurrentStatusListModel> Statuses{ get; set; }
+        public IEnumerable<CurrentStatusListModel> Statuses { get; set; }
 
         public void OnGet()
         {

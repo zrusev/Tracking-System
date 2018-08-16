@@ -1,7 +1,8 @@
-﻿namespace Metrics_Track.Infrastructure.Extensions
+﻿namespace Metrics_Track.Web.Infrastructure.Extensions
 {
     using Microsoft.AspNetCore.Http;
     using Newtonsoft.Json;
+
     public static class SessionExtensions
     {
         public static void Set<T>(this ISession session, string key, T value)

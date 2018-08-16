@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.Divisions
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.Divisions
 {
     using Metrics_Track.Services.Models.Division;
 

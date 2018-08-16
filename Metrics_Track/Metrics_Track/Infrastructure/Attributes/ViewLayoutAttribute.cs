@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Infrastructure.Attributes
+﻿namespace Metrics_Track.Web.Infrastructure.Attributes
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
@@ -6,6 +6,7 @@
     public class ViewLayoutAttribute : ResultFilterAttribute
     {
         private string layout;
+
         public ViewLayoutAttribute(string layout)
         {
             this.layout = layout;

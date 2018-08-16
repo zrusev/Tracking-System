@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.Activities
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.Activities
 {
     public class AddActivityViewModel
     {

@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Areas.Admin.Controllers
+﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
-    using Metrics_Track.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -43,11 +43,11 @@
         }
 
         [HttpGet]
-        public IActionResult LobsMapping(int[] IdProcesses)
+        public IActionResult LobsMapping(int[] idProcesses)
         {
-            if (IdProcesses.Length != 1)
+            if (idProcesses.Length != 1)
             {
-                if (IdProcesses.Length > 1)
+                if (idProcesses.Length > 1)
                 {
                     TempData.AddErrorMessage(WebConstants.SelectSingleProcess);
                 }
@@ -55,7 +55,7 @@
                 return RedirectToAction(nameof(Index));
             }
 
-            var idSelection = IdProcesses[0];
+            var idSelection = idProcesses[0];
 
             var process = this.processList.ById(idSelection);
 
@@ -81,9 +81,9 @@
         }
 
         [HttpPost]
-        public IActionResult LobsMapping(int idProcess, int[] IdLobs)
+        public IActionResult LobsMapping(int idProcess, int[] idLobs)
         {
-            this.processList.UpdateProcessLobIds(idProcess, IdLobs);
+            this.processList.UpdateProcessLobIds(idProcess, idLobs);
 
             TempData.AddSuccessMessage(WebConstants.SuccessfulMapping);
 

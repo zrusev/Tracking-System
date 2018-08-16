@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.Statuses
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.Statuses
 {
     public class AddStatusViewModel
     {

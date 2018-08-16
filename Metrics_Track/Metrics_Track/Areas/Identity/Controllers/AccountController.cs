@@ -1,10 +1,10 @@
-﻿namespace Metrics_Track.Areas.Identity.Controllers
+﻿namespace Metrics_Track.Web.Areas.Identity.Controllers
 {
     using Infrastructure.Extensions;
-    using Metrics_Track.Controllers;
     using Metrics_Track.Data.Models;
     using Metrics_Track.Services.Admin.Contracts;
     using Metrics_Track.Services.Contracts;
+    using Metrics_Track.Web.Controllers;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -63,6 +63,7 @@
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -80,10 +81,12 @@
                     logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
                 }
+
                 if (result.IsLockedOut)
                 {
                     logger.LogWarning("User account locked out.");
@@ -113,6 +116,7 @@
             }
 
             var model = new LoginWith2faViewModel { RememberMe = rememberMe };
+
             ViewData["ReturnUrl"] = returnUrl;
 
             return View(model);
@@ -197,6 +201,7 @@
                 logger.LogInformation("User with ID {UserId} logged in with a recovery code.", user.Id);
                 return RedirectToLocal(returnUrl);
             }
+
             if (result.IsLockedOut)
             {
                 logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
@@ -273,19 +278,13 @@
                     TempData.AddSuccessMessage("You have been successfully registered. Please wait while an administrator approves your account.");
                     return RedirectToLocal(returnUrl);
                 }
+
                 AddErrors(result);
             }
 
             model.Countries = GetCountriesListItems();
             return View(model);
         }
-
-        private IEnumerable<SelectListItem> GetCountriesListItems()
-            => country.All().Select(c => new SelectListItem
-            {
-                Value = c.IdCountry.ToString(),
-                Text = c.Country
-            });
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -318,6 +317,7 @@
                 ErrorMessage = $"Error from external provider: {remoteError}";
                 return RedirectToAction(nameof(Login));
             }
+
             var info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
@@ -326,11 +326,13 @@
 
             // Sign in the user with this external login provider if the user already has a login.
             var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+
             if (result.Succeeded)
             {
                 logger.LogInformation("User logged in with {Name} provider.", info.LoginProvider);
                 return RedirectToLocal(returnUrl);
             }
+
             if (result.IsLockedOut)
             {
                 return RedirectToAction(nameof(Lockout));
@@ -339,8 +341,11 @@
             {
                 // If the user does not have an account, then ask the user to create an account.
                 ViewData["ReturnUrl"] = returnUrl;
+
                 ViewData["LoginProvider"] = info.LoginProvider;
+
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+
                 return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
             }
         }
@@ -354,15 +359,20 @@
             {
                 // Get the information about the user from the external login provider
                 var info = await signInManager.GetExternalLoginInfoAsync();
+
                 if (info == null)
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
+
                 var user = new User { UserName = model.Email, Email = model.Email };
+
                 var result = await userManager.CreateAsync(user);
+
                 if (result.Succeeded)
                 {
                     result = await userManager.AddLoginAsync(user, info);
+
                     if (result.Succeeded)
                     {
                         await signInManager.SignInAsync(user, isPersistent: false);
@@ -370,6 +380,7 @@
                         return RedirectToLocal(returnUrl);
                     }
                 }
+
                 AddErrors(result);
             }
 
@@ -385,11 +396,13 @@
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
+
             var user = await userManager.FindByIdAsync(userId);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
+
             var result = await userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -443,6 +456,7 @@
             {
                 throw new ApplicationException("A code must be supplied for password reset.");
             }
+
             var model = new ResetPasswordViewModel { Code = code };
             return View(model);
         }
@@ -456,17 +470,20 @@
             {
                 return View(model);
             }
+
             var user = await userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
+
             var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
+
             AddErrors(result);
             return View();
         }
@@ -478,7 +495,6 @@
             return View();
         }
 
-
         [HttpGet]
         public IActionResult AccessDenied()
         {
@@ -486,6 +502,13 @@
         }
 
         #region Helpers
+
+        private IEnumerable<SelectListItem> GetCountriesListItems()
+            => country.All().Select(c => new SelectListItem
+            {
+                Value = c.IdCountry.ToString(),
+                Text = c.Country
+            });
 
         private void AddErrors(IdentityResult result)
         {
@@ -499,8 +522,8 @@
         {
             if (returnUrl != null)
             {
-                returnUrl = returnUrl.Replace(WebConstants.AdminArea, "", StringComparison.InvariantCultureIgnoreCase);
-                returnUrl = returnUrl.Replace(WebConstants.IdentityArea, "", StringComparison.InvariantCultureIgnoreCase);
+                returnUrl = returnUrl.Replace(WebConstants.AdminArea, string.Empty, StringComparison.InvariantCultureIgnoreCase);
+                returnUrl = returnUrl.Replace(WebConstants.IdentityArea, string.Empty, StringComparison.InvariantCultureIgnoreCase);
             }
 
             if (Url.IsLocalUrl(returnUrl))

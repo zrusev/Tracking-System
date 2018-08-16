@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Infrastructure.Extensions
+﻿namespace Metrics_Track.Web.Infrastructure.Extensions
 {
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Newtonsoft.Json;

@@ -1,6 +1,7 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.Processes
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.Processes
 {
     using System.ComponentModel.DataAnnotations;
+
     public class AddProcessViewModel
     {
         public string Process { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Infrastructure.Attributes
+﻿namespace Metrics_Track.Web.Infrastructure.Attributes
 {
     using System;
     using System.ComponentModel.DataAnnotations;

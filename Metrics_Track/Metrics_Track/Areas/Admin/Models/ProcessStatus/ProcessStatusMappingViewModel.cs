@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.ProcessStatus
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.ProcessStatus
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;

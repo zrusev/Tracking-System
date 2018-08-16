@@ -1,7 +1,8 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.CountryProcess
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.CountryProcess
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
+
     public class CountryProcessViewModel
     {
         public int IdCountry { get; set; }

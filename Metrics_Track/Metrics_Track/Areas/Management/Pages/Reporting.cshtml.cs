@@ -1,6 +1,6 @@
-namespace Metrics_Track.Areas.Management.Pages
+namespace Metrics_Track.Web.Areas.Management.Pages
 {
-    using Metrics_Track.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Transaction;
     using Microsoft.AspNetCore.Mvc;

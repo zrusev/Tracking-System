@@ -1,4 +1,4 @@
-﻿@using Metrics_Track.Areas.Identity.Navigation
+﻿@using Metrics_Track.Web.Areas.Identity.Navigation
 @inject SignInManager<User> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();

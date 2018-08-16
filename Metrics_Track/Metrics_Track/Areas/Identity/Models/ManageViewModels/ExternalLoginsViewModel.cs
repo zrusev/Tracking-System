@@ -1,8 +1,9 @@
-﻿namespace Metrics_Track.Areas.Identity.Models.ManageViewModels
+﻿namespace Metrics_Track.Web.Areas.Identity.Models.ManageViewModels
 {
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Identity;
     using System.Collections.Generic;
+
     public class ExternalLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }

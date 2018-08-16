@@ -1,4 +1,4 @@
-namespace Metrics_Track.Models
+namespace Metrics_Track.Web.Models
 {
     public class ErrorViewModel
     {

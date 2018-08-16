@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.ProcessDivision
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.ProcessDivision
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;

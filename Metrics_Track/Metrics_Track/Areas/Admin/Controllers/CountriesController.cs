@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Areas.Admin.Controllers
+﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
-    using Metrics_Track.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Country;
     using Microsoft.AspNetCore.Authorization;
@@ -29,7 +29,10 @@
                 Text = c.Country
             });
 
-            return View(new CountryViewModel { CountryList = countries });
+            return View(new CountryViewModel
+            {
+                CountryList = countries
+            });
         }
 
         [HttpGet]
@@ -40,8 +43,7 @@
         }
 
         [HttpGet]
-        public IActionResult AddCountry()
-            => View(new AddCountryViewModel());
+        public IActionResult AddCountry() => View(new AddCountryViewModel());
 
         [HttpPost]
         public IActionResult AddNewCountryToList(AddCountryViewModel model)
@@ -58,19 +60,19 @@
         }
 
         [HttpGet]
-        public IActionResult ModifyCountry(int[] IdCountries)
+        public IActionResult ModifyCountry(int[] idCountries)
         {
-            if (IdCountries.Length == 0 || IdCountries.Length >= 2)
+            if (idCountries.Length == 0 || idCountries.Length >= 2)
             {
                 TempData.AddErrorMessage($"Please select a single country only.");
                 return RedirectToAction(nameof(Index));
             }
 
-            var country = this.country.ById(IdCountries[0]);
+            var country = this.country.ById(idCountries[0]);
 
             return View(new AddCountryViewModel
             {
-                IdCountry =  IdCountries[0],
+                IdCountry = idCountries[0],
                 Country = country.Country,
                 RefSite = country.RefSite,
                 SpphIdCountry = country.SpphIdCountry

@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Areas.Admin.Controllers
+﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
-    using Metrics_Track.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Division;
     using Microsoft.AspNetCore.Authorization;
@@ -69,8 +69,7 @@
         }
 
         [HttpGet]
-        public IActionResult AddDivision()
-            => View(new AddDivisionViewModel());
+        public IActionResult AddDivision() => View(new AddDivisionViewModel());
 
         [HttpPost]
         public IActionResult AddDivision(AddDivisionViewModel model)

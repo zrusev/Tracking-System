@@ -1,9 +1,10 @@
-﻿namespace Metrics_Track.Areas.Identity.Models.AccountViewModels
+﻿namespace Metrics_Track.Web.Areas.Identity.Models.AccountViewModels
 {
     using Metrics_Track.Data.Constants;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     public class RegisterViewModel
     {
         [Required]
@@ -44,6 +45,7 @@
         [Display(Name = "Country")]
         [Required(ErrorMessage = "{0} is required.")]
         public int[] IdCountries { get; set; }
+
         public IEnumerable<SelectListItem> Countries { get; set; }
     }
 }

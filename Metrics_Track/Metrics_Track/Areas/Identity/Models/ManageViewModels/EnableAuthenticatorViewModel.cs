@@ -1,7 +1,8 @@
-﻿namespace Metrics_Track.Areas.Identity.Models.ManageViewModels
+﻿namespace Metrics_Track.Web.Areas.Identity.Models.ManageViewModels
 {
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using System.ComponentModel.DataAnnotations;
+
     public class EnableAuthenticatorViewModel
     {
             [Required]

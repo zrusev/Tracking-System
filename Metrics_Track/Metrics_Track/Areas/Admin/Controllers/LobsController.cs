@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Areas.Admin.Controllers
+﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
-    using Metrics_Track.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Lob;
     using Microsoft.AspNetCore.Authorization;
@@ -75,8 +75,7 @@
         }
 
         [HttpGet]
-        public IActionResult AddLob()
-            => View(new AddLobViewModel());
+        public IActionResult AddLob() => View(new AddLobViewModel());
 
         [HttpPost]
         public IActionResult AddLob(AddLobViewModel model)
@@ -100,7 +99,6 @@
             TempData.AddSuccessMessage($"Lob: {model.Lob} with ID: {newId} has been added successfully.");
             return RedirectToAction(nameof(Index));
         }
-
 
         public IActionResult RemoveLob(int id)
         {

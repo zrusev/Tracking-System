@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.ProcessLob
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.ProcessLob
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;

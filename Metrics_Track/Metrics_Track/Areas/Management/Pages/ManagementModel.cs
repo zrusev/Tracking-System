@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Management.Pages
+﻿namespace Metrics_Track.Web.Areas.Management.Pages
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

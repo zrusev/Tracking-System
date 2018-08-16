@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Admin.Models.Countries
+﻿namespace Metrics_Track.Web.Areas.Admin.Models.Countries
 {
     public class AddCountryViewModel
     {

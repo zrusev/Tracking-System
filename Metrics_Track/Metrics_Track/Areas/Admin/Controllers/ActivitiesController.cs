@@ -1,6 +1,6 @@
-﻿namespace Metrics_Track.Areas.Admin.Controllers
+﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
-    using Metrics_Track.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Metrics_Track.Services.Models.Activity;
     using Microsoft.AspNetCore.Authorization;
@@ -37,7 +37,10 @@
         {
             var activity = this.activity.ById(int.Parse(activityId));
 
-            return View(new ActivityViewModel { Activity = activity });
+            return View(new ActivityViewModel
+            {
+                Activity = activity
+            });
         }
 
         [HttpPost]
@@ -70,8 +73,7 @@
         }
 
         [HttpGet]
-        public IActionResult AddActivity()
-            => View(new AddActivityViewModel());
+        public IActionResult AddActivity() => View(new AddActivityViewModel());
 
         [HttpPost]
         public IActionResult AddActivity(AddActivityViewModel model)

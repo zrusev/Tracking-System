@@ -1,7 +1,6 @@
-﻿namespace Metrics_Track.Areas.Admin.Controllers
+﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
     using Infrastructure.Extensions;
-    using Metrics_Track;
     using Metrics_Track.Data.Models;
     using Metrics_Track.Services.Admin.Contracts;
     using Metrics_Track.Services.Contracts;
@@ -10,7 +9,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Models.Users;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -25,7 +23,7 @@
         private readonly ICountry country;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<User> userManager;
-        public readonly IEmailService emailService;
+        private readonly IEmailService emailService;
 
         public UsersController(
             IAdminUser users,
@@ -150,6 +148,7 @@
             if (!userExists)
             {
                 TempData.AddErrorMessage("Invalid identity details.");
+
                 return View(model);
             }
 
@@ -199,6 +198,28 @@
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public IActionResult RemoveUser(UserViewModel model)
+        {
+            ViewData["id"] = model.User.Id;
+            ViewData["user"] = model.User.FirstName + " " + model.User.LastName;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveUserById(string id)
+        {
+            var user = await this.userManager.FindByIdAsync(id);
+
+            this.users.RemoveTeamLeaderById(id);
+
+            await this.userManager.RemoveFromRoleAsync(user, WebConstants.AgentRole);
+
+            TempData.AddSuccessMessage("User removed successfully.");
+            return RedirectToAction(nameof(Index));
+        }
+
         private async Task SetRolesAsync(User user, bool modelRole, string targetRole)
         {
             var currentManagerRole = await this.userManager.IsInRoleAsync(user, targetRole);
@@ -222,28 +243,6 @@
                     this.users.RemoveFromManagersList(user);
                 }
             }
-        }
-
-        [HttpPost]
-        public IActionResult RemoveUser(UserViewModel model)
-        {
-            ViewData["id"] = model.User.Id;
-            ViewData["user"] = model.User.FirstName + " " + model.User.LastName;
-
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> RemoveUserById(string id)
-        {
-            var user = await this.userManager.FindByIdAsync(id);
-
-            this.users.RemoveTeamLeaderById(id);
-
-            await this.userManager.RemoveFromRoleAsync(user, WebConstants.AgentRole);
-
-            TempData.AddSuccessMessage("User removed successfully.");
-            return RedirectToAction(nameof(Index));
         }
     }
 }

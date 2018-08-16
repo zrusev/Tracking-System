@@ -1,6 +1,6 @@
-namespace Metrics_Track.Areas.Management.Pages
+namespace Metrics_Track.Web.Areas.Management.Pages
 {
-    using Metrics_Track.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
     using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
@@ -23,10 +23,8 @@ namespace Metrics_Track.Areas.Management.Pages
             this.hostingEnvironment = hostingEnvironment;
             this.transaction = transaction;
         }
-        public void OnGet()
-        {
-            ViewData["message"] =  TempData.Get<string>("inputMessage");
-        }
+
+        public void OnGet() => ViewData["message"] =  TempData.Get<string>("inputMessage");       
 
         public async Task<IActionResult> OnGetDataSetAsync()
         {
@@ -41,7 +39,7 @@ namespace Metrics_Track.Areas.Management.Pages
                 return RedirectToPage("/Reporting");
             }
 
-            string sWebRootFolder = hostingEnvironment.WebRootPath;
+            string sWebRootFolder = this.hostingEnvironment.WebRootPath;
 
             string sFileExtension = $"_{receivedDate.ToShortDateString().Replace('/', '_')}_{completeDate.ToShortDateString().Replace('/', '_')}";
             string sFileName = $"Metrics_Track_Reporting{sFileExtension}.xlsx";
@@ -104,17 +102,17 @@ namespace Metrics_Track.Areas.Management.Pages
                     row.CreateCell(6).SetCellValue(transaction.ProcessMap);
                     row.CreateCell(7).SetCellValue(transaction.Activity);
                     row.CreateCell(8).SetCellValue(transaction.Lob);
-                    if (transaction.ReceivedDate != null) { row.CreateCell(9).SetCellValue((DateTime)transaction.ReceivedDate); };
-                    if (transaction.StartDate != null) { row.CreateCell(10).SetCellValue((DateTime)transaction.StartDate); };
-                    if (transaction.CompleteDate != null) { row.CreateCell(11).SetCellValue((DateTime)transaction.CompleteDate); };
+                    if (transaction.ReceivedDate != null) { row.CreateCell(9).SetCellValue((DateTime)transaction.ReceivedDate); }
+                    if (transaction.StartDate != null) { row.CreateCell(10).SetCellValue((DateTime)transaction.StartDate); }
+                    if (transaction.CompleteDate != null) { row.CreateCell(11).SetCellValue((DateTime)transaction.CompleteDate); }
                     row.CreateCell(12).SetCellValue(transaction.Comment);
                     row.CreateCell(13).SetCellValue(transaction.ID_Number);
                     row.CreateCell(14).SetCellValue(transaction.Status);
-                    if (transaction.Premium != null) { row.CreateCell(15).SetCellValue((double)transaction.Premium); };
+                    if (transaction.Premium != null) { row.CreateCell(15).SetCellValue((double)transaction.Premium); }
                     row.CreateCell(16).SetCellValue(transaction.CurrencyCode);
-                    if (transaction.Priority != null) { row.CreateCell(17).SetCellValue((short)transaction.Priority); };
-                    if (transaction.InceptionDate != null) { row.CreateCell(18).SetCellValue((DateTime)transaction.InceptionDate); };
-                    if (transaction.DateReceivedInAig != null) { row.CreateCell(19).SetCellValue((DateTime)transaction.DateReceivedInAig); };
+                    if (transaction.Priority != null) { row.CreateCell(17).SetCellValue((short)transaction.Priority); }
+                    if (transaction.InceptionDate != null) { row.CreateCell(18).SetCellValue((DateTime)transaction.InceptionDate); }
+                    if (transaction.DateReceivedInAig != null) { row.CreateCell(19).SetCellValue((DateTime)transaction.DateReceivedInAig); }
                     row.CreateCell(20).SetCellValue(transaction.SlaHrs);
                     row.CreateCell(21).SetCellValue(transaction.SlaTarget);
                     row.CreateCell(22).SetCellValue(transaction.SlaType);

@@ -1,4 +1,4 @@
-﻿namespace Metrics_Track.Areas.Identity.Models.ManageViewModels
+﻿namespace Metrics_Track.Web.Areas.Identity.Models.ManageViewModels
 {
     public class TwoFactorAuthenticationViewModel
     {

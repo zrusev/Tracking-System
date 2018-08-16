@@ -1,6 +1,7 @@
-﻿namespace Metrics_Track.Infrastructure.Mapping
+﻿namespace Metrics_Track.Web.Infrastructure.Mapping
 {
     using AutoMapper;
+
     public class AutoMapperConfiguration
     {
         public static void Configure()
