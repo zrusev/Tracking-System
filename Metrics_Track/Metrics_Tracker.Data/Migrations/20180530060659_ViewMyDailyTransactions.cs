@@ -54,15 +54,15 @@
             dailyTransactionsView.Append("CREATE VIEW [CPS].[SSC_View_MyTransactions]" + Environment.NewLine);
             dailyTransactionsView.Append("AS" + Environment.NewLine);
             dailyTransactionsView.Append("SELECT TOP (100) PERCENT CPS.tbl_Volume_Main.Transaction_ID, CPS.tbl_Process.Function_Name AS [Function Name], tbl_Country_1.Country," + Environment.NewLine);
-            dailyTransactionsView.Append("CPS.tbl_Login.TeamLead AS [Team Leader], CASE WHEN [Display Name] IS NULL THEN ASPNETUSERS.USERNAME ELSE [Display Name] END AS [User Name], " + Environment.NewLine);
+            dailyTransactionsView.Append("CPS.tbl_TeamLead.TeamLead AS [Team Leader], CASE WHEN [Display Name] IS NULL THEN ASPNETUSERS.USERNAME ELSE [Display Name] END AS [User Name], " + Environment.NewLine);
             dailyTransactionsView.Append("CPS.tbl_Process.Process, CPS.tbl_Process.[Process Map], CPS.tbl_Activity.Activity, CPS.tbl_LOB.LOB, CPS.tbl_Volume_Main.ReceivedDate, " + Environment.NewLine);
             dailyTransactionsView.Append("CPS.tbl_Volume_Main.StartDate, CPS.tbl_Volume_Main.CompleteDate, CPS.tbl_Volume_Main.Comment, CPS.tbl_Volume_Main.ID_Number, CPS.tbl_Status.Status, " + Environment.NewLine);
             dailyTransactionsView.Append("CPS.tbl_Volume_Main.Premium, CPS.tbl_Volume_Main.Currency_Code, CPS.tbl_Process.MNC, CPS.tbl_Volume_Main.Priority, " + Environment.NewLine);
             dailyTransactionsView.Append("CASE WHEN [Precalc SLA Hours] IS NULL THEN CPS.SSC_GetSLAHrs(CPS.tbl_Volume_Main.Original_ID, CPS.tbl_Volume_Main.ReceivedDate, " + Environment.NewLine);
-            dailyTransactionsView.Append("CPS.tbl_Volume_Main.CompleteDate, CPS.tbl_Login.TeamLead, CPS.tbl_Process.[SLA Type], CPS.tbl_Volume_Main.Priority, CPS.tbl_Country.Country) " + Environment.NewLine);
+            dailyTransactionsView.Append("CPS.tbl_Volume_Main.CompleteDate, CPS.tbl_TeamLead.TeamLead, CPS.tbl_Process.[SLA Type], CPS.tbl_Volume_Main.Priority, CPS.tbl_Country.Country) " + Environment.NewLine);
             dailyTransactionsView.Append("ELSE [Precalc SLA Hours] END AS [SLA Hrs], CASE WHEN CPS.tbl_Volume_Main.Priority = 0 THEN CPS.tbl_Process.[SLA Target] ELSE 4 END AS [SLA Target], " + Environment.NewLine);
             dailyTransactionsView.Append("CPS.tbl_Process.[SLA Type], 1 AS [SLA Transaction], CASE WHEN CASE WHEN [Precalc SLA Hours] IS NULL " + Environment.NewLine);
-            dailyTransactionsView.Append("THEN CPS.SSC_GetSLAHrs(CPS.tbl_Volume_Main.Original_ID, CPS.tbl_Volume_Main.ReceivedDate, CPS.tbl_Volume_Main.CompleteDate, CPS.tbl_Login.TeamLead, " + Environment.NewLine);
+            dailyTransactionsView.Append("THEN CPS.SSC_GetSLAHrs(CPS.tbl_Volume_Main.Original_ID, CPS.tbl_Volume_Main.ReceivedDate, CPS.tbl_Volume_Main.CompleteDate, CPS.tbl_TeamLead.TeamLead, " + Environment.NewLine);
             dailyTransactionsView.Append("CPS.tbl_Process.[SLA Type], CPS.tbl_Volume_Main.Priority, CPS.tbl_Country.Country) " + Environment.NewLine);
             dailyTransactionsView.Append("ELSE [Precalc SLA Hours] END <= CASE WHEN CPS.tbl_Volume_Main.Priority = 0 THEN CPS.tbl_Process.[SLA Target] ELSE 4 END THEN 1 ELSE 0 END AS [SLA Achievment], " + Environment.NewLine);
             dailyTransactionsView.Append("CASE WHEN [Precalc HT] IS NULL THEN CPS.SSC_GetWorkingMin(CPS.tbl_Volume_Main.Original_ID, CPS.tbl_Volume_Main.StartDate, " + Environment.NewLine);
@@ -80,7 +80,8 @@
             dailyTransactionsView.Append("CPS.tbl_Country AS tbl_Country_1 ON CPS.tbl_Volume_Main.ID_Country = tbl_Country_1.ID_Country LEFT OUTER JOIN " + Environment.NewLine);
             dailyTransactionsView.Append("CPS.tbl_Login ON CPS.tbl_Volume_Main.ID_Login = CPS.tbl_Login.ID_Login LEFT OUTER JOIN " + Environment.NewLine);
             dailyTransactionsView.Append("CPS.tbl_LOB ON CPS.tbl_Volume_Main.ID_LOB = CPS.tbl_LOB.ID_LOB LEFT OUTER JOIN " + Environment.NewLine);
-            dailyTransactionsView.Append("CPS.AspNetUsers ON CPS.tbl_Volume_Main.ID_Login = CPS.AspNetUsers.ID_Login " + Environment.NewLine);
+            dailyTransactionsView.Append("CPS.AspNetUsers ON CPS.tbl_Volume_Main.ID_Login = CPS.AspNetUsers.ID_Login LEFT OUTER JOIN" + Environment.NewLine);
+            dailyTransactionsView.Append("CPS.tbl_TeamLead ON CPS.tbl_TeamLead.Id_TeamLead = CPS.AspNetUsers.ID_TeamLead " + Environment.NewLine);
             dailyTransactionsView.Append("WHERE (CPS.tbl_Volume_Main.Status_Code = 1) " + Environment.NewLine);
             dailyTransactionsView.Append("AND (CPS.tbl_Volume_Main.CompleteDate > DATEADD(d, DATEDIFF(d, 0, CPS.tbl_Volume_Main.CompleteDate), 0)) OR (CPS.tbl_Volume_Main.Status_Code = 2)" + Environment.NewLine);            
 
