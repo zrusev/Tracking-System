@@ -31,7 +31,7 @@
 
                     b.HasKey("IdActivity");
 
-                    b.ToTable("tbl_Activity","CPS");
+                    b.ToTable("tbl_Activity", "CPS");
                 });
 
             modelBuilder.Entity("Metrics_Track.Data.Models.tbl_Country", b =>

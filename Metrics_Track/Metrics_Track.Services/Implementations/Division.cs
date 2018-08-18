@@ -6,6 +6,7 @@
     using Models.Division;
     using System.Collections.Generic;
     using System.Linq;
+
     public class Division : IDivision
     {
         private readonly TrackerDbContext db;

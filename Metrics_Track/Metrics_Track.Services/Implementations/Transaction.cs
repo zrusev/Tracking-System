@@ -12,7 +12,7 @@
 
     public class Transaction : ITransaction
     {
-        private const int maxResultsPerQuery = 500;
+        private const int MaxResultsPerQuery = 500;
 
         private readonly TrackerDbContext db;
 
@@ -78,7 +78,7 @@
         }
 
         public IEnumerable<PreviousTransactionModel> PreviousTransaction(int transactionId)
-            =>  this.db
+             => this.db
                     .TblVolumeMain
                     .Where(ti => ti.TransactionId == transactionId)
                     .Select(p => new PreviousTransactionModel
@@ -151,7 +151,7 @@
 
             return this.db
                      .SCCViewReporting
-                     .FromSql(query, maxResultsPerQuery, receivedDate, completeDate)
+                     .FromSql(query, MaxResultsPerQuery, receivedDate, completeDate)
                      .AsNoTracking()
                      .ProjectTo<AllTransactionsListModel>()
                      .ToList();

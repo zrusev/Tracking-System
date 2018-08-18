@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Services.Models.Transaction
 {
     using System;
+
     public class PendingListModel
     {
         public int? IdProcess { get; set; }

@@ -19,7 +19,7 @@
             this.ec = emailConfig.Value;
         }
 
-        public async Task<string> SendEmailAsync(String email, String subject, String message)
+        public async Task<string> SendEmailAsync(string email, string subject, string message)
         {
             try
             {
@@ -28,20 +28,20 @@
                 //send directly to admin
                 if (email.Equals(string.Empty))
                 {
-                    email = ec.AdminEmailAddress;
+                    email = this.ec.AdminEmailAddress;
                 }
 
-                emailMessage.From.Add(new MailboxAddress(ec.FromName, ec.FromAddress));
-                emailMessage.To.Add(new MailboxAddress("", email));
+                emailMessage.From.Add(new MailboxAddress(this.ec.FromName, this.ec.FromAddress));
+                emailMessage.To.Add(new MailboxAddress(string.Empty, email));
                 emailMessage.Subject = subject;
                 emailMessage.Body = new TextPart(TextFormat.Html) { Text = message };
 
                 using (var client = new SmtpClient())
                 {
-                    client.LocalDomain = ec.LocalDomain;
+                    client.LocalDomain = this.ec.LocalDomain;
 
-                    await client.ConnectAsync(ec.MailServerAddress, Convert.ToInt32(ec.MailServerPort), SecureSocketOptions.Auto).ConfigureAwait(false);
-                    await client.AuthenticateAsync(new NetworkCredential(ec.UserId, ec.UserPassword));
+                    await client.ConnectAsync(this.ec.MailServerAddress, Convert.ToInt32(this.ec.MailServerPort), SecureSocketOptions.Auto).ConfigureAwait(false);
+                    await client.AuthenticateAsync(new NetworkCredential(this.ec.UserId, this.ec.UserPassword));
                     await client.SendAsync(emailMessage).ConfigureAwait(false);
                     await client.DisconnectAsync(true).ConfigureAwait(false);
                 }
@@ -50,7 +50,7 @@
             }
             catch (Exception ex)
             {
-                return "Something went wrong. " +  ex.Message;
+                return "Something went wrong. " + ex.Message;
             }
         }
     }

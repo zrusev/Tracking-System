@@ -2,6 +2,7 @@
 {
     using Models.Activity;
     using System.Collections.Generic;
+
     public interface IActivity
     {
         IEnumerable<ActivityModel> All();

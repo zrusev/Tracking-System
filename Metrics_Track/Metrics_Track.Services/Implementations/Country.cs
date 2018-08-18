@@ -38,7 +38,7 @@
                   .ToList();
 
         public async Task<List<ProcessMapModel>> ProcessMapByIdAsync(string id)
-            =>  await (from trlUserCountry in this.db.TrelAgentCountry
+               => await(from trlUserCountry in this.db.TrelAgentCountry
                         join tblCountry in this.db.TblCountry on trlUserCountry.IdCountry equals tblCountry.IdCountry into UserCountry_Table
                             from leftUserCountry in UserCountry_Table.DefaultIfEmpty()
                         join tblLogin in this.db.Users on trlUserCountry.IdAgent equals tblLogin.Id into Login_Table
@@ -67,11 +67,11 @@
                             from leftProcessTower in ProcessTower_Table.DefaultIfEmpty()
                         join tblTower in this.db.TblTower on leftProcessTower.IdTower equals tblTower.IdTower into Tower_Table
                             from leftTower in Tower_Table.DefaultIfEmpty()
-                       join trlProcessTowerCategory in this.db.TrelProcessTowerCategory on leftProcess.IdProcess equals trlProcessTowerCategory.IdProcess into ProcessTowerCategory_Table
+                        join trlProcessTowerCategory in this.db.TrelProcessTowerCategory on leftProcess.IdProcess equals trlProcessTowerCategory.IdProcess into ProcessTowerCategory_Table
                             from leftProcessTowerCategory in ProcessTowerCategory_Table.DefaultIfEmpty()
                         join tblTowerCategory in this.db.TblTowerCategory on leftProcessTowerCategory.IdTowerCategory equals tblTowerCategory.IdTowerCategory into TowerCategory_Table
                             from leftTowerCategory in TowerCategory_Table.DefaultIfEmpty()
-                        where leftLogin.Id == id                        
+                        where leftLogin.Id == id
                         select new ProcessMapModel
                         {
                             IdCountry = leftUserCountry.IdCountry,
@@ -93,8 +93,8 @@
                             Tower = leftProcess.ProcessMap,
                             IdTowerCategory = leftProcess.IdProcess,
                             TowerCategory = leftProcess.ProcessMap
-                        }).ToListAsync();
-
+                        })
+                        .ToListAsync();
 
         public List<CountryModel> CountryList(List<ProcessMapModel> processModel)
         {
@@ -200,6 +200,7 @@
                     });
                 }
             }
+
             return countries;
         }
 

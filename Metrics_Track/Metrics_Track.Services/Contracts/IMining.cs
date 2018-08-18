@@ -4,6 +4,7 @@
     using Models.User;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     public interface IMining
     {
         IEnumerable<MiningModel> ById(int id);

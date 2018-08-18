@@ -2,6 +2,7 @@
 {
     using Models.Status;
     using System.Collections.Generic;
+
     public interface IStatus
     {
         IEnumerable<StatusModel> All();

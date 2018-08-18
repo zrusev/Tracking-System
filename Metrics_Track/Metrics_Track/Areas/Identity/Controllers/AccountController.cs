@@ -268,7 +268,9 @@
                     var emailSubject = "Metrics Track account request";
                     var emailBody = string.Format(@"<p>Pending account approval for user: {0} {1} is present.&nbsp;</p>
                                                     <p>Please assign a respective team leader using the admin panel.</p>
-                                                    <p><strong><sup>Metrics Track System</sup></strong></p>", user.FirstName, user.LastName);
+                                                    <p><strong><sup>Metrics Track System</sup></strong></p>",
+                                                    user.FirstName,
+                                                    user.LastName);
 
                     await emailSender.SendEmailAsync(emailTo, emailSubject, emailBody);
 
@@ -422,6 +424,7 @@
             if (ModelState.IsValid)
             {
                 var user = await userManager.FindByEmailAsync(model.Email);
+
                 if (user == null || !(await userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -431,9 +434,13 @@
                 // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
+
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-                await emailSender.SendEmailAsync(model.Email, "Reset Password",
-                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+
+                await emailSender.SendEmailAsync(model.Email, 
+                                                "Reset Password",
+                                               $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 

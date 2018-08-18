@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Data.Models
 {
     using System.Collections.Generic;
+
     public class tbl_Mining
     {
         public tbl_Mining()

@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Services.Models.Transaction
 {
     using System;
+
     public class DailyTransactionsListModel
     {
         public int TransactionId { get; set; }
@@ -60,6 +61,5 @@
         public int? IdLogin { get; set; }
 
         public int? AspIDLogin { get; set; }
-
     }
 }

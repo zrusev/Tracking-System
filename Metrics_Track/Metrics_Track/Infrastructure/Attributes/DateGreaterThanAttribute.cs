@@ -5,12 +5,12 @@
 
     public class DateGreaterThanAttribute : ValidationAttribute
     {
-        private string DateToCompareToFieldName { get; set; }
-
         public DateGreaterThanAttribute(string dateToCompareToFieldName)
         {
             DateToCompareToFieldName = dateToCompareToFieldName;
         }
+
+        private string DateToCompareToFieldName { get; set; }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

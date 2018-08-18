@@ -18,14 +18,14 @@
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration[Configuration.GetConnectionString("Connection")];
+            var connectionString = this.Configuration[this.Configuration.GetConnectionString("Connection")];
 
             services.AddDbContext<TrackerDbContext>(options =>
                 options.UseSqlServer(connectionString,
@@ -74,8 +74,8 @@
                 options.Cookie.IsEssential = true;
             });
 
-            services.Configure<EmailConfigModel>(Configuration.GetSection("Email"));            
-            services.Configure<EmailConfigModel>(options => options.UserPassword = Configuration["EmailPassword"]);
+            services.Configure<EmailConfigModel>(this.Configuration.GetSection("Email"));            
+            services.Configure<EmailConfigModel>(options => options.UserPassword = this.Configuration["EmailPassword"]);
 
             services.AddMvc()
                 .AddRazorPagesOptions(options => 

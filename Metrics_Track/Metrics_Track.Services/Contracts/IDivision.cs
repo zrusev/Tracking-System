@@ -2,6 +2,7 @@
 {
     using Models.Division;
     using System.Collections.Generic;
+
     public interface IDivision
     {
         IEnumerable<DivisionModel> All();

@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Data.Models
 {
     using System;
+
     public class SSC_View_MyTransactions
     {
         public int TransactionId { get; set; }
@@ -45,7 +46,7 @@
 
         public int? SLATarget { get; set; }
 
-        public string SLAType {get; set;}
+        public string SLAType { get; set; }
 
         public int SLATransaction { get; set; }
 

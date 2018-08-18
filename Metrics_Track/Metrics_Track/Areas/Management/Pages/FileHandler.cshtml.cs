@@ -15,7 +15,7 @@ namespace Metrics_Track.Web.Areas.Management.Pages
 
     public class FileHandlerModel : ManagementModel
     {
-        private IHostingEnvironment hostingEnvironment;
+        private readonly IHostingEnvironment hostingEnvironment;
         private readonly ITransaction transaction;
 
         public FileHandlerModel(IHostingEnvironment hostingEnvironment, ITransaction transaction)
@@ -24,7 +24,7 @@ namespace Metrics_Track.Web.Areas.Management.Pages
             this.transaction = transaction;
         }
 
-        public void OnGet() => ViewData["message"] =  TempData.Get<string>("inputMessage");       
+        public void OnGet() => ViewData["message"] = TempData.Get<string>("inputMessage");       
 
         public async Task<IActionResult> OnGetDataSetAsync()
         {
@@ -39,18 +39,18 @@ namespace Metrics_Track.Web.Areas.Management.Pages
                 return RedirectToPage("/Reporting");
             }
 
-            string sWebRootFolder = this.hostingEnvironment.WebRootPath;
+            string webRootFolder = this.hostingEnvironment.WebRootPath;
 
-            string sFileExtension = $"_{receivedDate.ToShortDateString().Replace('/', '_')}_{completeDate.ToShortDateString().Replace('/', '_')}";
-            string sFileName = $"Metrics_Track_Reporting{sFileExtension}.xlsx";
+            string fileExtension = $"_{receivedDate.ToShortDateString().Replace('/', '_')}_{completeDate.ToShortDateString().Replace('/', '_')}";
+            string fileName = $"Metrics_Track_Reporting{fileExtension}.xlsx";
 
-            string URL = string.Format("{0}://{1}/{2}", Request.Scheme, Request.Host, sFileName);
+            string url = string.Format("{0}://{1}/{2}", Request.Scheme, Request.Host, fileName);
 
-            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, sFileName));
+            FileInfo file = new FileInfo(Path.Combine(webRootFolder, fileName));
 
             var memory = new MemoryStream();
 
-            using (var fs = new FileStream(Path.Combine(sWebRootFolder, sFileName), FileMode.Create, FileAccess.Write))
+            using (var fs = new FileStream(Path.Combine(webRootFolder, fileName), FileMode.Create, FileAccess.Write))
             {
                 IWorkbook workbook;
                 workbook = new XSSFWorkbook();
@@ -128,13 +128,13 @@ namespace Metrics_Track.Web.Areas.Management.Pages
                 workbook.Write(fs);
             }
 
-            using (var stream = new FileStream(Path.Combine(sWebRootFolder, sFileName), FileMode.Open))
+            using (var stream = new FileStream(Path.Combine(webRootFolder, fileName), FileMode.Open))
             {
                 await stream.CopyToAsync(memory);
             }
 
             memory.Position = 0;
-            return File(memory, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", sFileName);
+            return File(memory, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
     }
 }

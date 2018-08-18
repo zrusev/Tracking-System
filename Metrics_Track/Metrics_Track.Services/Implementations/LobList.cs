@@ -14,6 +14,7 @@
         {
             this.db = db;
         }
+
         public IEnumerable<LobModel> All()
             => this.db
                 .TblLob

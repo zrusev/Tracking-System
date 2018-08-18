@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Metrics_Track.Services.Models.Transaction
+﻿namespace Metrics_Track.Services.Models.Transaction
 {
+    using System;
+
     public class PreviousTransactionModel
     {
         public string Process { get; set; }

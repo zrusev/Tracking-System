@@ -18,6 +18,7 @@
         {
             this.db = db;
         }
+
         public async Task<IEnumerable<SelectListItem>> AllAsync()
             => await this.db
                     .TblTeamLead

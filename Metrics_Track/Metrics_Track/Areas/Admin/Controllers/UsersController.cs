@@ -99,9 +99,11 @@
                                             <p>Your current team leader is {0}.</p>
                                             <p><span class=""il"">You</span>&nbsp;may now log in to 
                                             <a href=""{1}"">Metrics Track</a> using your e-mail and password.</p>
-                                            <p><strong><sup>Metrics Track team</sup></strong></p>", teamLead.TeamLead, emailUrl);
+                                            <p><strong><sup>Metrics Track team</sup></strong></p>",
+                                            teamLead.TeamLead,
+                                            emailUrl);
 
-            var emailConfirmation =  await emailService.SendEmailAsync(emailTo, emailSubject, emailBody);
+            var emailConfirmation = await emailService.SendEmailAsync(emailTo, emailSubject, emailBody);
 
             TempData.AddSuccessMessage($"{user.FirstName} {user.LastName} has been assigned to {teamLead.TeamLead} successfully. " + emailConfirmation);
 

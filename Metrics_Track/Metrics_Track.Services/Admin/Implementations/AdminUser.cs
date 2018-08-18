@@ -57,7 +57,7 @@
 
         public void RemoveAgentToCountryTrel(string agentId)
         {
-            var trelList =  this.db
+            var trelList = this.db
                  .TrelAgentCountry
                  .Where(i => i.IdAgent == agentId)
                  .ToList();

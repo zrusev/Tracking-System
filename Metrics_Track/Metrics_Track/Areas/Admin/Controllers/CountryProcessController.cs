@@ -51,7 +51,7 @@
                 .Select(s => new SelectListItem
                 {
                     Value = s.IdProcess.ToString(),
-                    Text =  s.Process + " /" + s.ProcessMap + "/(" + s.IdProcess + ")" 
+                    Text = s.Process + " /" + s.ProcessMap + "/(" + s.IdProcess + ")"
                 });
 
             model.Processes = processes;

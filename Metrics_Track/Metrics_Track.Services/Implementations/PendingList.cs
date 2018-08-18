@@ -20,7 +20,7 @@
         public async Task<List<PendingListModel>> AllAsync(int idLogin, short statusCode, short sandbox)
         => await this.db
                 .TblVolumeMain
-                .Where(d => d.IdLogin == idLogin &&  d.StatusCode == statusCode && d.Sandbox == sandbox)
+                .Where(d => d.IdLogin == idLogin && d.StatusCode == statusCode && d.Sandbox == sandbox)
                 .Select(t => new PendingListModel
                 {
                     IdProcess = t.IdProcess,

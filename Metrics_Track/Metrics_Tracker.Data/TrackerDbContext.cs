@@ -11,39 +11,73 @@
         }
 
         public DbSet<tbl_HolidayTable> HolidayTable { get; set; }
+
         public DbSet<tbl_Activity> TblActivity { get; set; }
+
         public DbSet<tbl_Country> TblCountry { get; set; }
+
         public DbSet<tbl_Division> TblDivision { get; set; }
+
         public DbSet<tbl_InternalErrorsLog> TblInternalErrorsLog { get; set; }
+
         public DbSet<tbl_L2Id> TblL2Id { get; set; }
+
         public DbSet<tbl_Lob> TblLob { get; set; }
+
         public DbSet<tbl_Login> TblLogin { get; set; }
+
         public DbSet<tbl_Mining> TblMining { get; set; }
+
         public DbSet<tbl_Objects> TblObjects { get; set; }
+
         public DbSet<tbl_Process> TblProcess { get; set; }
+
         public DbSet<tbl_ReportingUsers> TblReportingUsers { get; set; }
+
         public DbSet<tbl_Specific> TblSpecific { get; set; }
+
         public DbSet<tbl_Status> TblStatus { get; set; }
+
         public DbSet<tbl_Tower> TblTower { get; set; }
+
         public DbSet<tbl_TowerCategory> TblTowerCategory { get; set; }
+
         public DbSet<tbl_TrackerVer> TblTrackerVer { get; set; }
+
         public DbSet<tbl_UserActivity> TblUserActivity { get; set; }
+
         public DbSet<tbl_VolumeMain> TblVolumeMain { get; set; }
+
         public DbSet<trel_CountryProcess> TrelCountryProcess { get; set; }
+
         public DbSet<trel_ProcessActivity> TrelProcessActivity { get; set; }
+
         public DbSet<trel_ProcessDivision> TrelProcessDivision { get; set; }
+
         public DbSet<trel_ProcessLob> TrelProcessLob { get; set; }
+
         public DbSet<trel_ProcessStatus> TrelProcessStatus { get; set; }
+
         public DbSet<trel_ProcessTower> TrelProcessTower { get; set; }
+
         public DbSet<trel_ProcessTowerCategory> TrelProcessTowerCategory { get; set; }
+
         public DbSet<trel_UserCountry> TrelUserCountry { get; set; }
+
         public DbSet<trel_UserMining> TrelUserMining { get; set; }
+
         public DbSet<tbl_QualityIntegration> TblQualityIntegration { get; set; }
+
         public DbSet<trel_AgentCountry> TrelAgentCountry { get; set; }
+
         public DbSet<trel_CountryMining> TrelCountryMining { get; set; }
+
         public DbSet<SSC_View_MyTransactions> SSCViewMyTransactions { get; set; }
+
         public DbSet<tbl_TeamLead> TblTeamLead { get; set; }
+
         public DbSet<SSC_View_CurrentStatus> SSCViewCurrentStatus { get; set; }
+
         public DbSet<SCC_View_Reporting> SCCViewReporting { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

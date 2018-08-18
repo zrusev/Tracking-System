@@ -9,6 +9,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     public class Mining : IMining
     {
         private readonly TrackerDbContext db;
@@ -48,7 +49,7 @@
                     .FirstOrDefaultAsync();
 
         public IEnumerable<MiningModel> MiningByUserId(string id)
-            =>  this.db
+             => this.db
                     .TrelAgentCountry
                     .Where(a => a.IdAgent == id)
                     .Select(c => new
