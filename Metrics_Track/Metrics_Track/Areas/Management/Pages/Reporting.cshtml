@@ -123,17 +123,16 @@
     <script language="javascript" type="text/javascript">
         $(function () {
             $(function () {
+                var tzoffset = (new Date()).getTimezoneOffset() * 60000;                
                 $('#datetimepicker1').datetimepicker({
                     format: 'YYYY-MM-DD HH:mm:ss'
-                }).on('dp.change', function () {
-                    var customDate = $('#datetimepicker1').data("DateTimePicker").date();
-                    $('input[name=ReceivedDate]').val(customDate.toISOString());
+                }).on('dp.change', function (e) {
+                    $('input[name=ReceivedDate]').val(new Date(e.date - tzoffset).toISOString().slice(0, -1));
                 });
                 $('#datetimepicker2').datetimepicker({
                     format: 'YYYY-MM-DD HH:mm:ss'
-                }).on('dp.change', function () {
-                    var customDate = $('#datetimepicker2').data("DateTimePicker").date();
-                    $('input[name=CompleteDate]').val(customDate.toISOString());
+                }).on('dp.change', function (e) {
+                    $('input[name=CompleteDate]').val(new Date(e.date - tzoffset).toISOString().slice(0, -1));
                 });
                 var rDate = $('input[name=ReceivedDate]').val();
                 $('#datetimepicker1').data("DateTimePicker").date(new Date(rDate));
