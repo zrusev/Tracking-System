@@ -45,6 +45,7 @@
             translateY: 150
         });
 
+        //IE11 does not support ES5 syntax, use another browser
         var promise = morphing.finished.then(function () {
             btn2.onclick = function () {
                 var morphing = anime({

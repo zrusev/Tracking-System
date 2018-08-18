@@ -85,7 +85,7 @@
                 return View(model);
             }
 
-            var newId = this.lob.AddPLob(new LobListModel
+            var newId = this.lob.AddLob(new LobListModel
             {
                 Lob = model.Lob,
                 MmcpLob = model.MmcpLob,

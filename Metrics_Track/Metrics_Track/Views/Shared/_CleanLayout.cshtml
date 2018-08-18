@@ -31,54 +31,11 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Metrics Track</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @if (User.IsInRole(WebConstants.AdministratorRole))
-                    {
-                        <li><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
-                        <li><a asp-area="Admin" asp-controller="Countries" asp-action="Index">Countries</a></li>
-                        <li><a asp-area="Admin" asp-controller="Processes" asp-action="Index">Processes</a></li>
-                        <li><a asp-area="Admin" asp-controller="Lobs" asp-action="Index">LOBs</a></li>
-                        <li><a asp-area="Admin" asp-controller="Activities" asp-action="Index">Activities</a></li>
-                        <li><a asp-area="Admin" asp-controller="Divisions" asp-action="Index">Divisions</a></li>
-                        <li><a asp-area="Admin" asp-controller="Statuses" asp-action="Index">Statuses</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mapping <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a asp-area="Admin" asp-controller="CountryProcess" asp-action="Index">Country &#8680; Process</a></li>
-                                <li><a asp-area="Admin" asp-controller="CountryMining" asp-action="Index">Country &#8680; Mining</a></li>
-                                <li class="divider"></li>
-                                <li><a asp-area="Admin" asp-controller="ProcessLOB" asp-action="Index">Process &#8680; LOB</a></li>
-                                <li><a asp-area="Admin" asp-controller="ProcessActivity" asp-action="Index">Process &#8680; Activity</a></li>
-                                <li><a asp-area="Admin" asp-controller="ProcessDivision" asp-action="Index">Process &#8680; Division</a></li>
-                                <li><a asp-area="Admin" asp-controller="ProcessStatus" asp-action="Index">Process &#8680; Status</a></li>
-                            </ul>
-                        </li>
-                    }
-
-                    @if (User.IsInRole(WebConstants.AgentRole) && User.Identity.IsAuthenticated)
-                    {
-                        <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-                        <li><a asp-area="" asp-controller="Dashboard" asp-action="MyDailyTransactions">My Daily Transactions</a></li>
-                    }
-                </ul>
                 @await Html.PartialAsync("_LoginPartial")
                 @await Html.PartialAsync("_CookieConsentPartial")
             </div>
         </div>
     </nav>
-    
-   @if (TempData.ContainsKey(WebConstants.TempDataSuccessMessageKey))
-   {
-       <div class="alert alert-success">
-           @TempData[WebConstants.TempDataSuccessMessageKey]
-       </div>
-   }
-   @if (TempData.ContainsKey(WebConstants.TempDataErrorMessageKey))
-   {
-       <div class="alert alert-danger">
-           @TempData[WebConstants.TempDataErrorMessageKey]
-       </div>
-   }
 
    @RenderBody()
 

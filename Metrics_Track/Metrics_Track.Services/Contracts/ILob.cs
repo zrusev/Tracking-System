@@ -13,6 +13,6 @@
 
         void RemoveLob(int id);
 
-        int AddPLob(LobListModel model);
+        int AddLob(LobListModel model);
     }
 }

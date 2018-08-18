@@ -25,17 +25,25 @@ namespace Metrics_Track.Web.Areas.Management.Pages
         public IEnumerable<AllTransactionsListModel> PagedTransactions { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        [Required(ErrorMessage = "Received date is required.")]
         [Display(Name = "Received Date"), DataType(DataType.Text)]
         public DateTime ReceivedDate { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
 
         [BindProperty(SupportsGet = true)]
-        [Required(ErrorMessage = "Complete date is required.")]
         [Display(Name = "Complete Date"), DataType(DataType.Text)]
         public DateTime CompleteDate { get; set; } = DateTime.Now;
 
-        public IActionResult OnGet(int? id)
+        public IActionResult OnGet(int? id, DateTime? receivedDate, DateTime? completedate)
         {
+            if (receivedDate != null)
+            {
+                this.ReceivedDate = (DateTime)receivedDate;
+            }
+
+            if (completedate != null)
+            {
+                this.CompleteDate = (DateTime)completedate;
+            }
+
             if (this.ReceivedDate >= this.CompleteDate)
             {
                 TempData.AddErrorMessage("Received date can not be later than Complete date.");

@@ -2,8 +2,10 @@
 {
     using AutoMapper.QueryableExtensions;
     using Contracts;
+    using Metrics_Track.Common.Validation;
     using Metrics_Track.Data.Models;
     using Models.Lob;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -51,8 +53,13 @@
             return lob.IdLob;
         }
 
-        public int AddPLob(LobListModel model)
+        public int AddLob(LobListModel model)
         {
+            if (model == null)
+            {
+                throw new ArgumentException(ValidationConstants.LobDefinedMessage);
+            }
+
             var lob = new tbl_Lob()
             {
                 Lob = model.Lob,

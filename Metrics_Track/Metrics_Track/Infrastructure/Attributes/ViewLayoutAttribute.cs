@@ -15,6 +15,7 @@
         public override void OnResultExecuting(ResultExecutingContext context)
         {
             var viewResult = context.Result as ViewResult;
+
             if (viewResult != null)
             {
                 viewResult.ViewData["Layout"] = this.layout;
