@@ -89,7 +89,7 @@
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
+        {            
             app.UseDatabaseMigration();
 
             if (env.IsDevelopment())

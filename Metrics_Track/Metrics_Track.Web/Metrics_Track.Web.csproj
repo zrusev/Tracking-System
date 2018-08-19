@@ -25,7 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Metrics_Track.Common\Metrics_Track.Common.csproj" />
     <ProjectReference Include="..\Metrics_Track.Services\Metrics_Track.Services.csproj" />
-    <ProjectReference Include="..\Metrics_Tracker.Data\Metrics_Track.Data.csproj" />
+    <ProjectReference Include="..\Metrics_Track.Data\Metrics_Track.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

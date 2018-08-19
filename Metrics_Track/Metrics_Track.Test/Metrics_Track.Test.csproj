@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Metrics_Track\Metrics_Track.Web.csproj" />
+    <ProjectReference Include="..\Metrics_Track.Web\Metrics_Track.Web.csproj" />
   </ItemGroup>
 
 </Project>

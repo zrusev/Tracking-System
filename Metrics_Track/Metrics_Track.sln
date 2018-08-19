@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics_Track.Web", "Metrics_Track\Metrics_Track.Web.csproj", "{4E13B560-60D7-4E45-B7EE-372AD401104E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics_Track.Web", "Metrics_Track.Web\Metrics_Track.Web.csproj", "{4E13B560-60D7-4E45-B7EE-372AD401104E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics_Track.Data", "Metrics_Tracker.Data\Metrics_Track.Data.csproj", "{89E1F063-93EE-4E50-8FAA-38793DB5E92B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics_Track.Data", "Metrics_Track.Data\Metrics_Track.Data.csproj", "{89E1F063-93EE-4E50-8FAA-38793DB5E92B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics_Track.Services", "Metrics_Track.Services\Metrics_Track.Services.csproj", "{66C9DF63-5C67-4167-95AF-03D1FBDF5E18}"
 EndProject
