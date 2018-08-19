@@ -301,3 +301,7 @@ __pycache__/
 **/mailsettings.development.json
 **/mailsettings.uat.json
 **/mailsettings.production.json
+
+# ignore customfiles
+*.Instructions.docx
+*.Script.sql
