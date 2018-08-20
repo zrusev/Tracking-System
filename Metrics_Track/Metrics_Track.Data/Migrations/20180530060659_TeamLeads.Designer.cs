@@ -9,8 +9,8 @@
     using System;
 
     [DbContext(typeof(TrackerDbContext))]
-    [Migration("20180530201721_TeamLeadName")]
-    partial class TeamLeadName
+    [Migration("20180530060659_TeamLeads")]
+    partial class TeamLeads
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -483,7 +483,7 @@
 
                     b.HasKey("IdTeamLead");
 
-                    b.ToTable("tbl_TeamLead","CPS");
+                    b.ToTable("TblTeamLead");
                 });
 
             modelBuilder.Entity("Metrics_Track.Data.Models.tbl_Tower", b =>
@@ -958,7 +958,7 @@
                         .HasColumnName("ID_Login")
                         .HasDefaultValueSql("NEXT VALUE FOR CPS.SequenceIds");
 
-                    b.Property<int?>("IdTeamLead")
+                    b.Property<int>("IdTeamLead")
                         .HasColumnName("ID_TeamLead");
 
                     b.Property<string>("LastName")
@@ -993,8 +993,7 @@
                     b.HasKey("Id");
 
                     b.HasIndex("IdTeamLead")
-                        .IsUnique()
-                        .HasFilter("[ID_TeamLead] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -1318,7 +1317,8 @@
                 {
                     b.HasOne("Metrics_Track.Data.Models.tbl_TeamLead", "TeamLead")
                         .WithOne("User")
-                        .HasForeignKey("Metrics_Track.Data.Models.User", "IdTeamLead");
+                        .HasForeignKey("Metrics_Track.Data.Models.User", "IdTeamLead")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

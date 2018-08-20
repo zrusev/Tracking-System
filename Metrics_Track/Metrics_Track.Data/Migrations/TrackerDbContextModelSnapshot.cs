@@ -46,7 +46,7 @@ namespace Metrics_Track.Data.Migrations
                     b.Property<string>("FunctionName")
                         .HasColumnName("Function Name");
 
-                    b.Property<float>("HandlingTime")
+                    b.Property<double>("HandlingTime")
                         .HasColumnName("Handling Time");
 
                     b.Property<string>("ID_Number")
@@ -76,7 +76,7 @@ namespace Metrics_Track.Data.Migrations
                     b.Property<int>("SlaAchievement")
                         .HasColumnName("SLA Achievement");
 
-                    b.Property<float>("SlaHrs")
+                    b.Property<double>("SlaHrs")
                         .HasColumnName("SLA Hrs");
 
                     b.Property<int>("SlaTarget")

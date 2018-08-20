@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
-
-namespace Metrics_Track.Data.Migrations
+﻿namespace Metrics_Track.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class TeamLeadName : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
