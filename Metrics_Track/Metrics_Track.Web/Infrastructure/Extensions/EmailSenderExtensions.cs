@@ -1,6 +1,6 @@
 namespace Metrics_Track.Web.Infrastructure.Extensions
 {
-    using Metrics_Track.Services.Admin.Contracts;
+    using Services.Admin.Contracts;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
 

@@ -1,7 +1,7 @@
 namespace Metrics_Track.Web.Areas.Management.Pages
 {
-    using Metrics_Track.Services.Contracts;
-    using Metrics_Track.Services.Models.Status;
+    using Services.Contracts;
+    using Services.Models.Status;
     using System.Collections.Generic;
 
     public class CurrentStatusModel : ManagementModel

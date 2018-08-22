@@ -1,8 +1,8 @@
 ﻿namespace Metrics_Track.Test.Services.Admin.Lobs
 {
     using AutoMapper;
-    using Metrics_Track.Common.Validation;
-    using Metrics_Track.Data.Models;
+    using Common.Validation;
+    using Data.Models;
     using Metrics_Track.Services.Implementations;
     using Metrics_Track.Services.Models.Lob;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

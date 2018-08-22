@@ -1,12 +1,12 @@
 ﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
     using Infrastructure.Extensions;
-    using Metrics_Track.Services.Contracts;
-    using Metrics_Track.Services.Models.Country;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Models.Countries;
+    using Services.Contracts;
+    using Services.Models.Country;
     using System.Linq;
 
     [Area(WebConstants.AdminArea)]

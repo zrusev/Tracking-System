@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Web.Areas.Admin.Models.Lobs
 {
-    using Metrics_Track.Services.Models.Lob;
+    using Services.Models.Lob;
 
     public class LobViewModel
     {

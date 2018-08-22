@@ -2,7 +2,7 @@
 {
     using AutoMapper.QueryableExtensions;
     using Contracts;
-    using Metrics_Track.Data.Models;
+    using Data.Models;
     using Models.Mining;
     using System.Collections.Generic;
     using System.Linq;

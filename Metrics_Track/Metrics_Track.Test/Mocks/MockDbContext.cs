@@ -1,6 +1,6 @@
 namespace Metrics_Track.Test
 {
-    using Metrics_Track.Data.Models;
+    using Data.Models;
     using Microsoft.EntityFrameworkCore;
     using System;
 

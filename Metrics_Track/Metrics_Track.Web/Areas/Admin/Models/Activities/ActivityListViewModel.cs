@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Web.Areas.Admin.Models.Activities
 {
-    using Metrics_Track.Services.Models.Activity;
+    using Services.Models.Activity;
     using System.Collections.Generic;
 
     public class ActivityListViewModel

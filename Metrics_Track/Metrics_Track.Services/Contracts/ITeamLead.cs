@@ -1,7 +1,7 @@
 ﻿namespace Metrics_Track.Services.Contracts
 {
-    using Metrics_Track.Services.Models.User;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Models.User;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 

@@ -1,14 +1,14 @@
 ﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
+    using Data.Models;
     using Infrastructure.Extensions;
-    using Metrics_Track.Data.Models;
-    using Metrics_Track.Services.Admin.Contracts;
-    using Metrics_Track.Services.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Models.Users;
+    using Services.Admin.Contracts;
+    using Services.Contracts;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -93,15 +93,10 @@
 
             var emailUrl = string.Format("{0}://{1}{2}/account/login", Request.Scheme, Request.Host, Request.PathBase);
             var emailTo = user.Email;
-            var emailSubject = "Metrics Track account confirmation";
-            var emailBody = string.Format(@"<p>Thank you for registering at Metrics Track.&nbsp;</p>
-                                            <p>Your account has been revised and approved.</p>
-                                            <p>Your current team leader is {0}.</p>
-                                            <p><span class=""il"">You</span>&nbsp;may now log in to 
-                                            <a href=""{1}"">Metrics Track</a> using your e-mail and password.</p>
-                                            <p><strong><sup>Metrics Track team</sup></strong></p>",
-                                            teamLead.TeamLead,
-                                            emailUrl);
+            var emailSubject = WebConstants.EmailSubject;
+            var emailBody = string.Format(WebConstants.EmailBody,
+                                          teamLead.TeamLead,
+                                          emailUrl);
 
             var emailConfirmation = await emailService.SendEmailAsync(emailTo, emailSubject, emailBody);
 
@@ -114,6 +109,13 @@
         public async Task<IActionResult> ById(string userId)
         {
             var appUser = await this.userManager.FindByIdAsync(userId);
+
+            if (appUser == null)
+            {
+                TempData.AddErrorMessage("User not found. Invalid ID.");
+
+                return RedirectToAction(nameof(Index));
+            }
 
             var countries = this.country
                 .All()
@@ -140,6 +142,8 @@
         {
             if (!ModelState.IsValid)
             {
+                TempData.AddErrorMessage("Invalid model details.");
+
                 return RedirectToAction(nameof(Index));
             }
 

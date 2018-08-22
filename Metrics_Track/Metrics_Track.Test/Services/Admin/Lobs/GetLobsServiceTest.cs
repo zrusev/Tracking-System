@@ -1,7 +1,7 @@
 ﻿namespace Metrics_Track.Test.Services.Admin.Lobs
 {
     using AutoMapper;
-    using Metrics_Track.Data.Models;
+    using Data.Models;
     using Metrics_Track.Services.Implementations;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Mocks;

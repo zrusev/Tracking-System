@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Web.Areas.Identity.Models.AccountViewModels
 {
-    using Metrics_Track.Data.Constants;
+    using Data.Constants;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

@@ -1,14 +1,14 @@
 ﻿namespace Metrics_Track.Web.Areas.Identity.Controllers
 {
+    using Data.Models;
     using Infrastructure.Extensions;
-    using Metrics_Track.Data.Models;
-    using Metrics_Track.Services.Admin.Contracts;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Models.ManageViewModels;
+    using Services.Admin.Contracts;
     using System;
     using System.Linq;
     using System.Text;

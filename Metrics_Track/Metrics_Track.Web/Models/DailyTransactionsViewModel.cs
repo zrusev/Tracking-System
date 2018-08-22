@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Web.Models
 {
-    using Metrics_Track.Services.Models.Transaction;
+    using Services.Models.Transaction;
     using System.Collections.Generic;
 
     public class DailyTransactionsViewModel

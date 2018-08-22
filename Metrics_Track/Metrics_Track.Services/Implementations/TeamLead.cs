@@ -2,10 +2,10 @@
 {
     using AutoMapper.QueryableExtensions;
     using Contracts;
-    using Metrics_Track.Data.Models;
-    using Metrics_Track.Services.Models.User;
+    using Data.Models;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
+    using Models.User;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;

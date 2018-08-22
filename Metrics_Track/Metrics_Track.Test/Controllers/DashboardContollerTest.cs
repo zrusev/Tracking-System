@@ -1,8 +1,7 @@
 ﻿namespace Metrics_Track.Test.Controllers
 {
-    using Metrics_Track.Data.Models;
+    using Data.Models;
     using Metrics_Track.Services.Contracts;
-    using Metrics_Track.Web.Controllers;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -11,6 +10,7 @@
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Web.Controllers;
 
     [TestClass]
     public class DashboardContollerTest

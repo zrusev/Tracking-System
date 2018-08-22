@@ -20,5 +20,14 @@
 
         public const string SuccessfulMapping = "Mapping has been updated successfully.";
         public const string SelectSingleProcess = "Please select a single process only.";
+
+        public const string EmailSubject = "Metrics Track account confirmation";
+        public const string EmailBody = @"<p>Thank you for registering at Metrics Track.&nbsp;</p>
+                                            <p>Your account has been revised and approved.</p>
+                                            <p>Your current team leader is {0}.</p>
+                                            <p><span class=""il"">You</span>&nbsp;may now log in to 
+                                            <a href=""{1}"">Metrics Track</a> using your e-mail and password.</p>
+                                            <p><strong><sup>Metrics Track team</sup></strong></p>";
+
     }
 }

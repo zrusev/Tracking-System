@@ -1,9 +1,9 @@
 ﻿namespace Metrics_Track.Services.Implementations
 {
     using AutoMapper.QueryableExtensions;
+    using Common.Validation;
     using Contracts;
-    using Metrics_Track.Common.Validation;
-    using Metrics_Track.Data.Models;
+    using Data.Models;
     using Models.Lob;
     using System;
     using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿namespace Metrics_Track.Services.Models.User
 {
-    using Metrics_Track.Common.Mapping;
-    using Metrics_Track.Data.Models;
+    using Common.Mapping;
+    using Data.Models;
     using System;
 
     public class UserActivityModel : IMapFrom<tbl_UserActivity>

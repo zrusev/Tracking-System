@@ -1,8 +1,8 @@
 ﻿namespace Metrics_Track.Services.Admin.Models
 {
+    using Admin.Contracts;
     using MailKit.Net.Smtp;
     using MailKit.Security;
-    using Metrics_Track.Services.Admin.Contracts;
     using Microsoft.Extensions.Options;
     using MimeKit;
     using MimeKit.Text;

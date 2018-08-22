@@ -1,10 +1,7 @@
 ﻿namespace Metrics_Track.Web.Areas.Identity.Controllers
 {
+    using Data.Models;
     using Infrastructure.Extensions;
-    using Metrics_Track.Data.Models;
-    using Metrics_Track.Services.Admin.Contracts;
-    using Metrics_Track.Services.Contracts;
-    using Metrics_Track.Web.Controllers;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -12,11 +9,14 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Logging;
     using Models.AccountViewModels;
+    using Services.Admin.Contracts;
+    using Services.Contracts;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Web.Controllers;
 
     [Authorize]
     [Area(WebConstants.IdentityArea)]

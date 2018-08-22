@@ -1,7 +1,7 @@
 ﻿namespace Metrics_Track.Web.Infrastructure.Extensions
 {
-    using Metrics_Track.Services.Contracts;
     using Microsoft.Extensions.DependencyInjection;
+    using Services.Contracts;
     using System.Linq;
     using System.Reflection;
 

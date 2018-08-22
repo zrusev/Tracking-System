@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Services.Admin.Contracts
 {
-    using Metrics_Track.Data.Models;
+    using Data.Models;
     using Models;
     using System.Collections.Generic;
     using System.Threading.Tasks;

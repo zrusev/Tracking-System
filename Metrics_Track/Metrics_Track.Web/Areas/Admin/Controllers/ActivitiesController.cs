@@ -1,11 +1,11 @@
 ﻿namespace Metrics_Track.Web.Areas.Admin.Controllers
 {
     using Infrastructure.Extensions;
-    using Metrics_Track.Services.Contracts;
-    using Metrics_Track.Services.Models.Activity;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.Activities;
+    using Services.Contracts;
+    using Services.Models.Activity;
     using X.PagedList;
 
     [Area(WebConstants.AdminArea)]

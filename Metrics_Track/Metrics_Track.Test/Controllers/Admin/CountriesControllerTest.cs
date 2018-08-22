@@ -1,15 +1,15 @@
 ﻿namespace Metrics_Track.Test.Controllers.Admin
 {
     using Metrics_Track.Services.Contracts;
-    using Metrics_Track.Web;
-    using Metrics_Track.Web.Areas.Admin.Controllers;
-    using Metrics_Track.Web.Areas.Admin.Models.Countries;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
     using System;
     using System.Linq;
+    using Web;
+    using Web.Areas.Admin.Controllers;
+    using Web.Areas.Admin.Models.Countries;
 
     [TestClass]
     public class CountriesControllerTest

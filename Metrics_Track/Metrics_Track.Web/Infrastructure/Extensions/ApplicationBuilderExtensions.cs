@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Web.Infrastructure.Extensions
 {
-    using Metrics_Track.Data.Models;
+    using Data.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;

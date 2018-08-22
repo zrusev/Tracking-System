@@ -1,8 +1,8 @@
 ﻿namespace Metrics_Track.Web.Models
 {
-    using Metrics_Track.Services.Models.Country;
-    using Metrics_Track.Services.Models.Mining;
-    using Metrics_Track.Services.Models.Transaction;
+    using Services.Models.Country;
+    using Services.Models.Mining;
+    using Services.Models.Transaction;
     using System.Collections.Generic;
 
     public class CountriesViewModel

@@ -1,16 +1,16 @@
 ﻿namespace Metrics_Track.Web.Controllers
 {
+    using Data.Models;
     using Infrastructure.Attributes;
     using Infrastructure.Extensions;
-    using Metrics_Track.Data.Models;
-    using Metrics_Track.Services.Contracts;
-    using Metrics_Track.Services.Models.Transaction;
-    using Metrics_Track.Services.Models.User;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Models;
+    using Services.Contracts;
+    using Services.Models.Transaction;
+    using Services.Models.User;
     using System;
     using System.Linq;
     using System.Threading.Tasks;

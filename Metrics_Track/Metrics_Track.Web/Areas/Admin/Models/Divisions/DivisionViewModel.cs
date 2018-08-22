@@ -1,6 +1,6 @@
 ﻿namespace Metrics_Track.Web.Areas.Admin.Models.Divisions
 {
-    using Metrics_Track.Services.Models.Division;
+    using Services.Models.Division;
 
     public class DivisionViewModel
     {

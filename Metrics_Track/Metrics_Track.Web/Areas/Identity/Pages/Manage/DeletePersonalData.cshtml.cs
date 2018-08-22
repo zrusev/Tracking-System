@@ -1,13 +1,13 @@
 ﻿namespace Metrics_Track.Web.Areas.Identity.Pages.Manage
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.Threading.Tasks;
-    using Metrics_Track.Data.Models;
+    using Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Threading.Tasks;
 
     public class DeletePersonalDataModel : PageModel
     {

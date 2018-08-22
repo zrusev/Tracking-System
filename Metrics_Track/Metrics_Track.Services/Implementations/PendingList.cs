@@ -1,7 +1,7 @@
 ﻿namespace Metrics_Track.Services.Implementations
 {
     using Contracts;
-    using Metrics_Track.Data.Models;
+    using Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Models.Transaction;
     using System.Collections.Generic;

@@ -1,9 +1,9 @@
 namespace Metrics_Track.Web.Areas.Management.Pages
 {
     using Infrastructure.Extensions;
-    using Metrics_Track.Services.Contracts;
-    using Metrics_Track.Services.Models.Transaction;
     using Microsoft.AspNetCore.Mvc;
+    using Services.Contracts;
+    using Services.Models.Transaction;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

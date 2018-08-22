@@ -2,6 +2,6 @@
 {
     public class ValidationConstants
     {
-        public const string LobDefinedMessage = "The lob cannot be empty.";
+        public const string LobDefinedMessage = "The LOB cannot be empty.";
     }
 }

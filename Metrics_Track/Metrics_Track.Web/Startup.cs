@@ -1,9 +1,8 @@
 ﻿namespace Metrics_Track.Web
 {
+    using Data.Models;
     using Infrastructure.Extensions;
     using Infrastructure.Mapping;
-    using Metrics_Track.Data.Models;
-    using Metrics_Track.Services.Admin.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -12,6 +11,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Services.Admin.Models;
     using System;
 
     public class Startup
