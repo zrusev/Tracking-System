@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Mocks;
     using Moq;
     using System.Collections.Generic;
     using System.Security.Claims;
@@ -21,7 +22,7 @@
         private const string SecondUserUsername = "Second";
 
         [TestMethod]
-        public async Task DashboardContoller_ShoudReturnRedirectToActionWhenIsAuthenticated()
+        public async Task DashboardContoller_WhenIsAuthenticated_ShoudReturnRedirectToAction()
         {
             var usr = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
@@ -62,12 +63,4 @@
             return userManager;
         }
     }
-
-    public class UserManagerMock
-    {
-        public static Mock<UserManager<User>> New
-            => new Mock<UserManager<User>>(
-                Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
-    }
-
 }

@@ -83,7 +83,12 @@
             {
                 ModelState.AddModelError(string.Empty, "Invalid identity details.");
             }
-            
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             user.IdTeamLead = int.Parse(model.IdTeamLead);
             user.EmailConfirmed = true;
 

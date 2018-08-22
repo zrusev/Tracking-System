@@ -44,7 +44,7 @@
         }
 
         [TestMethod]
-        public void GetAddCountry_ShouldReturnViewWithValidModel()
+        public void GetAddCountry_WithValidModel_ShouldReturnView()
         {            
             var service = new Mock<ICountry>();
 
@@ -61,7 +61,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
-        public void PostAddCountry_ShouldThrowException()
+        public void PostAddCountry_WithInvalidModel_ShouldThrowException()
         {
             var service = new Mock<ICountry>();
 
