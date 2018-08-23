@@ -304,4 +304,3 @@ __pycache__/
 
 # ignore customfiles
 *.Instructions.docx
-*.Script.sql
