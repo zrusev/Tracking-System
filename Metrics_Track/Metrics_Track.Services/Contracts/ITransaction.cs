@@ -7,6 +7,8 @@
 
     public interface ITransaction
     {
+        bool Exists(TransactionModel model);
+
         int AddTransaction(TransactionModel model);
 
         Task<List<DailyTransactionsListModel>> DailyTransactions(int idLogin);

@@ -145,6 +145,14 @@
                 model.StatusCode = CompleteTransactionIdStatusCode;
             }
 
+            var exists = this.transaction.Exists(model);
+
+            if (!exists)
+            {
+                this.ModelState.AddModelError("model", "Invalid transaction mapping.");
+                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() });
+            }
+
             var currentUser = await this.GetUserDetailsAsync();
 
             model.IdLogin = currentUser.IdLogin;
@@ -180,7 +188,7 @@
             var currentUser = await this.GetUserDetailsAsync();
             if (transaction.IdLogin != currentUser.IdLogin || transaction.Sandbox != currentUser.Sandbox)
                 return Json(new { success = false, errors = "The transaction has been assigned to somebody else." });
-            
+
             //if (transaction.StatusCode != PendingTransactionCode)
             //return Json(new { success = false, errors = "The transaction is no longer pending." });            
 

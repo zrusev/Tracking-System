@@ -8,46 +8,6 @@
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            //migrationBuilder.CreateTable(
-            //    name: "SCCViewReporting",
-            //    schema: "CPS",
-            //    columns: table => new
-            //    {
-            //        TransactionID = table.Column<int>(name: "Transaction ID", nullable: false)
-            //            .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-            //        FunctionName = table.Column<string>(name: "Function Name", nullable: true),
-            //        Country = table.Column<string>(nullable: true),
-            //        TeamLeader = table.Column<string>(name: "Team Leader", nullable: true),
-            //        UserName = table.Column<string>(name: "User Name", nullable: true),
-            //        Process = table.Column<string>(nullable: true),
-            //        ProcessMap = table.Column<string>(name: "Process Map", nullable: true),
-            //        Activity = table.Column<string>(nullable: true),
-            //        Lob = table.Column<string>(nullable: true),
-            //        ReceivedDate = table.Column<DateTime>(name: "Received Date", nullable: true),
-            //        StartDate = table.Column<DateTime>(name: "Start Date", nullable: true),
-            //        CompleteDate = table.Column<DateTime>(name: "Complete Date", nullable: true),
-            //        Comment = table.Column<string>(nullable: true),
-            //        IDNumber = table.Column<string>(name: "ID Number", nullable: true),
-            //        Status = table.Column<string>(nullable: true),
-            //        Premium = table.Column<double>(nullable: true),
-            //        CurrencyCode = table.Column<string>(name: "Currency Code", nullable: true),
-            //        Priority = table.Column<short>(nullable: true),
-            //        InceptionDate = table.Column<DateTime>(name: "Inception Date", nullable: true),
-            //        DateReceivedInCompany = table.Column<DateTime>(name: "Date Received In Company", nullable: true),
-            //        SLAHrs = table.Column<double>(name: "SLA Hrs", nullable: false),
-            //        SLATarget = table.Column<int>(name: "SLA Target", nullable: false),
-            //        SLAType = table.Column<string>(name: "SLA Type", nullable: true),
-            //        SLAAchievement = table.Column<int>(name: "SLA Achievement", nullable: false),
-            //        HandlingTime = table.Column<double>(name: "Handling Time", nullable: false),
-            //        Week = table.Column<string>(nullable: true),
-            //        Month = table.Column<string>(nullable: true),
-            //        Sandbox = table.Column<short>(nullable: false)
-            //    },
-            //    constraints: table =>
-            //    {
-            //        table.PrimaryKey("PK_SCCViewReporting", x => x.TransactionID);
-            //    });
-
             StringBuilder allTransactionsView = new StringBuilder();
 
             allTransactionsView.Append("CREATE VIEW [CPS].[SSC_View_Reporting]" + Environment.NewLine);
@@ -87,10 +47,6 @@
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            //migrationBuilder.DropTable(
-            //    name: "SCCViewReporting",
-            //    schema: "CPS");
-
             migrationBuilder.Sql("DROP VIEW [CPS].[SSC_View_Reporting]");
         }
     }

@@ -70,7 +70,7 @@ function sessKeyPressed(ed, e) {
 function startIdleTime() {
     stopIdleTime();
     localStorage.setItem("sessIdleTimeCounter", $.now());
-    idleIntervalID = setInterval('checkIdleTimeout()', 10000);
+    idleIntervalID = setInterval('checkIdleTimeout()', 10000 * 6);
     isIdleTimerOn = false;
 }
 

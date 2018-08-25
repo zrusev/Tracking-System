@@ -8,25 +8,6 @@
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            //migrationBuilder.CreateTable(
-            //    name: "SSCViewCurrentStatus",
-            //    schema: "CPS",
-            //    columns: table => new
-            //    {
-            //        ID_Login = table.Column<int>(nullable: false)
-            //            .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-            //        DisplayName = table.Column<string>(name: "Display Name", nullable: true),
-            //        TeamLeader = table.Column<string>(name: "Team Leader", nullable: true),
-            //        Type = table.Column<string>(nullable: true),
-            //        LastUpdate = table.Column<DateTime>(name: "Last Update", nullable: false),
-            //        Comment = table.Column<string>(nullable: true),
-            //        Sandbox = table.Column<short>(nullable: false)
-            //    },
-            //    constraints: table =>
-            //    {
-            //        table.PrimaryKey("PK_SSCViewCurrentStatus", x => x.ID_Login);
-            //    });
-
             StringBuilder currentStatusView = new StringBuilder();
 
             currentStatusView.Append("CREATE VIEW [CPS].[SSC_View_UserCurrent]" + Environment.NewLine);
@@ -43,10 +24,6 @@
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            //migrationBuilder.DropTable(
-            //    name: "SSCViewCurrentStatus",
-            //    schema: "CPS");
-
             migrationBuilder.Sql("DROP VIEW [CPS].[SSC_View_UserCurrent]");
         }
     }
