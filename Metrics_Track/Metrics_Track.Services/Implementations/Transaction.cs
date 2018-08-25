@@ -22,34 +22,30 @@
         }
 
         public bool Exists(TransactionModel model)
-        {
-            var q = (from trel in this.db.TrelCountryProcess
-                     join c in this.db.TblCountry on trel.IdCountry equals c.IdCountry
-                        where c.IdCountry == model.IdCountry
-                     join p in this.db.TblProcess on trel.IdProcess equals p.IdProcess
-                     join pa in this.db.TrelProcessActivity on p.IdProcess equals pa.IdProcess
-                     join a in this.db.TblActivity on pa.IdActivity equals a.IdActivity
-                        where a.IdActivity == model.IdActivity
-                     join ps in this.db.TrelProcessStatus on p.IdProcess equals ps.IdProcess
-                     join s in this.db.TblStatus on ps.IdStatus equals s.IdStatus
-                        where s.IdStatus == model.IdStatus
-                     join pl in this.db.TrelProcessLob on p.IdProcess equals pl.IdProcess
-                     join l in this.db.TblLob on pl.IdLob equals l.IdLob
-                        where l.IdLob == model.IdLob
-                     //join pd in this.db.TrelProcessDivision on p.IdProcess equals pd.IdProcess
-                     //join d in this.db.TblDivision on pd.IdDivision equals d.IdDivision
-                     //   where d.IdDivision == model.IdDivision
-                     //join pt in this.db.TrelProcessTower on p.IdProcess equals pt.IdProcess
-                     //join t in this.db.TblTower on pt.IdTower equals t.IdTower
-                     //   where pt.IdTower == model.IdTower
-                     //join ptc in this.db.TrelProcessTowerCategory on p.IdProcess equals ptc.IdProcess
-                     //join tc in this.db.TblTowerCategory on ptc.IdTowerCategory equals tc.IdTowerCategory
-                     //   where ptc.IdTowerCategory == model.IdTowerCategory
-                     select trel)
-                    .Any();
-
-            return q;
-        }
+             => (from trel in this.db.TrelCountryProcess
+                 join c in this.db.TblCountry on trel.IdCountry equals c.IdCountry
+                    where c.IdCountry == model.IdCountry
+                 join p in this.db.TblProcess on trel.IdProcess equals p.IdProcess
+                 join pa in this.db.TrelProcessActivity on p.IdProcess equals pa.IdProcess
+                 join a in this.db.TblActivity on pa.IdActivity equals a.IdActivity
+                    where a.IdActivity == model.IdActivity
+                 join ps in this.db.TrelProcessStatus on p.IdProcess equals ps.IdProcess
+                 join s in this.db.TblStatus on ps.IdStatus equals s.IdStatus
+                    where s.IdStatus == model.IdStatus
+                 join pl in this.db.TrelProcessLob on p.IdProcess equals pl.IdProcess
+                 join l in this.db.TblLob on pl.IdLob equals l.IdLob
+                    where l.IdLob == model.IdLob
+                 //join pd in this.db.TrelProcessDivision on p.IdProcess equals pd.IdProcess
+                 //join d in this.db.TblDivision on pd.IdDivision equals d.IdDivision
+                 //   where d.IdDivision == model.IdDivision
+                 //join pt in this.db.TrelProcessTower on p.IdProcess equals pt.IdProcess
+                 //join t in this.db.TblTower on pt.IdTower equals t.IdTower
+                 //   where pt.IdTower == model.IdTower
+                 //join ptc in this.db.TrelProcessTowerCategory on p.IdProcess equals ptc.IdProcess
+                 //join tc in this.db.TblTowerCategory on ptc.IdTowerCategory equals tc.IdTowerCategory
+                 //   where ptc.IdTowerCategory == model.IdTowerCategory
+                 select trel)
+                .Any();
 
         public int AddTransaction(TransactionModel model)
         {

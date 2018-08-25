@@ -2,12 +2,14 @@
 {
     using Data.Models;
     using Metrics_Track.Services.Contracts;
+    using Metrics_Track.Services.Models.Transaction;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Mocks;
     using Moq;
+    using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -47,6 +49,36 @@
             Assert.IsNotNull(result);
 
             Assert.IsInstanceOfType(result, typeof(IActionResult));
+        }
+
+        [TestMethod]
+        public async Task PostSubmitTransaction_WhenModelHasInvalidData_ShouldReturnJson()
+        {
+            var userManager = this.GetUserManagerMock();
+
+            var controller = new DashboardController(new Mock<ICountry>().Object,
+                                         new Mock<IMining>().Object,
+                                         new Mock<ITransaction>().Object,
+                                         new Mock<IPendingList>().Object,
+                                         userManager.Object);
+
+            JsonResult result = await controller.SubmitTransaction(new TransactionModel()
+            {
+                IdLogin = 1,
+                IdCountry = 1,
+                IdProcess = 1,
+                IdActivity = 1,
+                IdLob = 1,
+                IdDivision = 1,
+                IdTowerCategory = 1,
+                IdTower = 1,
+                ReceivedDate = DateTime.Now,
+                IdStatus = 1
+            }) as JsonResult;
+
+            Assert.IsNotNull(result);
+
+            Assert.IsInstanceOfType(result, typeof(JsonResult));
         }
 
         private Mock<UserManager<User>> GetUserManagerMock()
