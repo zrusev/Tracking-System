@@ -3,6 +3,7 @@
     using Admin.Contracts;
     using MailKit.Net.Smtp;
     using MailKit.Security;
+    using Metrics_Track.Common.Validation;
     using Microsoft.Extensions.Options;
     using MimeKit;
     using MimeKit.Text;
@@ -46,11 +47,11 @@
                     await client.DisconnectAsync(true).ConfigureAwait(false);
                 }
 
-                return "Confirmation e-mail sent to agent successfully.";
+                return ValidationConstants.SuccessfulConfirmation;
             }
             catch (Exception ex)
             {
-                return "Something went wrong. " + ex.Message;
+                return ValidationConstants.SomethingWrong + ex.Message;
             }
         }
     }

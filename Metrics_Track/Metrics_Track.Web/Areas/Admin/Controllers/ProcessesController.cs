@@ -44,7 +44,7 @@
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Invalid process details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidProcessDetails);
                 return View(model);
             }
 
@@ -53,7 +53,7 @@
 
             if (!processExists)
             {
-                ModelState.AddModelError(string.Empty, "Invalid process details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidProcessDetails);
                 return View(model);
             }
 
@@ -114,7 +114,7 @@
         {
             if (id == 0)
             {
-                TempData.AddErrorMessage($"Invalid process id.");
+                TempData.AddErrorMessage(WebConstants.InvalidProcessId);
                 return RedirectToAction(nameof(Index));
             }
 

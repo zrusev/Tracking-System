@@ -44,7 +44,7 @@
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Invalid division details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidDivisionDetails);
                 return View(model);
             }
 
@@ -53,7 +53,7 @@
 
             if (!divisionExists)
             {
-                ModelState.AddModelError(string.Empty, "Invalid division details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidDivisionDetails);
                 return View(model);
             }
 
@@ -92,7 +92,7 @@
         {
             if (id == 0)
             {
-                TempData.AddErrorMessage($"Invalid process id.");
+                TempData.AddErrorMessage(WebConstants.InvalidDivisionId);
                 return RedirectToAction(nameof(Index));
             }
 

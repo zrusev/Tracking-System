@@ -44,7 +44,7 @@
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Invalid lob details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidLobDetails);
                 return View(model);
             }
 
@@ -53,7 +53,7 @@
 
             if (!lobExists)
             {
-                ModelState.AddModelError(string.Empty, "Invalid lob details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidLobDetails);
                 return View(model);
             }
 
@@ -104,7 +104,7 @@
         {
             if (id == 0)
             {
-                TempData.AddErrorMessage($"Invalid lob id.");
+                TempData.AddErrorMessage(WebConstants.InvalidLobId);
                 return RedirectToAction(nameof(Index));
             }
 

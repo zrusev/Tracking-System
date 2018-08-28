@@ -48,7 +48,7 @@
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Invalid activity details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidActivityDetails);
                 return View(model);
             }
 
@@ -57,7 +57,7 @@
 
             if (!activityExists)
             {
-                ModelState.AddModelError(string.Empty, "Invalid activity details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidActivityDetails);
                 return View(model);
             }
 
@@ -96,7 +96,7 @@
         {
             if (id == 0)
             {
-                TempData.AddErrorMessage($"Invalid process id.");
+                TempData.AddErrorMessage(WebConstants.InvalidActivityId);
                 return RedirectToAction(nameof(Index));
             }
 

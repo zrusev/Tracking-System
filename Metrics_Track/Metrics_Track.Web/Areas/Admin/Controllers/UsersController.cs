@@ -81,7 +81,7 @@
 
             if (!userExists || !teamLeadExists || !roleExists)
             {
-                ModelState.AddModelError(string.Empty, "Invalid identity details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidIdentityDetails);
             }
 
             if (!ModelState.IsValid)
@@ -117,7 +117,7 @@
 
             if (appUser == null)
             {
-                TempData.AddErrorMessage("User not found. Invalid ID.");
+                TempData.AddErrorMessage(WebConstants.InvalidUserId);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -147,7 +147,7 @@
         {
             if (!ModelState.IsValid)
             {
-                TempData.AddErrorMessage("Invalid model details.");
+                TempData.AddErrorMessage(WebConstants.InvalidModelDetails);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -158,7 +158,7 @@
 
             if (!userExists)
             {
-                TempData.AddErrorMessage("Invalid identity details.");
+                TempData.AddErrorMessage(WebConstants.InvalidIdentityDetails);
 
                 return View(model);
             }
@@ -168,7 +168,7 @@
 
             if (targetUserId.Equals(currentUserId))
             {
-                TempData.AddErrorMessage("Self modifications are not allowed.");
+                TempData.AddErrorMessage(WebConstants.InvalidSelfModifications);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -227,7 +227,7 @@
 
             await this.userManager.RemoveFromRoleAsync(user, WebConstants.AgentRole);
 
-            TempData.AddSuccessMessage("User removed successfully.");
+            TempData.AddSuccessMessage(WebConstants.RemovedUser);
             return RedirectToAction(nameof(Index));
         }
 

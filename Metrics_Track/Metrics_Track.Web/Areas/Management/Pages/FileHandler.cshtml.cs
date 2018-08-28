@@ -35,7 +35,7 @@ namespace Metrics_Track.Web.Areas.Management.Pages
 
             if (transactions.Count() == 0)
             {
-                TempData.AddErrorMessage("No records have been found for this period.");
+                TempData.AddErrorMessage(WebConstants.MissingRecords);
                 return RedirectToPage("/Reporting");
             }
 

@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Services.Models.Process
 {
     using Common.Mapping;
+    using Common.Validation;
     using Data.Models;
     using System.ComponentModel.DataAnnotations;
 
@@ -14,13 +15,13 @@
 
         public string ProcessMap { get; set; }
 
-        [Required(ErrorMessage = "MNC can not be empty.")]
+        [Required(ErrorMessage = ValidationConstants.SlaTargetType)]
         public string Mnc { get; set; }
 
         public string SlaType { get; set; }
 
         [Required]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Sla Target must be numeric")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = ValidationConstants.SlaTargetType)]
         public string SlaTarget { get; set; }
 
         public string Level2Taxonomy { get; set; }

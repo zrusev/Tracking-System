@@ -44,7 +44,7 @@
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Invalid status details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidStatusDetails);
                 return View(model);
             }
 
@@ -53,7 +53,7 @@
 
             if (!statusExists)
             {
-                ModelState.AddModelError(string.Empty, "Invalid status details.");
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidStatusDetails);
                 return View(model);
             }
 
@@ -92,7 +92,7 @@
         {
             if (id == 0)
             {
-                TempData.AddErrorMessage($"Invalid status id.");
+                TempData.AddErrorMessage(WebConstants.InvalidStatusId);
                 return RedirectToAction(nameof(Index));
             }
 

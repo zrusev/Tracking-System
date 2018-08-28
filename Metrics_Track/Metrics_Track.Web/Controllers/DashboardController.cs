@@ -149,7 +149,7 @@
 
             if (!exists)
             {
-                this.ModelState.AddModelError("model", "Invalid transaction mapping.");
+                this.ModelState.AddModelError("model", WebConstants.InvalidTransactionMapping);
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() });
             }
 
@@ -179,18 +179,18 @@
         public async Task<IActionResult> ReturnTransaction(int transactionId)
         {
             if (transactionId == 0)
-                return Json(new { success = false, errors = "Invalid transaction id." });
+                return Json(new { success = false, errors = WebConstants.InvalidTransactionId });
             
             var transaction = this.transaction.ReturnedTransaction(transactionId);            
             if (transaction == null)
-                return Json(new { success = false, errors = "Could not find this transaction." });            
+                return Json(new { success = false, errors = WebConstants.MissingTransaction });            
 
             var currentUser = await this.GetUserDetailsAsync();
             if (transaction.IdLogin != currentUser.IdLogin || transaction.Sandbox != currentUser.Sandbox)
-                return Json(new { success = false, errors = "The transaction has been assigned to somebody else." });
+                return Json(new { success = false, errors = WebConstants.WrongAssignment });
 
             //if (transaction.StatusCode != PendingTransactionCode)
-            //return Json(new { success = false, errors = "The transaction is no longer pending." });            
+            //return Json(new { success = false, errors = WebConstants.WrongTransactionStatus });            
 
             this.transaction.UpdateStatusCode(transactionId, VoidStatusCode);
 

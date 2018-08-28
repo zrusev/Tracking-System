@@ -46,7 +46,7 @@ namespace Metrics_Track.Web.Areas.Management.Pages
 
             if (this.ReceivedDate >= this.CompleteDate)
             {
-                TempData.AddErrorMessage("Received date can not be later than Complete date.");
+                TempData.AddErrorMessage(WebConstants.InvalidReceivedDate);
                 return Page();
             }
             

@@ -1,5 +1,6 @@
 ﻿namespace Metrics_Track.Web.Areas.Admin.Models.Processes
 {
+    using Common.Validation;
     using System.ComponentModel.DataAnnotations;
 
     public class AddProcessViewModel
@@ -10,13 +11,13 @@
 
         public string ProcessMap { get; set; }
 
-        [Required(ErrorMessage = "MNC can not be empty.")]
+        [Required(ErrorMessage = ValidationConstants.EmptyMNC)]
         public string Mnc { get; set; }
 
         public string SlaType { get; set; }
 
         [Required]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Sla Target must be numeric")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = ValidationConstants.SlaTargetType)]
         public string SlaTarget { get; set; }
 
         public string Level2Taxonomy { get; set; }

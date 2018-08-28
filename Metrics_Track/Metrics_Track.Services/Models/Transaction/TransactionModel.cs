@@ -1,5 +1,6 @@
 ﻿namespace Metrics_Track.Services.Models.Transaction
 {
+    using Common.Validation;
     using System;
     using System.ComponentModel.DataAnnotations;
 
@@ -9,20 +10,20 @@
 
         public int? IdLogin { get; set; }
 
-        [Required(ErrorMessage ="Country selection is required.")]
+        [Required(ErrorMessage = ValidationConstants.RequiredCountrySelection)]
         public int IdCountry { get; set; }
 
-        [Required(ErrorMessage = "Process selection is required.")]
+        [Required(ErrorMessage = ValidationConstants.RequiredProcessSelection)]
         public int IdProcess { get; set; }
 
         public string Process { get; set; }
 
-        [Required(ErrorMessage = "Activity selection is required.")]
+        [Required(ErrorMessage = ValidationConstants.RequiredActivitySelection)]
         public int IdActivity { get; set; }
 
         public string Activity { get; set; }
 
-        [Required(ErrorMessage = "LOB selection is required.")]
+        [Required(ErrorMessage = ValidationConstants.RequiredLobSelection)]
         public int IdLob { get; set; }
 
         public string Lob { get; set; }
@@ -33,7 +34,7 @@
 
         public int? IdTower { get; set; }
 
-        [Required(ErrorMessage = "Received date is required.")]
+        [Required(ErrorMessage = ValidationConstants.RequiredReceivedDate)]
         [DataType(DataType.Text)]
         public DateTime ReceivedDate { get; set; }
 
@@ -41,7 +42,7 @@
 
         public DateTime? CompleteDate { get; set; }
 
-        [Required(ErrorMessage = "Status selection is required.")]
+        [Required(ErrorMessage = ValidationConstants.RequiredStatusSelection)]
         public int IdStatus { get; set; }
 
         public string Status { get; set; }

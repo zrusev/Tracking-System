@@ -38,7 +38,7 @@
         [HttpGet]
         public IActionResult RemoveCountries()
         {
-            TempData.AddErrorMessage("Removing countries is not allowed.");
+            TempData.AddErrorMessage(WebConstants.InvalidCountryRemoving);
             return RedirectToAction(nameof(Index));
         }
 
@@ -64,7 +64,7 @@
         {
             if (idCountries.Length == 0 || idCountries.Length >= 2)
             {
-                TempData.AddErrorMessage($"Please select a single country only.");
+                TempData.AddErrorMessage(WebConstants.MultipleCountriesSelection);
                 return RedirectToAction(nameof(Index));
             }
 
