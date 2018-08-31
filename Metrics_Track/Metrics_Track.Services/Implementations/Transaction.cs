@@ -12,6 +12,10 @@
 
     public class Transaction : ITransaction
     {
+        private const int CompleteTransactionIdStatusCode = 1;
+        private const int PendingIdStatusCode = 5;
+        private const int PendingTransactionCode = 2;
+
         private const int MaxResultsPerQuery = 500;
 
         private readonly TrackerDbContext db;
@@ -49,6 +53,15 @@
 
         public int AddTransaction(TransactionModel model)
         {
+            if (model.IdStatus == PendingIdStatusCode)
+            {
+                model.StatusCode = PendingTransactionCode;
+            }
+            else
+            {
+                model.StatusCode = CompleteTransactionIdStatusCode;
+            }
+
             var currentTransaction = new tbl_VolumeMain
             {
                 IdLogin = model.IdLogin,

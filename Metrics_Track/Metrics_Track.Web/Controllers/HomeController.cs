@@ -1,6 +1,7 @@
 ﻿namespace Metrics_Track.Web.Controllers
 {
     using Infrastructure.Attributes;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using System.Diagnostics;
@@ -18,6 +19,7 @@
             return View();
         }
 
+        [Authorize]
         public IActionResult Workspace() => View();
 
         public IActionResult Error() 

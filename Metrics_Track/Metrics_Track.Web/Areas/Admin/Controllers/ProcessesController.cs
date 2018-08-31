@@ -58,21 +58,21 @@
             }
 
             var successId = this.processList.UpdateProcess(new ProcessListModel
-                    {
-                        IdProcess = model.Process.IdProcess,
-                        Process = model.Process.Process,
-                        FunctionName = model.Process.FunctionName,
-                        ProcessMap = model.Process.ProcessMap,
-                        Mnc = model.Process.Mnc,
-                        SlaType = model.Process.SlaType,
-                        SlaTarget = model.Process.SlaTarget,
-                        Level2Taxonomy = model.Process.Level2Taxonomy,
-                        Level3Taxonomy = model.Process.Level3Taxonomy,
-                        Pid = model.Process.Pid,
-                        NiceQueue = model.Process.NiceQueue,
-                        Group = model.Process.Group,
-                        SpphIdProcess = model.Process.SpphIdProcess
-                    });
+            {
+                IdProcess = model.Process.IdProcess,
+                Process = model.Process.Process,
+                FunctionName = model.Process.FunctionName,
+                ProcessMap = model.Process.ProcessMap,
+                Mnc = model.Process.Mnc,
+                SlaType = model.Process.SlaType,
+                SlaTarget = model.Process.SlaTarget,
+                Level2Taxonomy = model.Process.Level2Taxonomy,
+                Level3Taxonomy = model.Process.Level3Taxonomy,
+                Pid = model.Process.Pid,
+                NiceQueue = model.Process.NiceQueue,
+                Group = model.Process.Group,
+                SpphIdProcess = model.Process.SpphIdProcess
+            });
 
             TempData.AddSuccessMessage($"Process: {model.Process.Process} with ID: {successId} has been updated successfully.");
 

@@ -18,7 +18,6 @@
     [Authorize(Roles = WebConstants.AgentRole)]
     public class DashboardController : Controller
     {
-        private const int CompleteTransactionIdStatusCode = 1;
         private const int PendingIdStatusCode = 5;
         private const int PendingTransactionCode = 2;
         private const short VoidStatusCode = 3;
@@ -39,7 +38,6 @@
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -55,7 +53,6 @@
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Accounts(string id)
         {            
             var currentUser = await this.GetUserDetailsAsync();
@@ -107,7 +104,6 @@
 
         [HttpPost]
         [AjaxOnly]
-        [Authorize]
         public async Task<IActionResult> UpdateStatus(UserActivityModel model)
         {
             if (!ModelState.IsValid)
@@ -128,21 +124,11 @@
 
         [HttpPost]
         [AjaxOnly]
-        [Authorize]
         public async Task<IActionResult> SubmitTransaction(TransactionModel model)
         {
             if (!ModelState.IsValid)
             {
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() });
-            }
-
-            if (model.IdStatus == PendingIdStatusCode)
-            {
-                model.StatusCode = PendingTransactionCode;
-            }
-            else
-            {
-                model.StatusCode = CompleteTransactionIdStatusCode;
             }
 
             var exists = this.transaction.Exists(model);
@@ -162,70 +148,45 @@
 
             var identityId = this.transaction.AddTransaction(model);
 
-            var addToPendings = (model.IdStatus == PendingIdStatusCode) ? true : false;
-
             var newStartDate = DateTime.Now;
 
             HttpContext.Session.Set<int>("PreviousTransactionId", identityId);
 
             HttpContext.Session.Set<DateTime>("StartDate", newStartDate);
 
+            var addToPendings = (model.IdStatus == PendingIdStatusCode) ? true : false;
+
             return Json(new { success = true, newId = identityId, startDate = newStartDate, prem = model.Premium, pending = addToPendings });
         }
 
         [HttpGet]
-        [Authorize]
         [AjaxOnly]
         public async Task<IActionResult> ReturnTransaction(int transactionId)
         {
             if (transactionId == 0)
+            {
                 return Json(new { success = false, errors = WebConstants.InvalidTransactionId });
+            }
             
-            var transaction = this.transaction.ReturnedTransaction(transactionId);            
+            var transaction = this.transaction.ReturnedTransaction(transactionId);
+
             if (transaction == null)
+            {
                 return Json(new { success = false, errors = WebConstants.MissingTransaction });            
+            }
 
             var currentUser = await this.GetUserDetailsAsync();
             if (transaction.IdLogin != currentUser.IdLogin || transaction.Sandbox != currentUser.Sandbox)
+            {
                 return Json(new { success = false, errors = WebConstants.WrongAssignment });
-
-            //if (transaction.StatusCode != PendingTransactionCode)
-            //return Json(new { success = false, errors = WebConstants.WrongTransactionStatus });            
-
+            }
+            
             this.transaction.UpdateStatusCode(transactionId, VoidStatusCode);
 
-            return Json(new
-            {
-                success = true,
-                IdCountry = transaction.IdCountry,                
-                IdProcess = transaction.IdProcess,
-                Process = transaction.Process,
-                IdActivity = transaction.IdActivity,
-                Activity = transaction.Activity,
-                IdLob = transaction.IdLob,
-                Lob = transaction.Lob,
-                IdDivision = transaction.IdDivision,
-                IdTowerCategory = transaction.IdTowerCategory,
-                IdTower = transaction.IdTower,
-                ReceivedDate = transaction.ReceivedDate,
-                StartDate = transaction.StartDate,
-                CompleteDate = transaction.CompleteDate,
-                IdStatus = transaction.IdStatus,
-                Status = transaction.Status,
-                Comment = transaction.Comment,
-                IdNumber = transaction.IdNumber,
-                Premium = transaction.Premium,
-                CurrencyCode = transaction.CurrencyCode,                
-                Priority = transaction.Priority,
-                InceptionDate = transaction.InceptionDate,
-                DateReceivedInAig = transaction.DateReceivedInAig
-            });
+            return Json(new { success = true, transaction });
         }
 
-        public IActionResult StayAlive() => null;
-
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> MyDailyTransactions()
         {
             var currentUser = await this.GetUserDetailsAsync();
@@ -235,12 +196,10 @@
             return View(new DailyTransactionsViewModel { DailyTransactionsList = dailyTransactionsList });
         }
 
-        public JsonResult GetMining(int id)
-        {
-            var modelMining = this.mining.ById(id);
-            return Json(modelMining);
-        }
+        public IActionResult StayAlive() => null;
 
+        public JsonResult GetMining(int id) => Json(this.mining.ById(id));
+        
         private async Task<User> GetUserDetailsAsync() => await userManager.GetUserAsync(User);
     }
 }

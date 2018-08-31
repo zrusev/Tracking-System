@@ -217,10 +217,10 @@ function returnTransaction(transactionId) {
         data: { transactionId: transactionId },
         success: function (response) {
             if (response.success) {
-                closeOpened(response.idCountry);
-                openClosed(response.idCountry, response.idProcess);
+                closeOpened(response.transaction.idCountry);
+                openClosed(response.transaction.idCountry, response.transaction.idProcess);
 
-                populateData(response);
+                populateData(response.transaction);
 
                 $("#previous-" + transactionId).remove();
 
